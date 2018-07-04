@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="${application.name}" packages="" monitorInterval="3">
+	<Appenders>
+		<!-- 控制台输出 -->
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%highlight{%d{yyyy/MM/dd HH:mm:ss SSS} %-5p [%X{username}] [${application.name}] [%t] [%c.%M(%F:%L)] %m%n}{FATAL=Bright Red, ERROR=Bright Magenta, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}" />
+		</Console>
+		<!-- 本地日志文件输出 -->
+		<!--<RollingFile name="RollingFile" fileName="./logs/${application.name}.log"
+					 filePattern="./logs/${date:yyyy-MM}/${application.name}-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d{yyyy/MM/dd HH:mm:ss SSS} %-5p  [${application.name}] [%t] [%c.%M(%F:%L)] %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				&lt;!&ndash; size根据实际的日志量填写 &ndash;&gt;
+				<SizeBasedTriggeringPolicy size="250 MB" />
+			</Policies>
+		</RollingFile>-->
+	</Appenders>
+	<Loggers>
+		<!-- 第三方日志系统 -->
+		<logger name="org.springframework" level="warn" additivity="false">
+			<AppenderRef ref="STDOUT" />
+			<!--<AppenderRef ref="RollingFile" />-->
+		</logger>
+		<logger name="org.apache" level="warn" additivity="false">
+			<AppenderRef ref="STDOUT" />
+			<!--<AppenderRef ref="RollingFile" />-->
+		</logger>
+
+		<!-- 根日志记录级别 -->
+		<Root level="info">
+			<AppenderRef ref="STDOUT" />
+			<!--<AppenderRef ref="RollingFile" />-->
+		</Root>
+	</Loggers>
+</Configuration>

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.CountDownLatch;
 //@EnableCaching
 // 异步调用
 //@EnableAsync
+@EnableTransactionManagement
 public class Main extends SpringBootServletInitializer {
 
     @Bean
