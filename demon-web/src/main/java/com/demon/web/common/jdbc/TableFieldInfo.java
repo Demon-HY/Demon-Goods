@@ -9,8 +9,7 @@ import java.io.Serializable;
  */
 public class TableFieldInfo  implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 2057524445681319726L;
     // 字段名
     private String fieldName;
     // 字段注释

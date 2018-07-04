@@ -1,6 +1,7 @@
 package com.demon.web.common.environment;
 
-import com.demon.web.common.response.ClientResult;
+import com.demon.web.utils.ClientResult;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
+    private static final long serialVersionUID = -8309117329025295532L;
     /**
      * 用户ID
      */
@@ -25,7 +27,7 @@ public class Env implements Serializable {
     public String clientIP;
 
 
-    public ClientResult cr; // 客户端返回数据
+    public ClientResult<T> cr; // 客户端返回数据
 
     /**
      * 获取用户唯一标识
@@ -49,11 +51,11 @@ public class Env implements Serializable {
         this.userId = userId;
     }
 
-    public ClientResult getCr() {
+    public ClientResult<T> getCr() {
         return cr;
     }
 
-    public void setCr(ClientResult cr) {
+    public void setCr(ClientResult<T> cr) {
         this.cr = cr;
     }
 

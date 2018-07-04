@@ -1,11 +1,8 @@
 package com.demon.web.common.jdbc;
 
 import com.alibaba.fastjson.JSONObject;
-import com.control.situation.entity.UserInfo;
-import com.control.situation.utils.ValidateUtils;
-import com.control.situation.utils.conversion.MapUtils;
-import com.control.situation.utils.db.TableFieldInfo;
-import com.control.situation.utils.db.TableInfo;
+import com.demon.utils.ValidUtils;
+import com.demon.utils.beans.MapUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -94,7 +91,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
         Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
         List<T> list = getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), params);
-        if (ValidateUtils.isEmpty(list) || list.size() != 1) {
+        if (ValidUtils.isBlank(list) || list.size() != 1) {
             return null;
         }
         return list.get(0);
@@ -144,7 +141,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			String key = field.getName();
 			String name = field.getAnnotation(Column.class).name();
 			Object arg = obj.get(key);
-			if (ValidateUtils.isEmpty(arg)) continue;
+			if (ValidUtils.isBlank(arg)) continue;
 
 			sql1.append(name).append(",");
 			sql2.append("?,");
@@ -153,7 +150,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 //		for (String key : obj.keySet()) {
 //			Object arg = obj.get(key);
-//			if (ValidateUtils.isEmpty(arg)) continue;
+//			if (ValidUtils.isBlank(arg)) continue;
 //
 //			sql1.append(key).append(",");
 //			sql2.append("?,");
@@ -184,7 +181,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			if (key.equals(pkName)) continue;
 
 			Object arg = obj.get(key);
-			if (ValidateUtils.isEmpty(arg)) continue;
+			if (ValidUtils.isBlank(arg)) continue;
 
 			sql1.append(key).append(" = ?,");
 			args.add(arg);
@@ -467,41 +464,5 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		comment = all.substring(index + 9);
 		comment = comment.substring(0, comment.length() - 1);
 		return comment;
-	}
-
-	public static void main(String[] args) {
-		// 开启 DEBUG 模式，不执行SQL，只打印SQL语句
-		CommonDaoImpl.debug = true;
-
-		CommonDao<UserInfo> common = new CommonDaoImpl<>();
-		UserInfo user = new UserInfo();
-
-		// selectById
-		common.selectById(20, UserInfo.class);
-
-		// selectByCriteria
-		CommonDao.Criteria criteria = common.createCriteria();
-		criteria.between("id", 10, 20)
-				.eq("account", "admin")
-				.like("nick_name", "Admin")
-				.limit(0, 10);
-		common.selectByCriteria(criteria, UserInfo.class);
-
-		// countByCriteria
-		criteria = common.createCriteria();
-		criteria.eq("id", 20)
-				.eq("account", "admin");
-		common.countByCriteria(criteria, UserInfo.class);
-
-		// removeById
-		common.removeById(1, UserInfo.class);
-
-		// insert
-		user.setPassword("sads");
-		user.setAccount("admin");
-		common.insert(user);
-
-		// update
-		common.update(user);
 	}
 }

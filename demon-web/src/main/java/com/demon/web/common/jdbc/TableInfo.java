@@ -1,7 +1,5 @@
 package com.demon.web.common.jdbc;
 
-import com.control.situation.utils.db.TableFieldInfo;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,8 +10,7 @@ import java.util.List;
  */
 public class TableInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = -7462297320480709513L;
     private String tableName;
     private String tableComment;
     private List<TableFieldInfo> listFieldInfos;
