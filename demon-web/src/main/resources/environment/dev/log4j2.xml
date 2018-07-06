@@ -20,11 +20,11 @@
 	</Appenders>
 	<Loggers>
 		<!-- 第三方日志系统 -->
-		<logger name="org.springframework" level="warn" additivity="false">
+		<logger name="org.springframework" level="info" additivity="false">
 			<AppenderRef ref="STDOUT" />
 			<AppenderRef ref="RollingFile" />
 		</logger>
-		<logger name="org.apache" level="warn" additivity="false">
+		<logger name="org.apache" level="info" additivity="false">
 			<AppenderRef ref="STDOUT" />
 			<AppenderRef ref="RollingFile" />
 		</logger>
