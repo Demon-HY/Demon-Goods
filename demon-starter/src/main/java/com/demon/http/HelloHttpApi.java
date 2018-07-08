@@ -1,4 +1,4 @@
-package com.demon.web.http;
+package com.demon.http;
 
 import com.demon.utils.ValidUtils;
 import com.demon.web.common.event.type.test.TestEvent;
@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

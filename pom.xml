@@ -56,6 +56,10 @@
     <modules>
         <module>demon-web</module>
         <module>demon-utils</module>
+        <module>demon-module-user</module>
+        <module>demon-module-right</module>
+        <module>demon-starter</module>
+        <module>demon-module-auth</module>
     </modules>
 
     <repositories><!--ali 代码库 -->

@@ -10,10 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>demon-web</artifactId>
-    <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
-
-    <description> Web 服务 </description>
+    <packaging>jar</packaging>
 
     <properties>
         <!--当工程定义了多个@SpringBootApplication的类时，需要为maven做如下配置，告诉maven去启动哪一个SpringBootApplication-->
@@ -121,78 +118,16 @@
         </dependency>
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <environment>dev</environment>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <environment>test</environment>
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <environment>prod</environment>
-            </properties>
-        </profile>
-    </profiles>
-
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>environment/dev/*</exclude>
-                    <exclude>environment/test/*</exclude>
-                    <exclude>environment/prod/*</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/resources/environment/${environment}</directory>
-            </resource>
-
-            <resource>
-                <directory>src/main/resources/environment/${environment}</directory>
-                <includes>
-                    <include>log4j2.xml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-
-        <finalName>ROOT</finalName>
-
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.5.RELEASE</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
                 <configuration>
-                    <warName>ROOT</warName>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
             </plugin>
         </plugins>
     </build>

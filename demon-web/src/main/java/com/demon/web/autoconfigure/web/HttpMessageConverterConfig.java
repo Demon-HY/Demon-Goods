@@ -37,7 +37,7 @@ public class HttpMessageConverterConfig {
                 //    字符类型字段如果为null,输出为"",而非null
                 SerializerFeature.WriteNullStringAsEmpty,
                 //    Boolean字段如果为null,输出为false,而非null
-                SerializerFeature.WriteNullBooleanAsFalse,
+//                SerializerFeature.WriteNullBooleanAsFalse,
 //                SerializerFeature.WriteBigDecimalAsPlain,
                 //    Date的日期转换器
 //                SerializerFeature.WriteDateUseDateFormat,
