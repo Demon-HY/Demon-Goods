@@ -1,4 +1,4 @@
-package org.demon.init;
+package org.demon.web.init;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
