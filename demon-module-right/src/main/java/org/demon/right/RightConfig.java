@@ -1,6 +1,6 @@
 package org.demon.right;
 
-import org.demon.web.module.DefaultConfig;
+import org.demon.starter.module.DefaultConfig;
 
 public class RightConfig extends DefaultConfig {
 

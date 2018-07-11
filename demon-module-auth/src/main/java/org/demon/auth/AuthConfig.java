@@ -1,6 +1,6 @@
 package org.demon.auth;
 
-import org.demon.web.module.DefaultConfig;
+import org.demon.starter.module.DefaultConfig;
 
 public class AuthConfig extends DefaultConfig {
 

@@ -1,7 +1,7 @@
 package org.demon.right.api;
 
-import org.demon.web.common.environment.Env;
-import org.demon.web.utils.ClientResult;
+import org.demon.starter.common.environment.Env;
+import org.demon.starter.utils.ClientResult;
 
 /**
  * 内部模块访问接口

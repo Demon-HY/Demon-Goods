@@ -1,6 +1,6 @@
 package org.demon.user;
 
-import org.demon.web.module.DefaultConfig;
+import org.demon.starter.module.DefaultConfig;
 import org.javatuples.Pair;
 
 public class UserConfig extends DefaultConfig {

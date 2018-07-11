@@ -2,11 +2,9 @@ package org.demon.user.api.impl;
 
 import org.demon.user.api.UserApi;
 import org.demon.user.dao.UserDaoImpl;
-import org.demon.web.common.environment.Env;
-import org.demon.web.utils.ClientResult;
+import org.demon.starter.utils.ClientResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.apache.log4j.Logger;
 
 /**

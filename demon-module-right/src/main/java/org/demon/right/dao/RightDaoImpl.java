@@ -1,7 +1,7 @@
 package org.demon.right.dao;
 
 import org.demon.right.entity.Right;
-import org.demon.web.common.jdbc.CommonDaoImpl;
+import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
