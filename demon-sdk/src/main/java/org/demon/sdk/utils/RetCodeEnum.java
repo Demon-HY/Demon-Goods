@@ -1,4 +1,4 @@
-package org.demon.starter.utils;
+package org.demon.sdk.utils;
 
 /**
  * 返回给客户端的错误码 [3位的业务类型,3位的具体错误码]
@@ -43,7 +43,7 @@ public enum RetCodeEnum {
         if (value == null) {
             return null;
         }
-        for(RetCodeEnum RetCodeEnum : RetCodeEnum.values()){
+        for(org.demon.sdk.utils.RetCodeEnum RetCodeEnum : RetCodeEnum.values()){
             if(RetCodeEnum.retCode.equals(value)){
                 return RetCodeEnum.message;
             }

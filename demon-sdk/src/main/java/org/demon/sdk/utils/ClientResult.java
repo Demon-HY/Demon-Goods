@@ -1,4 +1,4 @@
-package org.demon.starter.utils;
+package org.demon.sdk.utils;
 
 import java.io.Serializable;
 
