@@ -1,7 +1,7 @@
-package org.demon.starter.common.exception;
+package org.demon.web.exception;
 
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.utils.ClientResult;
+import org.demon.sdk.utils.RetCodeEnum;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

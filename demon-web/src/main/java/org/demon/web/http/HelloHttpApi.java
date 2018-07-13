@@ -1,9 +1,9 @@
 package org.demon.web.http;
 
 import org.demon.sdk.event.type.test.TestEvent;
+import org.demon.sdk.utils.ClientResult;
+import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

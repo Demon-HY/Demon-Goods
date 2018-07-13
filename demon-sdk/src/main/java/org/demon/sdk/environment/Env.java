@@ -1,8 +1,11 @@
 package org.demon.sdk.environment;
 
 import org.apache.poi.ss.formula.functions.T;
-import org.demon.starter.utils.ClientResult;
+import org.demon.sdk.utils.ClientResult;
+import org.demon.sdk.utils.RetCodeEnum;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 
 /**
@@ -12,7 +15,20 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-    private static final long serialVersionUID = -8309117329025295532L;
+    private static final long serialVersionUID = 782003512411189022L;
+
+    /**
+     * HTTP 请求所对应的模块名称
+     */
+    public String moduleName;
+    /**
+     * Serrvlet HTTP 请求对象
+     */
+    public HttpServletRequest request;
+    /**
+     * Servlet HTTP 返回对象
+     */
+    public HttpServletResponse response;
     /**
      * 用户ID
      */
@@ -25,45 +41,8 @@ public class Env implements Serializable {
      * 客户端IP
      */
     public String clientIP;
-
-
-    public ClientResult<T> cr; // 客户端返回数据
-
     /**
-     * 获取用户唯一标识
+     * 错误信息
      */
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    /**
-     * 获取用户 ID
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public ClientResult<T> getCr() {
-        return cr;
-    }
-
-    public void setCr(ClientResult<T> cr) {
-        this.cr = cr;
-    }
-
-    public String getClientIP() {
-        return clientIP;
-    }
-
-    public void setClientIP(String clientIP) {
-        this.clientIP = clientIP;
-    }
+    RetCodeEnum retCodeEnum;
 }

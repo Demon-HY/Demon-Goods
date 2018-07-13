@@ -1,6 +1,6 @@
 package org.demon.sdk.exception;
 
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.utils.RetCodeEnum;
 
 import java.io.Serializable;
 
@@ -10,7 +10,6 @@ import java.io.Serializable;
  * Created by Demon-HY on 2018/3/19 0019.
  */
 public class LogicalException extends Exception implements Serializable {
-
 
     private static final long serialVersionUID = 1515073568935089979L;
     public String stat;
@@ -22,8 +21,8 @@ public class LogicalException extends Exception implements Serializable {
         this.errMsg = retCodeEnum.getMessage();
     }
 
-    public LogicalException(String stat, Exception e) {
-        super(stat, e);
+    public LogicalException(RetCodeEnum retCodeEnum, Exception e) {
+        super(retCodeEnum.getMessage(), e);
         this.errMsg = stat;
     }
 }
