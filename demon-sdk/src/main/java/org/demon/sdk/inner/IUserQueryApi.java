@@ -1,7 +1,8 @@
-package org.demon.sdk.inner.user;
+package org.demon.sdk.inner;
 
-import org.demon.sdk.entity.user.User;
+import org.demon.sdk.entity.User;
 import org.demon.sdk.environment.Env;
+import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.exception.ParamException;
 
 /**
@@ -28,5 +29,5 @@ public interface IUserQueryApi {
      * @param env
      * @param user 用户信息
      */
-    void checkUserStatus(Env env, User user);
+    void checkUserStatus(Env env, User user) throws LogicalException;
 }

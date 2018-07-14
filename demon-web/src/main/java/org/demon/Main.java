@@ -19,7 +19,7 @@ public class Main extends SpringBootServletInitializer {
 
     @Bean
     public CountDownLatch closeLatch() {
-        return new CountDownLatch(20);
+        return new CountDownLatch(100);
     }
 
     public static void main(String[] args) throws InterruptedException {

@@ -1,8 +1,5 @@
 package org.demon.starter.common.jdbc;
 
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.util.List;
 
 /**
@@ -10,8 +7,6 @@ import java.util.List;
  * Created by Demon-Coffee on 2018/3/15.
  */
 public interface CommonDao<T> {
-
-    JdbcTemplate getJdbcTemplate();
 
     /**
      * 根据主键查询一条数据
@@ -80,49 +75,49 @@ public interface CommonDao<T> {
      */
     int update(T entity);
 
-    /**
-     * 获取表名
-     */
-    String getTableName(Class<?> entityClass);
+//    /**
+//     * 获取表名
+//     */
+//    String getTableName(Class<?> entityClass);
+//
+//    /**
+//     * 获取主键名
+//     */
+//    String getPrimyName(Class<?> entityClass);
+//
+//    /**
+//     * 获取该表所有字段
+//     *
+//     * @param entityClass 表实体类
+//     * @return "id,field1,field2,..."
+//     */
+//    String getFields(Class<?> entityClass);
+//
+//    /**
+//     * 获得某表所有字段的注释
+//     *
+//     * @param tableName 表名
+//     */
+//    JSONObject getColumnCommentByTableName(String tableName) throws Exception;
+//
+//    /**
+//     * 获得数据表字段信息
+//     *
+//     * @param tableName 表名
+//     *                  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
+//     *                  | Field     | Type           | Collation       | Null | Key | Default | Extra          | Privileges                      | Comment      |
+//     *                  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
+//     *                  | uid       | bigint(11)     | NULL            | NO   | PRI | NULL    | auto_increment | select,insert,update,references | 用户ID       |
+//     *                  | name      | varchar(20)    | utf8_general_ci | YES  |     | NULL    |                | select,insert,update,references | 用户名       |
+//     */
+//    List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception;
 
-    /**
-     * 获取主键名
-     */
-    String getPrimyName(Class<?> entityClass);
-
-    /**
-     * 获取该表所有字段
-     *
-     * @param entityClass 表实体类
-     * @return "id,field1,field2,..."
-     */
-    String getFields(Class<?> entityClass);
-
-    /**
-     * 获得某表所有字段的注释
-     *
-     * @param tableName 表名
-     */
-    JSONObject getColumnCommentByTableName(String tableName) throws Exception;
-
-    /**
-     * 获得数据表字段信息
-     *
-     * @param tableName 表名
-     *                  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
-     *                  | Field     | Type           | Collation       | Null | Key | Default | Extra          | Privileges                      | Comment      |
-     *                  +-----------+----------------+-----------------+------+-----+---------+----------------+---------------------------------+--------------+
-     *                  | uid       | bigint(11)     | NULL            | NO   | PRI | NULL    | auto_increment | select,insert,update,references | 用户ID       |
-     *                  | name      | varchar(20)    | utf8_general_ci | YES  |     | NULL    |                | select,insert,update,references | 用户名       |
-     */
-    List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception;
-
-    /**
-     * 获取数据库信息
-     *
-     * @param tableName 表名
-     */
-    TableInfo getTableInfoByTableName(String tableName) throws Exception;
+//    /**
+//     * 获取数据库信息
+//     *
+//     * @param tableName 表名
+//     */
+//    TableInfo getTableInfoByTableName(String tableName) throws Exception;
 
     /**
      * 查询条件

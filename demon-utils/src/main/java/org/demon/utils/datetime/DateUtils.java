@@ -12,16 +12,19 @@ import java.util.List;
 
 /**
  * 时间相关操作类
- *
+ * <p>
  * Created by demon on 2017/7/1 0001.
  */
 public class DateUtils {
 
     private static Logger log = LogManager.getLogger(DateUtils.class);
 
-    private DateUtils() { }
+    private DateUtils() {
+    }
 
-    /**  一秒=1000毫秒 */
+    /**
+     * 一秒=1000毫秒
+     */
     public static final long SECOND = 1000L;
     public final static long MONUTE = 60 * 1000;// 1分钟
     public final static long HOUR = 60 * MONUTE;// 1小时
@@ -30,33 +33,58 @@ public class DateUtils {
     public final static long year = 12 * MONTH;// 年
 
     public final static String DATE_SEQUENCE = "yyyyMMddHHmmssSSS";
-    /** 通用的格式 */
+    /**
+     * 通用的格式
+     */
     public static final String GENERAL_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    /** 截止到分钟格式 */
+    /**
+     * 截止到分钟格式
+     */
     public static final String MINT_PATTERN = "yyyy-MM-dd HH:mm";
-    /** 截止到小时格式 */
+    /**
+     * 截止到小时格式
+     */
     public static final String HOUR_PATTERN = "yyyy-MM-dd HH";
-    /** 截止到天格式 */
+    /**
+     * 截止到天格式
+     */
     public static final String DAY_PATTERN = "yyyy-MM-dd";
-    /** 只返回时间格式 */
+    /**
+     * 只返回时间格式
+     */
     public static final String TIME_PATTERN = "HH:mm:ss";
-    /** 天数差 */
+    /**
+     * 天数差
+     */
     public static final int DIFF_DAY = 1;
-    /** 小时差 */
+    /**
+     * 小时差
+     */
     public static final int DIFF_HOUR = 2;
-    /** 分钟差 */
+    /**
+     * 分钟差
+     */
     public static final int DIFF_MINUTE = 3;
-    /** 秒数差 */
+    /**
+     * 秒数差
+     */
     public static final int DIFF_SECOND = 4;
-    /** 分钟毫秒数 */
+    /**
+     * 分钟毫秒数
+     */
     public static final long MINT_MILLIS = 60 * SECOND;
-    /** 小时毫秒数 */
+    /**
+     * 小时毫秒数
+     */
     public static final long HOUR_MILLIS = 60 * MINT_MILLIS;
-    /** 天毫秒数 */
+    /**
+     * 天毫秒数
+     */
     public static final long DAY_MILLIS = 24 * HOUR_MILLIS;
 
     /**
      * 获取时间序列，格式：
+     *
      * @return yyyyMMddHHmmssSSS
      */
     public static String getDateSequence() {
@@ -76,8 +104,7 @@ public class DateUtils {
     /**
      * 将 unix 时间戳格式化
      *
-     * @param time
-     *            unix 时间戳
+     * @param time unix 时间戳
      * @return 时间格式：yyyy-MM-dd HH:mm:ss
      */
     public static String longTimeToString(long time) {
@@ -87,15 +114,13 @@ public class DateUtils {
     /**
      * 将 unix 时间戳格式化成指定格式
      *
-     * @param time
-     *            unix 时间戳
-     * @param format
-     *            常用类型如下 <blockquote> <br>
-     *            yyyy-MM-dd HH:mm:ss <br>
-     *            yyyy-MM-dd <br>
-     *            HH:mm:ss <br>
-     *            HH:mm:ss yyyy-MM-dd <br>
-     *            MM-dd-yyyy HH:mm:ss </blockquote>
+     * @param time   unix 时间戳
+     * @param format 常用类型如下 <blockquote> <br>
+     *               yyyy-MM-dd HH:mm:ss <br>
+     *               yyyy-MM-dd <br>
+     *               HH:mm:ss <br>
+     *               HH:mm:ss yyyy-MM-dd <br>
+     *               MM-dd-yyyy HH:mm:ss </blockquote>
      * @return 格式化时间
      */
     public static String longTimeToString(long time, String format) {
@@ -105,10 +130,19 @@ public class DateUtils {
     }
 
     /**
+     * 将 unix 时间戳格式化成时间
+     *
+     * @param time unix 时间戳
+     * @return 格式化时间
+     */
+    public static Date longTimeToDate(long time) {
+        return new Date(time);
+    }
+
+    /**
      * 将 Date 时间格式化成指定格式
      *
-     * @param date
-     *            java.util.Date
+     * @param date java.util.Date
      */
     public static String dateToString(Date date) {
         return dateToString(date, GENERAL_PATTERN);
@@ -117,15 +151,13 @@ public class DateUtils {
     /**
      * 将 Date 时间格式化成指定格式
      *
-     * @param date
-     *            java.util.Date
-     * @param format
-     *            常用类型如下 <blockquote> <br>
-     *            yyyy-MM-dd HH:mm:ss <br>
-     *            yyyy-MM-dd <br>
-     *            HH:mm:ss <br>
-     *            HH:mm:ss yyyy-MM-dd <br>
-     *            MM-dd-yyyy HH:mm:ss </blockquote>
+     * @param date   java.util.Date
+     * @param format 常用类型如下 <blockquote> <br>
+     *               yyyy-MM-dd HH:mm:ss <br>
+     *               yyyy-MM-dd <br>
+     *               HH:mm:ss <br>
+     *               HH:mm:ss yyyy-MM-dd <br>
+     *               MM-dd-yyyy HH:mm:ss </blockquote>
      */
     public static String dateToString(Date date, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
@@ -135,6 +167,7 @@ public class DateUtils {
 
     /**
      * 获取当前系统时间
+     *
      * @return java.util.Date
      */
     public static Date getCurrentTimeDate() {
@@ -152,6 +185,7 @@ public class DateUtils {
 
     /**
      * 获取时间距离当前时间的描述
+     *
      * @param date java.util.Date
      * @return
      */
@@ -186,6 +220,7 @@ public class DateUtils {
 
     /**
      * 将时间戳转换成当天0点
+     *
      * @param timestamp unix 时间戳
      * @return timestamp
      */
@@ -205,11 +240,9 @@ public class DateUtils {
     /**
      * 计算两个时间差
      *
-     * @param diffType
-     *            1:day 2:hour 3:minute 4:second
-     *
-     *            start or end time string format @see GENERAL_PATTERN yyyy-MM-dd HH:mm:ss
-     *
+     * @param diffType 1:day 2:hour 3:minute 4:second
+     *                 <p>
+     *                 start or end time string format @see GENERAL_PATTERN yyyy-MM-dd HH:mm:ss
      * @param start
      * @param end
      * @return long
@@ -250,10 +283,11 @@ public class DateUtils {
 
     /**
      * 获取昨天日期
-     * @author inning
-     * @DateTime 2015-7-20 上午11:37:27
+     *
      * @param date
      * @return
+     * @author inning
+     * @DateTime 2015-7-20 上午11:37:27
      */
     public static String getYesterDay(Date date) {
         java.text.Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -279,10 +313,11 @@ public class DateUtils {
 
     /**
      * 获取一个月之前的时间戳
+     *
      * @return unix 时间戳
      */
     public static long getLastMonthTime() {
-        return getDayBegin(getCurrentTimeMillis()) - (86400000L *30);
+        return getDayBegin(getCurrentTimeMillis()) - (86400000L * 30);
     }
 
     /**
@@ -362,44 +397,57 @@ public class DateUtils {
         return age;
     }
 
-    //获取指定年月的总天数
+    /**
+     * 获取指定年月的总天数
+     *
+     * @param year
+     * @param month
+     * @return
+     */
     public static int getLastDay(int year, int month) {
         int day = 1;
         Calendar cal = Calendar.getInstance();
-        cal.set(year,month - 1,day);
+        cal.set(year, month - 1, day);
         int last = cal.getActualMaximum(Calendar.DATE);
         return last;
     }
 
-    //获取指定年月的日期
-    public static List<String> getDatesByMonth(int year, int month){
-        List<String> list=new ArrayList<String>();
-        String yyyy=year+"";
-        String mm=month+"";
+    /**
+     * 获取指定年月的日期
+     *
+     * @param year
+     * @param month
+     * @return
+     */
+    public static List<String> getDatesByMonth(int year, int month) {
+        List<String> list = new ArrayList<String>();
+        String yyyy = year + "";
+        String mm = month + "";
         String dd;
-        if(month<10){
-            mm="0"+month;
+        if (month < 10) {
+            mm = "0" + month;
         }
-        int num=getLastDay(year, month);
-        for(int i=1;i<=num;i++){
-            if(i<10){
-                dd="0"+i;
-            }else{
-                dd=i+"";
+        int num = getLastDay(year, month);
+        for (int i = 1; i <= num; i++) {
+            if (i < 10) {
+                dd = "0" + i;
+            } else {
+                dd = i + "";
             }
-            list.add(yyyy+"-"+mm+"-"+dd);
+            list.add(yyyy + "-" + mm + "-" + dd);
         }
         return list;
     }
 
     /**
      * 检验时间格式
+     *
      * @param str
      * @param format "yyyy/MM/dd HH:mm:ss" "yyyy-MM-dd HH:mm:ss"
      * @return
      */
     public static boolean isValidDate(String str, String format) {
-        boolean convertSuccess=true;
+        boolean convertSuccess = true;
         // 指定日期格式为四位年/两位月份/两位日期，注意yyyy/MM/dd区分大小写；
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("");
         try {
@@ -407,7 +455,7 @@ public class DateUtils {
             simpleDateFormat.setLenient(false);
             simpleDateFormat.parse(str);
         } catch (ParseException e) {
-            convertSuccess=false;
+            convertSuccess = false;
         }
         return convertSuccess;
     }

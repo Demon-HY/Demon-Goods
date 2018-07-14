@@ -35,8 +35,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 
-	@Override
-	public JdbcTemplate getJdbcTemplate() {
+	private JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
 
@@ -325,13 +324,11 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return sql;
 	}
 
-	@Override
-	public String getTableName(Class<?> entityClass) {
+	private String getTableName(Class<?> entityClass) {
 		return entityClass.getAnnotation(Table.class).name();
 	}
 
-	@Override
-	public String getPrimyName(Class<?> entityClass) {
+	private String getPrimyName(Class<?> entityClass) {
 		String idName;
 		try {
 			Field[] fields = entityClass.getDeclaredFields();
@@ -347,8 +344,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return null;
 	}
 
-	@Override
-	public String getFields(Class<?> entityClass) {
+	private String getFields(Class<?> entityClass) {
 		try {
 			Field[] field = entityClass.getDeclaredFields();
 			StringBuilder fields = new StringBuilder();
@@ -363,8 +359,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return null;
 	}
 
-	@Override
-	public JSONObject getColumnCommentByTableName(String tableName) throws Exception {
+	private JSONObject getColumnCommentByTableName(String tableName) throws Exception {
 		JSONObject obj = new JSONObject();
 
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
@@ -387,8 +382,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return obj;
 	}
 
-	@Override
-	public List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception {
+	private List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception {
 		List<TableFieldInfo> fieldInfos = new ArrayList<>();
 
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
@@ -423,8 +417,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return fieldInfos;
 	}
 
-	@Override
-	public TableInfo getTableInfoByTableName(String tableName) throws Exception {
+	private TableInfo getTableInfoByTableName(String tableName) throws Exception {
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = null;

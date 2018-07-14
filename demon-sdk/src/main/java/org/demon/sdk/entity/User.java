@@ -1,7 +1,4 @@
-package org.demon.sdk.entity.user;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
+package org.demon.sdk.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -16,66 +13,59 @@ import java.util.Date;
 @Table(name = "user")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = -1L;
-
+	private static final long serialVersionUID = 25684508446383183L;
 	// 用户 Id
 	@Id
 	@Column(name = "uid")
-	private Long uid;
+	public Long uid;
 
 	// 用户名:手机号/邮箱
 	@Column(name = "name")
-	private String name;
+	public String name;
 
 	// 昵称
 	@Column(name = "nick")
-	private String nick;
+	public String nick;
 
 	// 手机号
 	@Column(name = "phone")
-	private Integer phone;
+	public String phone;
 
 	// 邮箱
 	@Column(name = "email")
-	private String email;
+	public String email;
 
 	// 密码
 	@Column(name = "password")
-	private String password;
+	public String password;
 
 	// QQ 号
 	@Column(name = "qq")
-	private String qq;
+	public String qq;
 
 	// 用户类型:1-普通用户,9-超级管理员
 	@Column(name = "type")
-	private Integer type;
+	public Integer type;
 
 	// 用户状态:1-正常,2-锁定,3-删除,4-未实名
 	@Column(name = "status")
-	private Integer status;
+	public Integer status;
 
 	// 扩展属性集合,JSON格式
 	@Column(name = "exattr")
-	private String exattr;
+	public String exattr;
 
 	// 创建时间
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "create_time")
-	private Date createTime;
+	public Date createTime;
 
 	// 更新时间
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "update_time")
-	private Date updateTime;
+	public Date updateTime;
 
 	// 最后一次登录时间
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@Column(name = "load_time")
-	private Date loadTime;
+	public Date loadTime;
 
 
 	public User(){}
@@ -104,11 +94,11 @@ public class User implements Serializable {
 		this.nick = nick;
 	}
 
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Integer phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

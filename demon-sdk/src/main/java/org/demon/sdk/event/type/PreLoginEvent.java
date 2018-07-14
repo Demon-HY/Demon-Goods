@@ -1,9 +1,12 @@
 package org.demon.sdk.event.type;
 
-import org.demon.sdk.entity.user.vo.UserLoginVo;
+import org.demon.sdk.entity.request.UserLoginVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.Event;
 
+/**
+ * 登录前事件
+ */
 public class PreLoginEvent extends Event {
 
     private static final long serialVersionUID = 6547813944157417912L;

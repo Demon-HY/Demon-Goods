@@ -1,4 +1,4 @@
-package org.demon.sdk.entity.user.vo;
+package org.demon.sdk.entity.request;
 
 /**
  * 创建用户需要的参数

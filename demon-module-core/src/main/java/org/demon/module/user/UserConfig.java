@@ -5,6 +5,8 @@ import org.javatuples.Pair;
 
 public class UserConfig extends DefaultConfig {
 
+    public static final String MODULE_NAME = "user";
+
     /**
      * 默认用户类型是 type=1(客户)
      */
@@ -25,8 +27,14 @@ public class UserConfig extends DefaultConfig {
      */
     public static final String REGEX_USER_EMAIL = "^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$";
 
-    public static final String MODULE_NAME = "user";
-    
+    /** 正常状态，可正常登录并进行操作 */
+    public static final int STATUS_NORMAL = 1;
+    /** 锁定状态，不能进行正常登录以及操作 */
+    public static final int STATUS_LOCK = 1 << 2;
+    /** 删除状态 */
+    public static final int STATUS_DELETE = 1 << 3;
+
+
     static {
         RIGHT_CHECK_USER = new Pair<>("RIGHT_CHECK_USER", "查看用户");
         RIGHT_SET_USER = new Pair<>("RIGHT_SET_USER", "设置用户");

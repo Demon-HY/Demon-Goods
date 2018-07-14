@@ -1,6 +1,7 @@
 package org.demon.sdk.environment;
 
 import org.apache.poi.ss.formula.functions.T;
+import org.demon.sdk.entity.vo.Login;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
 
@@ -41,6 +42,14 @@ public class Env implements Serializable {
      * 客户端IP
      */
     public String clientIP;
+    /**
+     * 客户端设备: pc/web/android/iphone
+     */
+    public String device;
+    /**
+     * 用户登录信息
+     */
+    public Login login;
     /**
      * 错误信息
      */

@@ -10,14 +10,14 @@ public class ClientResult<T> implements Serializable {
      */
     private Integer code = 1;
 
-    private String message = RetCodeEnum.OK.getMessage();
+    private String message = RetCodeEnum.OK.message;
 
     private T result;
 
     private boolean success = true;
 
     // 接口返回码定义
-    private Integer retCode = RetCodeEnum.OK.getRetCode();
+    private Integer retCode = RetCodeEnum.OK.retCode;
 
     public Integer getCode() {
         return code;
@@ -38,14 +38,14 @@ public class ClientResult<T> implements Serializable {
     public ClientResult() {}
 
     public ClientResult(RetCodeEnum retCodeEnum) {
-        this.retCode = retCodeEnum.getRetCode();
-        this.message = retCodeEnum.getMessage();
+        this.retCode = retCodeEnum.retCode;
+        this.message = retCodeEnum.message;
         this.code = 0;
         this.success = false;
     }
 
     public ClientResult(RetCodeEnum retCodeEnum, String message) {
-        this.retCode = retCodeEnum.getRetCode();
+        this.retCode = retCodeEnum.retCode;
         this.message = message;
         this.code = 0;
         this.success = false;
@@ -61,7 +61,7 @@ public class ClientResult<T> implements Serializable {
 
     public ClientResult setMessage(String message) {
         this.message = message;
-        this.retCode = RetCodeEnum.ERR_SERVER_EXCEPTION.getRetCode();
+        this.retCode = RetCodeEnum.ERR_SERVER_EXCEPTION.retCode;
         this.code = 0;
         this.success = false;
         return this;
@@ -81,8 +81,8 @@ public class ClientResult<T> implements Serializable {
     }
 
     public ClientResult<T> setRetCode(RetCodeEnum retCodeEnum) {
-        this.retCode = retCodeEnum.getRetCode();
-        this.message = retCodeEnum.getMessage();
+        this.retCode = retCodeEnum.retCode;
+        this.message = retCodeEnum.message;
         this.code = 0;
         this.success = false;
         return this;

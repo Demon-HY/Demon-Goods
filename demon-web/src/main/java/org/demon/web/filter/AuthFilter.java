@@ -58,7 +58,7 @@
 //        try {
 //            JsonUtil.sendJsonResponse(response, ClientResult.error(retCodeEnum));
 //        } catch (Exception e) {
-//            logger.warn(RetCodeEnum.ERR_SERVER_EXCEPTION.getMessage(), e);
+//            logger.warn(RetCodeEnum.ERR_SERVER_EXCEPTION.message, e);
 //        }
 //    }
 //

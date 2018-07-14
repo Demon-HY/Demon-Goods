@@ -1,6 +1,6 @@
-package org.demon.module.user.dao;
+package org.demon.module.user;
 
-import org.demon.sdk.entity.user.User;
+import org.demon.sdk.entity.User;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,8 +14,7 @@ public class UserDaoImpl extends CommonDaoImpl<User> {
     @Resource
     private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public JdbcTemplate getJdbcTemplate() {
+    private JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 
