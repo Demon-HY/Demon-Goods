@@ -1,8 +1,10 @@
 package org.demon.web.http;
 
+import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.type.test.TestEvent;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.autoconfigure.annotion.RequestEnv;
 import org.demon.utils.ValidUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,7 +24,7 @@ public class HelloHttpApi {
 
     @ApiOperation(value = "测试hello", httpMethod = "GET")
     @RequestMapping("/hello")
-    public ClientResult hello(String flag) {
+    public ClientResult hello(@RequestEnv Env env, String flag) {
         if (ValidUtils.isBlank(flag)) {
             return ClientResult.error(RetCodeEnum.ERR_BAD_PARAMS);
         }

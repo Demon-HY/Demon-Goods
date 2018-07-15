@@ -3,13 +3,13 @@ package org.demon.utils.excel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.demon.utils.ValidUtils;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.*;
  */
 public class ExcelUtils {
 
-	private static Logger logger = LogManager.getLogger(ExcelUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
 	private Workbook wb;
 	private Sheet sheet;
 	private Row row;

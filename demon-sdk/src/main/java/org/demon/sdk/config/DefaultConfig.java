@@ -9,9 +9,4 @@ public abstract class DefaultConfig {
      * 模块名
      */
     public static final String MODULE_NAME = "";
-
-    /**
-     * 支持匿名访问的路径
-     */
-    public static final String ANNO_PATH = "/anon/";
 }

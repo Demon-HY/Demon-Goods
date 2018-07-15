@@ -229,4 +229,12 @@ public class ServletUtil {
 		return (needToChange ? sb.toString() : s);
 	}
 
+//	/**
+//	 * 解析客户端设备
+//	 * @param request
+//	 * @return
+//	 */
+//	public static String parseClientDevice(HttpServletRequest request) {
+//		return request.getHeader("X-Device");
+//	}
 }

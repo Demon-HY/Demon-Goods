@@ -1,8 +1,6 @@
 package org.demon.sdk.environment;
 
-import org.apache.poi.ss.formula.functions.T;
 import org.demon.sdk.entity.vo.Login;
-import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +14,7 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-    private static final long serialVersionUID = 782003512411189022L;
-
+    private static final long serialVersionUID = -7100054939286964751L;
     /**
      * HTTP 请求所对应的模块名称
      */

@@ -30,6 +30,8 @@ public class AuthApi implements IAuthApi {
     private ApplicationContext applicationContext;
     @Autowired
     private UserQueryApi userQueryApi;
+    @Autowired
+    private AuthRedisApi authRedisApi;
 
     @Autowired
     private UserDaoImpl userDao;
@@ -70,6 +72,9 @@ public class AuthApi implements IAuthApi {
         tokenDao.insert(token);
 
         Login login = new Login(token, user);
+
+        // save login to redis
+        authRedisApi.saveLoginInfo(login);
 
         // 发送登录后事件
         PostLoginEvent postLoginEvent = new PostLoginEvent(this, env, login);

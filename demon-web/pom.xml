@@ -13,11 +13,20 @@
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <demon.version>1.0-SNAPSHOT</demon.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.demon</groupId>
             <artifactId>demon-sdk</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${demon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.demon</groupId>
+            <artifactId>demon-module-core</artifactId>
+            <version>${demon.version}</version>
         </dependency>
     </dependencies>
 
