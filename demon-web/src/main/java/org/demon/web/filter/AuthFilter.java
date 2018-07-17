@@ -48,11 +48,11 @@ public class AuthFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
         // 解决跨域问题
-//        String originHeader = request.getHeader("Origin");
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        String originHeader = request.getHeader("Origin");
+        response.setHeader("Access-Control-Allow-Origin", "localhost:8080");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");

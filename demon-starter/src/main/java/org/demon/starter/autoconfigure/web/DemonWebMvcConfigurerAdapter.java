@@ -2,6 +2,7 @@ package org.demon.starter.autoconfigure.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -14,4 +15,11 @@ public class DemonWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
         argumentResolvers.add(new RequestJsonHandlerMethodArgumentResolver());
         super.addArgumentResolvers(argumentResolvers);
     }
+
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**").allowedOrigins("*")
+//                .allowedMethods("GET", "HEAD", "POST","PUT", "DELETE", "OPTIONS")
+//                .allowCredentials(false).maxAge(3600);
+//    }
 }
