@@ -22,6 +22,9 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 登录拦截
@@ -50,12 +53,27 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 //        response.setCharacterEncoding("UTF-8");
 //        response.setContentType("application/json; charset=utf-8");
+//        // 解决跨域问题
+//        String originHeader = request.getHeader("Origin");
+//        response.setHeader("Access-Control-Allow-Origin", "localhost:8080");
+//        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+//        response.setHeader("Access-Control-Max-Age", "3600");
+//        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
         // 解决跨域问题
+        String[] origin = {"http://localhost:8080"};
+        Set<String> allowedOrigins = new HashSet<>(Arrays.asList(origin));
         String originHeader = request.getHeader("Origin");
-        response.setHeader("Access-Control-Allow-Origin", "localhost:8080");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with,content-type");
+        if (allowedOrigins.contains(originHeader)) {
+            response.setHeader("Access-Control-Allow-Origin", originHeader);
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Access-Control-Max-Age", "3600");
+            // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true;
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("XDomainRequestAllowed", "1");
+            //表明服务器支持的所有头信息字段
+            response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since," +
+                    "Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token, X-Device, X-Token");
+        }
 
         // 屏蔽 /favicon.ico
         String uri = request.getRequestURI();
