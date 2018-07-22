@@ -1,4 +1,4 @@
-package org.demon.starter.common.logger;
+package org.demon.web.logger;
 
 import com.alibaba.fastjson.JSONObject;
 import org.demon.utils.RandomUtil;
@@ -51,7 +51,7 @@ public class WebLoggerAspect {
     /**
      * 定义一个切入点
      */
-    @Pointcut("execution(* org.demon.*.http..*.*(..))")
+    @Pointcut("execution(* org.demon.web.http..*.*(..))")
     public void webLog() {
     }
 
@@ -88,13 +88,8 @@ public class WebLoggerAspect {
         // 请求的唯一标识，客户端通过这个可以查询到该次请求记录
         resp.setHeader("RequestId", getRequestCode());
 
-        String url = getRequestUrl(req);
-        if (ValidUtils.isNotBlank(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
-            return;
-        }
-
         // 处理完请求，返回内容
-        logger.info("HTTP-OK  {}  {}  {}  {}  Params:{}  Result:{}",
+        logger.info("HTTP-OK  {}  {}  {}  {}  P:{}  R:{}",
                 IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), getRequestUrl(req),
                 getRequestParams(req), getResponseBody(result));
         removeRequestCode();
@@ -110,18 +105,11 @@ public class WebLoggerAspect {
         resp.setHeader("RequestId", getRequestCode());
 
         // 这里可以捕获异常，但无法处理异常，异常还是会抛给 JVM
-//        ClientResult c = new ClientResult();
-//        c.setMessage("系统繁忙，请稍后重试");
-//        JsonUtil.sendJsonResponse(response, c);
-
         // 请求URL
         String url = getRequestUrl(req);
-        if (ValidUtils.isNotBlank(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
-            return;
-        }
 
         // 处理完请求，返回内容
-        logger.error("HTTP-ERROR  {}  {}  {}  {}  Params:{}  ErrorMsg:{}",
+        logger.error("HTTP-ERROR  {}  {}  {}  {}  P:{}  E:{}",
                 IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), url, getRequestParams(req), e.getMessage(), e);
         removeRequestCode();
     }

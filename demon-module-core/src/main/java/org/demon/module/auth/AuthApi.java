@@ -82,6 +82,7 @@ public class AuthApi implements IAuthApi {
         if (!preLoginEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
                     PostLoginEvent.EVENT_TYPE, postLoginEvent.lastHandler.getName(), postLoginEvent.breakReason);
+            throw new LogicalException(preLoginEvent.retCodeEnum);
         }
 
         return login;

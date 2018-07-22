@@ -45,11 +45,11 @@ public class Token implements Serializable {
 	@Column(name = "device")
 	public String device;
 
-	/**
-	 * 客户端访问的代理
-	 */
-	@Column(name = "user_agent")
-	public String userAgent;
+//	/**
+//	 * 客户端访问的代理
+//	 */
+//	@Column(name = "user_agent")
+//	public String userAgent;
 
 	// 创建时间
 	@Column(name = "create_time")
@@ -67,12 +67,13 @@ public class Token implements Serializable {
 		this.uid = uid;
 		this.expires = expires;
 		this.createTime = createTime;
+		this.updateTime = createTime;
 		this.ip = ip;
 		this.device = device;
 		if (userAgent != null && userAgent.length() > 500) {
 			userAgent = userAgent.substring(0, 500);
 		}
-		this.userAgent = userAgent;
+//		this.userAgent = userAgent;
 	}
 
 	/**
@@ -147,14 +148,6 @@ public class Token implements Serializable {
 
 	public void setDevice(String device) {
 		this.device = device;
-	}
-
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
 	}
 
 	public Date getCreateTime() {

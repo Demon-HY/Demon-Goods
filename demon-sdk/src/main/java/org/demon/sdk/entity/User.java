@@ -70,6 +70,15 @@ public class User implements Serializable {
 
 	public User(){}
 
+	public User(String name, String nick, String phone, String email, String password, String qq) {
+		this.name = name;
+		this.nick = nick;
+		this.phone = phone;
+		this.email = email;
+		this.password = password;
+		this.qq = qq;
+	}
+
 	public Long getUid() {
 		return uid;
 	}

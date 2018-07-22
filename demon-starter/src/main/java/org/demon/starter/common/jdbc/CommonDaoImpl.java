@@ -140,7 +140,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			String key = field.getName();
 			String name = field.getAnnotation(Column.class).name();
 			Object arg = obj.get(key);
-			if (ValidUtils.isBlank(arg)) continue;
+			if (ValidUtils.isEmpty(arg)) continue;
 
 			sql1.append(name).append(",");
 			sql2.append("?,");
@@ -180,7 +180,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			if (key.equals(pkName)) continue;
 
 			Object arg = obj.get(key);
-			if (ValidUtils.isBlank(arg)) continue;
+			if (ValidUtils.isEmpty(arg)) continue;
 
 			sql1.append(key).append(" = ?,");
 			args.add(arg);

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * 上下文环境变量,将一些请求的常用参数封装进去
- *
+ * <p>
  * Created by heyan on 2017/10/31 0031.
  */
 public class Env implements Serializable {

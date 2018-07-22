@@ -1,22 +1,31 @@
 package org.demon.sdk.utils;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
+@ApiModel(value = "客户端获取数据")
 public class ClientResult<T> implements Serializable {
 
     private static final long serialVersionUID = -5552820761684566855L;
     /**
      * o-失败,1-成功
      */
+    @ApiModelProperty(value = "o-失败,1-成功")
     private Integer code = 1;
 
+    @ApiModelProperty(value = "错误消息")
     private String message = RetCodeEnum.OK.message;
 
+    @ApiModelProperty(value = "Object")
     private T result;
 
+    @ApiModelProperty(value = "是否成功")
     private boolean success = true;
 
     // 接口返回码定义
+    @ApiModelProperty(value = "错误码")
     private Integer retCode = RetCodeEnum.OK.retCode;
 
     public Integer getCode() {
@@ -114,5 +123,13 @@ public class ClientResult<T> implements Serializable {
     public static<T> ClientResult success(T result) {
         ClientResult<T> cr = new ClientResult<>();
         return cr.setResult(result);
+    }
+
+    /**
+     * 成功
+     * @return ClientResult
+     */
+    public static<T> ClientResult success() {
+        return new ClientResult<>();
     }
 }

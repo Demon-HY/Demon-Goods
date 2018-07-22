@@ -2,6 +2,7 @@ package org.demon.starter.autoconfigure.redis;
 
 import org.demon.utils.JsonUtil;
 import org.demon.utils.beans.SerializeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +15,7 @@ public class RedisApi {
 
     private static final long serialVersionUID = -5502256331928465597L;
 
+    @Autowired
     private RedisTemplate redisTemplate;
 
     public RedisTemplate getRedisTemplate() {

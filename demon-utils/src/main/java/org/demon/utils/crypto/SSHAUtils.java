@@ -8,13 +8,17 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SSHA 加密
  *
- * Created by Demon on 2017/7/23 0023.
+ * Created by Demon-HY on 2017/7/23 0023.
  */
 public class SSHAUtils {
+
+    private static Logger logger = LoggerFactory.getLogger(SSHAUtils.class);
 
     /**
      * SSHA加密标识
@@ -27,18 +31,21 @@ public class SSHAUtils {
 
     /**
      * 加密用户密码,生成默认的指定字节数
-     * @param password
-     * @return
-     * @throws NoSuchAlgorithmException
+     * @param password 原密码
      */
-    public static String getSaltedPassword(String password) throws NoSuchAlgorithmException {
-        if (null == password) {
-            throw new IllegalArgumentException();
-        }
-        byte[] salt = new byte[DEFAULT_SALT_SIZE];
-        RANDOM.nextBytes(salt);
+    public static String getSaltedPassword(String password) {
+        try {
+            if (null == password) {
+                throw new IllegalArgumentException();
+            }
+            byte[] salt = new byte[DEFAULT_SALT_SIZE];
+            RANDOM.nextBytes(salt);
 
-        return getSaltedPassword(password.getBytes(), salt);
+            return getSaltedPassword(password.getBytes(), salt);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("加密用户密码失败", e);
+        }
+        return password;
     }
     /**
      * 加密用户密码

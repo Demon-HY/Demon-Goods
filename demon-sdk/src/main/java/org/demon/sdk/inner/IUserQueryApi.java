@@ -30,4 +30,12 @@ public interface IUserQueryApi {
      * @param user 用户信息
      */
     void checkUserStatus(Env env, User user) throws LogicalException;
+
+    /**
+     * 检查密码是否符合要求
+     * @param password
+     * @return
+     * @throws Exception
+     */
+    boolean checkPasswordIsLegal(String password) throws Exception;
 }

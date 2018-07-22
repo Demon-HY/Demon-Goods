@@ -12,17 +12,18 @@ import java.io.Serializable;
 public class LogicalException extends Exception implements Serializable {
 
     private static final long serialVersionUID = 1515073568935089979L;
-    public String stat;
+    public Integer stat;
     public String errMsg;
 
     public LogicalException(RetCodeEnum retCodeEnum) {
         super(retCodeEnum.retCode + "\t" + retCodeEnum.message);
-        this.stat = retCodeEnum.retCode.toString();
+        this.stat = retCodeEnum.retCode;
         this.errMsg = retCodeEnum.message;
     }
 
     public LogicalException(RetCodeEnum retCodeEnum, Exception e) {
         super(retCodeEnum.message, e);
-        this.errMsg = stat;
+        this.stat = retCodeEnum.retCode;
+        this.errMsg = retCodeEnum.message;
     }
 }

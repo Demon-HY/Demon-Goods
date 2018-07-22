@@ -58,15 +58,19 @@ public class AuthFilter implements Filter {
         Set<String> allowedOrigins = new HashSet<>(Arrays.asList(origin));
         String originHeader = request.getHeader("Origin");
         if (allowedOrigins.contains(originHeader)) {
-            response.setHeader("Access-Control-Allow-Origin", originHeader);
-            response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-            response.setHeader("Access-Control-Max-Age", "3600");
+            response.setHeader("Acl-Control-Allow-Origin", originHeader);
+            response.setHeader("Acl-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+            response.setHeader("Acl-Control-Max-Age", "3600");
             // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true;
-            response.setHeader("Access-Control-Allow-Credentials", "true");
+            response.setHeader("Acl-Control-Allow-Credentials", "true");
             response.setHeader("XDomainRequestAllowed", "1");
             //表明服务器支持的所有头信息字段
-            response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since," +
+            response.setHeader("Acl-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since," +
                     "Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token, X-Device, X-Token");
+        }
+        // 解决 OPIONS 跨域请求
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
+            JsonUtil.sendJsonResponse(response, ClientResult.success());
         }
 
         // 屏蔽 /favicon.ico
@@ -79,28 +83,23 @@ public class AuthFilter implements Filter {
 
         if (retCodeEnum.equals(RetCodeEnum.OK)) {
             filterChain.doFilter(servletRequest, servletResponse);
+            logger.info("AuthFilter end ...");
             return;
         }
 
-        try {
-            JsonUtil.sendJsonResponse(response, ClientResult.error(retCodeEnum));
-        } catch (Exception e) {
-            logger.warn(RetCodeEnum.ERR_SERVER_EXCEPTION.message, e);
-        }
-
-        logger.info("AuthFilter end ...");
+        JsonUtil.sendJsonResponse(response, ClientResult.error(retCodeEnum));
     }
 
     private RetCodeEnum handler(HttpServletRequest request, HttpServletResponse response) {
-        // 解决 OPIONS 跨越请求
-        if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
-            return RetCodeEnum.OK;
-        }
-
         Env env = parseServlet(request, response);
         request.setAttribute("env", env);
 
         String uri = request.getRequestURI();
+
+        // 该拦截器只拦截接口请求
+        if (!uri.contains(".do")) {
+            return RetCodeEnum.OK;
+        }
 
         // 匿名接口可以跳过登录
         if (uri.contains(AuthConfig.ANNO_PATH)) {
@@ -129,6 +128,8 @@ public class AuthFilter implements Filter {
         String device = request.getHeader(SysContants.HEADER_DEVICE);
         if (ValidUtils.isNotBlank(device)) {
             env.device = device.toLowerCase();
+        } else {
+            env.device = "web";
         }
         env.token = request.getHeader(SysContants.HEADER_TOKEN);
         env.request = request;

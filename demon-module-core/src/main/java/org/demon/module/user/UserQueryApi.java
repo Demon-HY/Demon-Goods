@@ -51,5 +51,12 @@ public class UserQueryApi implements IUserQueryApi {
 
     }
 
+    @Override
+    public boolean checkPasswordIsLegal(String password) throws Exception {
+        if (ValidUtils.isBlank(password) || password.matches("[u4e00-u9fa5]"))
+            throw new LogicalException(RetCodeEnum.ERR_ILLEGAL_PASSWORD);
+        return true;
+    }
+
 
 }

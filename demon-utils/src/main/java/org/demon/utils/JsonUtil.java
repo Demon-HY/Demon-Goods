@@ -97,14 +97,14 @@ public class JsonUtil {
         }
     }
 
-    public static void sendJsonResponse(HttpServletResponse response, Object obj)
-            throws Exception {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = response.getWriter();
-
-        response.getWriter().print(convertToJSON(obj));
-        out.flush();
+    public static void sendJsonResponse(HttpServletResponse response, Object obj) {
+        try {
+            PrintWriter out = response.getWriter();
+            response.getWriter().print(convertToJSON(obj));
+            out.flush();
+        } catch (IOException e) {
+            logger.error("系统繁忙,请稍后重试", e);
+        }
     }
 
     public static void sendJsonResponse(HttpServletResponse response, Object obj, String callback) {

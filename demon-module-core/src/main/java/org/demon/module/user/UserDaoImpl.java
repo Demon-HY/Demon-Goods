@@ -25,7 +25,18 @@ public class UserDaoImpl extends CommonDaoImpl<User> {
      */
     public User findByAccount(String account) {
         CommonDao.Criteria criteria = this.createCriteria();
-        criteria.eq("account", account);
+        criteria.eq("name", account);
+        return selectOneByCriteria(criteria, User.class);
+    }
+
+    /**
+     * 通过手机号查询用户信息
+     * @param phone
+     * @return
+     */
+    public User findByPhone(String phone) {
+        CommonDao.Criteria criteria = this.createCriteria();
+        criteria.eq("phone", phone);
         return selectOneByCriteria(criteria, User.class);
     }
 }

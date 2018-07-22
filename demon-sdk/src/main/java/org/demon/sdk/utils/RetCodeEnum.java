@@ -25,22 +25,22 @@ public enum RetCodeEnum {
     ERR_CREATE_USER_FAILED("创建用户失败", 300003),
     ERR_SET_USER_ATTR_FAILED("设置用户属性失败", 300004),
     ERR_DELETE_USER_FAILED("删除用户失败", 300005),
-    ERR_ACCOUNT_EXIST("该账号已被使用", 301006),
-    ERR_PHONE_USED("手机已被使用", 301007),
-    ERR_EMAIL_USED("邮箱已被使用", 301008),
-    ERR_ILLEGAL_PHONE("无效电话号码", 301009),
-    ERR_ILLEGAL_PASSWORD("无效密码", 301010),
-    ERR_USER_INFO_BROKEN("用户信息损坏", 301011),
-    ERR_WRONG_PASSWORD("密码错误", 301012),
-    ERR_RESET_PASSWORD_FAILED("设置密码失败", 301013),
-    ERR_DELETE_SELF_FORBITEN("不能删除自己", 301014),
-    ERR_USER_LOCKED("用户已被锁定", 301015),
-    ERR_USER_ALREADY_USED("用户已登录使用", 301016),
-    ERR_REGISTER_CONFIRM_EXPIRED("验证码已过期,请重新获取", 301017),
-    ERR_RETRIEVE_EMAIL_EXPIRED("找回密码邮件过期", 301018),
-    ERR_ILLEGAL_USER_NAME("无效的用户名", 301019),
-    ERR_INIT_SERVERADMIN_USER("不能删除系统初始创建的serverAdmin用户", 301020),
-    ERR_USER_DELETE("用户已被删除", 301021),
+    ERR_ACCOUNT_EXIST("该账号已被使用", 300006),
+    ERR_PHONE_USED("手机已被使用", 300007),
+    ERR_EMAIL_USED("邮箱已被使用", 300008),
+    ERR_ILLEGAL_PHONE("无效电话号码", 300009),
+    ERR_ILLEGAL_PASSWORD("无效密码", 300010),
+    ERR_USER_INFO_BROKEN("用户信息损坏", 300011),
+    ERR_WRONG_PASSWORD("密码错误", 300012),
+    ERR_RESET_PASSWORD_FAILED("设置密码失败", 300013),
+    ERR_DELETE_SELF_FORBITEN("不能删除自己", 300014),
+    ERR_USER_LOCKED("用户已被锁定", 300015),
+    ERR_USER_ALREADY_USED("用户已登录使用", 300016),
+    ERR_REGISTER_CONFIRM_EXPIRED("验证码已过期,请重新获取", 300017),
+    ERR_RETRIEVE_EMAIL_EXPIRED("找回密码邮件过期", 300018),
+    ERR_ILLEGAL_USER_NAME("无效的用户名", 300019),
+    ERR_INIT_SERVERADMIN_USER("不能删除系统初始创建的serverAdmin用户", 300020),
+    ERR_USER_DELETE("用户已被删除", 300021),
 
     // 鉴权,
     ERR_TOKEN("无效令牌", 301001),
@@ -82,9 +82,22 @@ public enum RetCodeEnum {
         if (value == null) {
             return null;
         }
-        for(org.demon.sdk.utils.RetCodeEnum RetCodeEnum : RetCodeEnum.values()){
-            if(RetCodeEnum.retCode.equals(value)){
-                return RetCodeEnum.message;
+        for(org.demon.sdk.utils.RetCodeEnum retCodeEnum : RetCodeEnum.values()){
+            if(retCodeEnum.retCode.equals(value)){
+                return retCodeEnum.message;
+            }
+        }
+
+        return null;
+    }
+
+    public static RetCodeEnum getRetCodeEnum(Integer retCode) {
+        if (retCode == null) {
+            return null;
+        }
+        for(org.demon.sdk.utils.RetCodeEnum retCodeEnum : RetCodeEnum.values()){
+            if(retCodeEnum.retCode.equals(retCode)){
+                return retCodeEnum;
             }
         }
 
