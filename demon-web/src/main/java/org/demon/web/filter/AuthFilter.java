@@ -70,7 +70,8 @@ public class AuthFilter implements Filter {
         }
         // 解决 OPIONS 跨域请求
         if (request.getMethod().equals(HttpMethod.OPTIONS.name())) {
-            JsonUtil.sendJsonResponse(response, ClientResult.success());
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
 
         // 屏蔽 /favicon.ico

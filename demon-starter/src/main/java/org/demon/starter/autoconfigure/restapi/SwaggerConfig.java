@@ -1,7 +1,9 @@
 package org.demon.starter.autoconfigure.restapi;
 
-import com.google.common.base.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,63 +16,89 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
- * Created by Demon-HY on 2018/7/6.
+ * Swagger 相关配置
  */
-
 @Configuration
 @EnableSwagger2
+@ConditionalOnClass(EnableSwagger2.class)
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
+    /**
+     * 从哪个包开始扫描
+     */
+    private final String SWAGGER_SCAN_BASE_PACKAGE = "org.demon";
+    /**
+     * API版本
+     */
+    @Value("${swagger.version:1.0-SNAPSHOT}")
+    private String VERSION;
+    @Value("${swagger.title:Rest API 接口}")
+    private String title;
+    @Value("${swagger.description:Rest API 接口}")
+    private String description;
 
     @Autowired
     private Environment env;
 
-    @Bean
-    public Docket createRestApi() {
-        Predicate<RequestHandler> predicate = input -> {
-            // 除非是在开发环境中否则不开启swagger2
-            String active = env.getProperty("spring.profiles.active");
-            if (!active.equalsIgnoreCase("dev")) {
-                return false;
-            }
-
-            Class<?> declaringClass = input.declaringClass();
-            if (declaringClass == BasicErrorController.class)// 排除
-                return false;
-            if (declaringClass.isAnnotationPresent(RestController.class)) // 被注解的类
-                return true;
-            if (input.isAnnotatedWith(ResponseBody.class)) // 被注解的方法
-                return true;
-            return false;
-        };
-
-
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-//                .apis(RequestHandlerSelectors.basePackage("org.demon.*.http"))
-                .apis(predicate)
-                .paths(PathSelectors.any())
-                .build();
-    }
-
+    /**
+     * 构建ApiInfo对象
+     *
+     * @return the api info
+     */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Demon-Goods RESTful APIs")
                 .description("Demon-Goods")
                 .termsOfServiceUrl("Demon-Goods")
                 .contact("Demon-HY")
-                .version("1.0.0")
+                .version(VERSION)
                 .build();
+    }
+
+    /**
+     * @return the docket
+     */
+    @Bean
+    @ConditionalOnMissingBean
+    public Docket customImplementation() {
+//        Predicate<RequestHandler> predicate = input -> {
+//            // 除非是在开发环境中否则不开启swagger2
+//            String active = env.getProperty("spring.profiles.active");
+//            if (!active.equalsIgnoreCase("dev")) {
+//                return false;
+//            }
+//
+//            Class<?> declaringClass = input.declaringClass();
+//            if (declaringClass == BasicErrorController.class)// 排除
+//                return false;
+//            if (declaringClass.isAnnotationPresent(RestController.class)) // 被注解的类
+//                return true;
+//            if (input.isAnnotatedWith(ResponseBody.class)) // 被注解的方法
+//                return true;
+//            return false;
+//        };
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(SWAGGER_SCAN_BASE_PACKAGE))
+//                .apis(predicate)
+                .build()
+                .directModelSubstitute(LocalDate.class, java.util.Date.class)
+                .directModelSubstitute(LocalDateTime.class, java.util.Date.class)
+                .apiInfo(apiInfo());
     }
 
     @Bean
@@ -92,17 +120,4 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
             ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
-
-//    //    //设置过滤器
-//    @Bean
-//    public FilterRegistrationBean testFilterRegistration() {
-//
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-////        registration.setFilter(new AuthFilter());
-//        registration.addUrlPatterns("/*");
-//        registration.addInitParameter("paramName", "paramValue");
-//        registration.setName("AuthFilter");
-//        registration.setOrder(1);
-//        return registration;
-//    }
 }
