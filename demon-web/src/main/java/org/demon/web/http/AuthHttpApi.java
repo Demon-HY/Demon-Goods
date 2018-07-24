@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.demon.module.auth.AuthApi;
 import org.demon.module.auth.AuthConfig;
+import org.demon.sdk.entity.request.UserCreateVo;
 import org.demon.sdk.entity.request.UserLoginVo;
 import org.demon.sdk.entity.vo.Login;
 import org.demon.sdk.environment.Env;
@@ -38,9 +39,9 @@ public class AuthHttpApi {
      * @throws Exception
      */
     @ApiOperation(value = "登录", httpMethod = "POST")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userLoginVo", value = "用户登录信息", paramType = "body")
-    })
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userLoginVo", value = "用户登录信息", paramType = "body")
+//    })
     @RequestMapping(value = AuthConfig.ANNO_PATH + "login.do", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ClientResult login(@ApiIgnore @RequestEnv Env env, @RequestBody UserLoginVo userLoginVo) throws Exception {
