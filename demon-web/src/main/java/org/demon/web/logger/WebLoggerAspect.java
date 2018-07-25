@@ -91,12 +91,12 @@ public class WebLoggerAspect {
         // 处理完请求，返回内容
         logger.info("HTTP-OK  {}  {}  {}  {}  P:{}  R:{}",
                 IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), getRequestUrl(req),
-                getRequestParams(req), getResponseBody(result));
+                joinPoint.getArgs(), getResponseBody(result));
         removeRequestCode();
     }
 
     @AfterThrowing(value = "webLog()", throwing = "e")
-    public void doAfterThrowing(Throwable e) {
+    public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         setRequestCode(RandomUtil.getRequestId());
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -110,7 +110,7 @@ public class WebLoggerAspect {
 
         // 处理完请求，返回内容
         logger.error("HTTP-ERROR  {}  {}  {}  {}  P:{}  E:{}",
-                IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), url, getRequestParams(req), e.getMessage(), e);
+                IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), url, joinPoint.getArgs(), e.getMessage(), e);
         removeRequestCode();
     }
 
