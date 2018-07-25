@@ -22,7 +22,7 @@ public class RandomUtil {
 //                .replace("O", "b");
         long uuid = UUID.randomUUID().getMostSignificantBits();
         byte[] uuidBytes = ByteBuffer.allocate(8).putLong(uuid).array();
-        return Base64.encodeBase64URLSafeString(uuidBytes);
+        return Base64.encodeBase64URLSafeString(uuidBytes).toLowerCase();
     }
     
 }

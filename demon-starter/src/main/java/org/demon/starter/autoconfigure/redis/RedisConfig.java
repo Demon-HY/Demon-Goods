@@ -28,27 +28,8 @@ public class RedisConfig {
      */
     private static final String AUTH_DB = "auth";
 
-//    @Value("${spring.redis.host}")
-//    private String host;
-//
-//    @Value("${spring.redis.port}")
-//    private int port;
-//
-//    @Value("${spring.redis.timeout}")
-//    private int timeout;
-//
-//    @Value("${spring.redis.pool.max-idle}")
-//    private int maxIdle;
-//
-//    @Value("${spring.redis.pool.max-wait}")
-//    private long maxWaitMillis;
-//
-//    @Value("${spring.redis.password}")
-//    private String password;
-
     @Bean("authRedisTemplate")
     public RedisTemplate<String, Object> getRedisTemplate() {
-
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(getConnectionFactory(AUTH_DB));
         template.setKeySerializer(new StringRedisSerializer());
@@ -62,7 +43,8 @@ public class RedisConfig {
     private JedisPoolConfig getRedisConfig(String db) {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxIdle(Integer.parseInt(environment.getProperty("spring." + db + ".redis.pool.max-idle")));
-        config.setMaxWaitMillis(Long.parseLong(environment.getProperty("spring." + db + ".redis.pool.max-wait")));
+        config.setMaxIdle(Integer.parseInt(environment.getProperty("spring." + db + ".redis.pool.max-idle")));
+        config.setTestOnBorrow(true);
         return config;
     }
 
@@ -70,9 +52,12 @@ public class RedisConfig {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         JedisPoolConfig config = getRedisConfig(db);
         factory.setPoolConfig(config);
-        factory.setHostName(environment.getProperty("spring." + db + ".redis.host}"));
-        factory.setPassword(environment.getProperty("spring." + db + ".redis.password}"));
+        factory.setDatabase(Integer.parseInt(environment.getProperty("spring." + db + ".redis.database")));
+        factory.setHostName(environment.getProperty("spring." + db + ".redis.host"));
+        factory.setPassword(environment.getProperty("spring." + db + ".redis.password"));
         factory.setTimeout(Integer.parseInt(environment.getProperty("spring." + db + ".redis.timeout")));
+        // 初始化连接pool
+        factory.afterPropertiesSet();
         logger.info("JedisConnectionFactory bean init success.");
         return factory;
     }
