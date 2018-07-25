@@ -45,7 +45,6 @@ public class UserLoginVo implements Serializable {
     public String qq;
     /**
      * token 过期时间(单位：毫秒)
-     *
      */
     @ApiModelProperty(value = "token 过期时间(单位：毫秒)", position = 7)
     public Long tokenAge;
@@ -60,4 +59,18 @@ public class UserLoginVo implements Serializable {
     @ApiModelProperty(value = "扩展属性", hidden = true)
     public String exattr;
 
+    @Override
+    public String toString() {
+        return "UserLoginVo{" +
+                "account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
+                ", phone=" + phone +
+                ", email='" + email + '\'' +
+                ", qq='" + qq + '\'' +
+                ", tokenAge=" + tokenAge +
+                ", isCookie=" + isCookie +
+                ", exattr='" + exattr + '\'' +
+                '}';
+    }
 }

@@ -27,4 +27,12 @@ public class Login implements Serializable {
         this.token = token;
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "token=" + token +
+                ", user=" + user +
+                '}';
+    }
 }

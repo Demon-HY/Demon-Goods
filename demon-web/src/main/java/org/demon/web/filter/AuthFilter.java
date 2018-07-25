@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -24,9 +23,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 登录拦截
@@ -59,35 +55,8 @@ public class AuthFilter implements Filter {
         response.setContentType("application/json; charset=utf-8");
 
         // 兼容IE下AJAX 跨域重定向问题
-        response.setHeader("P3P","CP=CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT " +
+        response.setHeader("P3P", "CP=CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT " +
                 "DEM STA PRE COM NAV OTC NOI DSP COR");
-
-//        // 解决 OPIONS 跨域请求
-//        if (request.getMethod().equals("OPTIONS")) {
-//            // 解决跨域问题
-//            String[] origin = {"http://localhost:8080"};
-//            Set<String> allowedOrigins = new HashSet<>(Arrays.asList(origin));
-//            String originHeader = request.getHeader("Origin");
-//            if (allowedOrigins.contains(originHeader)) {
-//                response.setHeader("Access-Control-Allow-Origin", originHeader);
-//                response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-//                response.setHeader("Access-Control-Max-Age", "3600");
-//                // 如果要把Cookie发到服务器，需要指定Access-Control-Allow-Credentials字段为true;
-//                response.setHeader("Access-Control-Allow-Credentials", "true");
-//                response.setHeader("XDomainRequestAllowed", "1");
-//                //表明服务器支持的所有头信息字段
-//                response.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since," +
-//                        "Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token, X-Device, X-Token");
-//            }
-//            response.setStatus(HttpServletResponse.SC_OK);
-//            return;
-//        }
-
-        // 屏蔽 /favicon.ico
-        String uri = request.getRequestURI();
-        if (uri.equals("/favicon.ico")) {
-            return;
-        }
 
         RetCodeEnum retCodeEnum = handler(request, response);
 

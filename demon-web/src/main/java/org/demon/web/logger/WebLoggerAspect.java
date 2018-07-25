@@ -105,12 +105,11 @@ public class WebLoggerAspect {
         resp.setHeader("RequestId", getRequestCode());
 
         // 这里可以捕获异常，但无法处理异常，异常还是会抛给 JVM
-        // 请求URL
-        String url = getRequestUrl(req);
 
         // 处理完请求，返回内容
         logger.error("HTTP-ERROR  {}  {}  {}  {}  P:{}  E:{}",
-                IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), url, joinPoint.getArgs(), e.getMessage(), e);
+                IPUtils.getIPAddr(req), getRequestCode(), req.getMethod(), getRequestUrl(req),
+                joinPoint.getArgs(), e.getMessage(), e);
         removeRequestCode();
     }
 

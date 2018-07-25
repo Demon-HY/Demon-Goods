@@ -160,4 +160,21 @@ public class IdCard implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "IdCard{" +
+				"uid=" + uid +
+				", age=" + age +
+				", sex=" + sex +
+				", city='" + city + '\'' +
+				", postcode=" + postcode +
+				", trueName='" + trueName + '\'' +
+				", cardCode='" + cardCode + '\'' +
+				", cardPositiveImg='" + cardPositiveImg + '\'' +
+				", cardBackImg='" + cardBackImg + '\'' +
+				", cardHandImg='" + cardHandImg + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				'}';
+	}
 }

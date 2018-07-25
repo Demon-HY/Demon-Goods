@@ -183,4 +183,22 @@ public class User implements Serializable {
 		this.loadTime = loadTime;
 	}
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"uid=" + uid +
+				", name='" + name + '\'' +
+				", nick='" + nick + '\'' +
+				", phone='" + phone + '\'' +
+				", email='" + email + '\'' +
+				", password='" + password + '\'' +
+				", qq='" + qq + '\'' +
+				", type=" + type +
+				", status=" + status +
+				", exattr='" + exattr + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				", loadTime=" + loadTime +
+				'}';
+	}
 }

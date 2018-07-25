@@ -90,4 +90,15 @@ public class Right implements Serializable {
 		this.params = params;
 	}
 
+	@Override
+	public String toString() {
+		return "Right{" +
+				"rightId=" + rightId +
+				", name='" + name + '\'' +
+				", type=" + type +
+				", displayName='" + displayName + '\'' +
+				", module='" + module + '\'' +
+				", params='" + params + '\'' +
+				'}';
+	}
 }

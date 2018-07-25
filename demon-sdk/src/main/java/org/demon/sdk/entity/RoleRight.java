@@ -54,4 +54,12 @@ public class RoleRight implements Serializable {
 		this.rightId = rightId;
 	}
 
+	@Override
+	public String toString() {
+		return "RoleRight{" +
+				"id=" + id +
+				", roleId=" + roleId +
+				", rightId=" + rightId +
+				'}';
+	}
 }

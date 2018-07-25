@@ -36,4 +36,16 @@ public class UserCreateVo implements Serializable {
     // QQ 号
     @ApiModelProperty(value = "QQ 号", position = 6)
     public String qq;
+
+    @Override
+    public String toString() {
+        return "UserCreateVo{" +
+                "name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", nick='" + nick + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", qq='" + qq + '\'' +
+                '}';
+    }
 }

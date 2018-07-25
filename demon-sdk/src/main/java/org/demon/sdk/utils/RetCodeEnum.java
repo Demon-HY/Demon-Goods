@@ -103,4 +103,12 @@ public enum RetCodeEnum {
 
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "RetCodeEnum{" +
+                "message='" + message + '\'' +
+                ", retCode=" + retCode +
+                '}';
+    }
 }

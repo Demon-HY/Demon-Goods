@@ -166,4 +166,17 @@ public class Token implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Token{" +
+				"id=" + id +
+				", token='" + token + '\'' +
+				", uid=" + uid +
+				", expires=" + expires +
+				", ip='" + ip + '\'' +
+				", device='" + device + '\'' +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				'}';
+	}
 }

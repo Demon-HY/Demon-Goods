@@ -51,4 +51,17 @@ public class Env implements Serializable {
      * 错误信息
      */
     RetCodeEnum retCodeEnum;
+
+    @Override
+    public String toString() {
+        return "Env{" +
+                "moduleName='" + moduleName + '\'' +
+                ", userId=" + userId +
+                ", token='" + token + '\'' +
+                ", clientIP='" + clientIP + '\'' +
+                ", device='" + device + '\'' +
+                ", login=" + login +
+                ", retCodeEnum=" + retCodeEnum +
+                '}';
+    }
 }

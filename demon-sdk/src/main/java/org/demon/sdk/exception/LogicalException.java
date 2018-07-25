@@ -26,4 +26,12 @@ public class LogicalException extends Exception implements Serializable {
         this.stat = retCodeEnum.retCode;
         this.errMsg = retCodeEnum.message;
     }
+
+    @Override
+    public String toString() {
+        return "LogicalException{" +
+                "stat=" + stat +
+                ", errMsg='" + errMsg + '\'' +
+                '}';
+    }
 }
