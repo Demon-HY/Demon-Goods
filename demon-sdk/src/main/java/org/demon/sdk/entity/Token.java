@@ -13,13 +13,13 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "token")
 public class Token implements Serializable {
 
-	private static final long serialVersionUID = 1668574555772364189L;
+	private static final long serialVersionUID = 9062964531025160405L;
 	// 自增ID
 	@Id
 	@Column(name = "id")

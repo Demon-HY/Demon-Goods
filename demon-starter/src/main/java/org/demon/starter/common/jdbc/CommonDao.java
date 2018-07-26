@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * JDBC 基础方法封装
- * Created by Demon-Coffee on 2018/3/15.
+ * Created by Demon-HY on 2018/3/15.
  */
 public interface CommonDao<T> {
 

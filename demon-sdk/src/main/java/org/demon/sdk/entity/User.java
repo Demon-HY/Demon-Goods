@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "user")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 25684508446383183L;
+	private static final long serialVersionUID = 8390645454224381806L;
 	// 用户 Id
 	@Id
 	@Column(name = "uid")

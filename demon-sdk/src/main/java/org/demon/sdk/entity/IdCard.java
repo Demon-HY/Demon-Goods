@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "id_card")
 public class IdCard implements Serializable {
 
-	private static final long serialVersionUID = 3110112933920762027L;
+	private static final long serialVersionUID = -1728214073773690607L;
 	// 用户ID
 	@Id
 	@Column(name = "uid")

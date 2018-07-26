@@ -14,7 +14,11 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-    private static final long serialVersionUID = -7100054939286964751L;
+    private static final long serialVersionUID = -9163982787261438155L;
+
+    public Env() {
+    }
+
     /**
      * HTTP 请求所对应的模块名称
      */
@@ -50,7 +54,7 @@ public class Env implements Serializable {
     /**
      * 错误信息
      */
-    RetCodeEnum retCodeEnum;
+    public RetCodeEnum retCodeEnum;
 
     @Override
     public String toString() {

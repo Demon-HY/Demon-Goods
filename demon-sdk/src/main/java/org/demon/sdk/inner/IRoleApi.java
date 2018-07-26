@@ -5,7 +5,7 @@ import org.demon.sdk.environment.Env;
 /**
  * 内部模块访问接口
  *
- * @author Demon-Coffee
+ * @author Demon-HY
  */
 public interface IRoleApi {
 }

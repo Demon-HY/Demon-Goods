@@ -11,7 +11,10 @@ import java.io.Serializable;
 @ApiModel(value = "创建用户属性")
 public class UserCreateVo implements Serializable {
 
-    private static final long serialVersionUID = 5519556564665209926L;
+    private static final long serialVersionUID = -5169678047284371631L;
+
+    public UserCreateVo() {
+    }
 
     // 用户名
     @ApiModelProperty(value = "用户名", required = true, position = 1)

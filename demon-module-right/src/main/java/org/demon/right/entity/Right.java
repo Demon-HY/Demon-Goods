@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "right")

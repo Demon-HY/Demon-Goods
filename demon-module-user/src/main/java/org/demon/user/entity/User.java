@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "user")

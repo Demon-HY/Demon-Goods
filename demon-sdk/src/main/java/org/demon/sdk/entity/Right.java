@@ -7,13 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "right")
 public class Right implements Serializable {
 
-	private static final long serialVersionUID = 6914230124688939139L;
+	private static final long serialVersionUID = 263980051051091456L;
 	// 权限ID
 	@Id
 	@Column(name = "right_id")

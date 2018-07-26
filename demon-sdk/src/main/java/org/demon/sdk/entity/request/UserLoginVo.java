@@ -11,8 +11,11 @@ import java.io.Serializable;
 @ApiModel(value = "用户登录对象")
 public class UserLoginVo implements Serializable {
 
-    private static final long serialVersionUID = 8157611022140886557L;
-    
+    private static final long serialVersionUID = -2089952341710111130L;
+
+    public UserLoginVo() {
+    }
+
     /**
      * 用户名
      */

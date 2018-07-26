@@ -7,14 +7,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 @Table(name = "role")
 public class Role implements Serializable {
 
-	private static final long serialVersionUID = -3766204474833734987L;
-
+	private static final long serialVersionUID = 8999024410943956008L;
 	// 角色ID
 	@Id
 	@Column(name = "id")

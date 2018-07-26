@@ -47,7 +47,7 @@ public class UserQueryApi implements IUserQueryApi {
                 throw new LogicalException(RetCodeEnum.ERR_USER_DELETE);
         }
 
-        // 检查用户所在角色是否被锁定
+        // TODO 检查用户所在角色是否被锁定
 
     }
 

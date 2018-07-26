@@ -18,7 +18,7 @@ public interface IAuthApi {
      * 用户登录
      * @param userLoginVo 用户登录信息
      */
-    Login login(Env env, UserLoginVo userLoginVo) throws LogicalException, ParseException, NoSuchAlgorithmException, UnsupportedEncodingException, Exception;
+    Login login(Env env, UserLoginVo userLoginVo) throws Exception;
 
     /**
      * 退出登录
@@ -30,8 +30,7 @@ public interface IAuthApi {
     /**
      * 验证用户是否已登录
      * @param env
-     * @param token 字符串
      * @return Login
      */
-    Login checkLogin(Env env, String token) throws LogicalException;
+    Login checkLogin(Env env) throws LogicalException;
 }

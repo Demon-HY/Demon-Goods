@@ -1,5 +1,7 @@
 package org.demon.utils.crypto;
 
+import org.demon.utils.beans.StringUtils;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -130,5 +132,7 @@ public class DESEncryptionUtils {
         System.out.println("encode=" + new String(data));
         data = decrypt(data);
         System.out.println("decode=" + new String(data));
+
+        System.out.println(StringUtils.firstUpper("auth"));
     }
 }

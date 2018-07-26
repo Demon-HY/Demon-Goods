@@ -6,7 +6,7 @@ import org.demon.starter.utils.ClientResult;
 /**
  * 内部模块访问接口
  *
- * @author Demon-Coffee
+ * @author Demon-HY
  * @since 1.0
  */
 public interface UserApi {

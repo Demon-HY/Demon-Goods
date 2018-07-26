@@ -9,16 +9,11 @@ import java.io.Serializable;
 public class ClientResult<T> implements Serializable {
 
     private static final long serialVersionUID = -5552820761684566855L;
-    /**
-     * o-失败,1-成功
-     */
-    @ApiModelProperty(value = "o-失败,1-成功")
-    private Integer code = 1;
 
     @ApiModelProperty(value = "错误消息")
     private String message = RetCodeEnum.OK.message;
 
-    @ApiModelProperty(value = "Object")
+    @ApiModelProperty(value = "返回数据")
     private T result;
 
     @ApiModelProperty(value = "是否成功")
@@ -28,9 +23,6 @@ public class ClientResult<T> implements Serializable {
     @ApiModelProperty(value = "错误码")
     private Integer retCode = RetCodeEnum.OK.retCode;
 
-    public Integer getCode() {
-        return code;
-    }
 
     public boolean isSuccess() {
         return success;
@@ -44,34 +36,28 @@ public class ClientResult<T> implements Serializable {
         this.success = success;
     }
 
-    public ClientResult() {}
+    public ClientResult() {
+    }
 
     public ClientResult(RetCodeEnum retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
-        this.code = 0;
         this.success = false;
     }
 
     public ClientResult(RetCodeEnum retCodeEnum, String message) {
         this.retCode = retCodeEnum.retCode;
         this.message = message;
-        this.code = 0;
         this.success = false;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public ClientResult setMessage(String message) {
+    public ClientResult<T> setMessage(String message) {
         this.message = message;
         this.retCode = RetCodeEnum.ERR_SERVER_EXCEPTION.retCode;
-        this.code = 0;
         this.success = false;
         return this;
     }
@@ -92,13 +78,13 @@ public class ClientResult<T> implements Serializable {
     public ClientResult<T> setRetCode(RetCodeEnum retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
-        this.code = 0;
         this.success = false;
         return this;
     }
 
     /**
      * 错误
+     *
      * @param retCodeEnum 错误码
      * @return ClientResult
      */
@@ -108,6 +94,7 @@ public class ClientResult<T> implements Serializable {
 
     /**
      * 错误
+     *
      * @param message 错误描述
      * @return ClientResult
      */
@@ -117,19 +104,21 @@ public class ClientResult<T> implements Serializable {
 
     /**
      * 成功
+     *
      * @param result 返回数据
      * @return ClientResult
      */
-    public static<T> ClientResult success(T result) {
+    public static <T> ClientResult<T> success(T result) {
         ClientResult<T> cr = new ClientResult<>();
         return cr.setResult(result);
     }
 
     /**
      * 成功
+     *
      * @return ClientResult
      */
-    public static<T> ClientResult success() {
+    public static ClientResult success() {
         return new ClientResult<>();
     }
 }
