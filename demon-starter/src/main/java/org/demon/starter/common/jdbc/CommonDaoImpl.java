@@ -3,6 +3,9 @@ package org.demon.starter.common.jdbc;
 import com.alibaba.fastjson.JSONObject;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.MapUtils;
+import org.demon.utils.mysql.DBUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,7 @@ import java.util.Map;
 @Service
 public class CommonDaoImpl<T> implements CommonDao<T> {
 
-	/**
-	 * debug = true, 打印要执行的SQL，不会执行
-	 */
-	public static Boolean debug = false;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Resource
 	private JdbcTemplate jdbcTemplate;
@@ -42,18 +42,19 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	@Override
 	public T selectById(Object idObj, Class<T> entityClass) {
 		try {
-			String idName = getPrimyName(entityClass);
+			String idName = DBUtils.getPrimyName(entityClass);
 			if (idName == null || idName.length() < 1) return null;
 
-			StringBuilder sql = getSelectFrom(entityClass);
+			StringBuilder sql = DBUtils.getSelectFrom(entityClass);
 			if (sql == null) return null;
 
 			sql.append(" WHERE ").append(idName).append(" = ? ");
-			if (debug) {
-				System.out.println(sql.toString()); return null;
-			}
 
 			Object[] arg = {idObj};
+
+			if (logger.isDebugEnabled()) {
+				logger.debug("SQL: {}, Params: {}", sql.toString(), idObj);
+			}
 			List list = getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), arg);
 			if (list == null || list.isEmpty()) {
 				return null;
@@ -68,29 +69,34 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 	@Override
 	public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
-		StringBuilder sql = getSelectFrom(entityClass);
+		StringBuilder sql = DBUtils.getSelectFrom(entityClass);
 		if (sql == null) return null;
 		sql.append(criteria.getCriteriaSQL());
-		if (debug) {
-			System.out.println(sql.toString()); return null;
-		}
 
 		Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql.toString(), params);
+		}
+
 		return getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), params);
 	}
 
     @Override
     public T selectOneByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
-        StringBuilder sql = getSelectFrom(entityClass);
+        StringBuilder sql = DBUtils.getSelectFrom(entityClass);
         if (sql == null) return null;
         sql.append(criteria.getCriteriaSQL());
-        if (debug) {
-            System.out.println(sql.toString()); return null;
-        }
 
         Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql.toString(), params);
+		}
+
         List<T> list = getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper(entityClass), params);
         if (ValidUtils.isBlank(list) || list.size() != 1) {
+
             return null;
         }
         return list.get(0);
@@ -98,12 +104,15 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 	@Override
 	public Long countByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
-		String sql = "SELECT COUNT(1) AS num FROM " + getTableName(entityClass) + criteria.getCriteriaSQL();
-		if (debug) {
-			System.out.println(sql); return null;
+		String sql = "SELECT COUNT(1) AS num FROM " + DBUtils.getTableName(entityClass) + criteria.getCriteriaSQL();
+
+		Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql, params);
 		}
 
-		Map<String, Object> map = jdbcTemplate.queryForMap(sql, criteria.getParam().toArray());
+		Map<String, Object> map = jdbcTemplate.queryForMap(sql, params);
 		return (Long) map.get("num");
 	}
 
@@ -111,15 +120,17 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	public int removeById(Object idObj, Class<T> entityClass) {
 		String sql = new StringBuilder()
 				.append("DELETE FROM ")
-				.append(getTableName(entityClass))
+				.append(DBUtils.getTableName(entityClass))
 				.append(" WHERE ")
-				.append(getPrimyName(entityClass))
+				.append(DBUtils.getPrimyName(entityClass))
 				.append(" = ? ").toString();
-		if (debug) {
-			System.out.println(sql); return 1;
-		}
 
 		Object[] arg = {idObj};
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql, idObj);
+		}
+
 		return getJdbcTemplate().update(sql, arg);
 	}
 
@@ -129,7 +140,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
 
 		StringBuilder sql1 = new StringBuilder("INSERT INTO ")
-				.append(getTableName(entity.getClass()))
+				.append(DBUtils.getTableName(entity.getClass()))
 				.append(" (");
 		StringBuilder sql2 = new StringBuilder(" VALUES(");
 		List<Object> args = new ArrayList<>();
@@ -160,8 +171,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		sql2.deleteCharAt(sql2.length() - 1);
 		sql2.append(") ");
 		String sql = sql1.append(sql2).toString();
-		if (debug) {
-			System.out.println(sql); return 1;
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql, args.toArray());
 		}
 
 		return getJdbcTemplate().update(sql, args.toArray());
@@ -171,9 +183,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	public int update(T entity) {
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
 		StringBuilder sql1 = new StringBuilder("UPDATE ")
-				.append(getTableName(entity.getClass()))
+				.append(DBUtils.getTableName(entity.getClass()))
 				.append(" SET ");
-		String pkName = getPrimyName(entity.getClass());
+		String pkName = DBUtils.getPrimyName(entity.getClass());
 		StringBuilder sql2 = new StringBuilder(" WHERE " + pkName + " = ? ");
 		List<Object> args = new ArrayList<>();
 		for (String key : obj.keySet()) {
@@ -189,8 +201,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		sql1.deleteCharAt(sql1.length() - 1);
 		args.add(obj.get(pkName));
 		String sql = sql1.append(sql2).toString();
-		if (debug) {
-			System.out.println(sql);  return 1;
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("SQL: {}, Params: {}", sql, args.toArray());
 		}
 
 		return getJdbcTemplate().update(sql, args.toArray());
@@ -310,56 +323,12 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	}
 
 	/**
-	 * 获取查询的字段信息
-	 *
-	 * @return select ... from table where
+	 * 获取字段信息以及描述
+	 * @param tableName
+	 * @return
+	 * @throws Exception
 	 */
-	private StringBuilder getSelectFrom(Class<T> entityClass) {
-		String fieldNames = getFields(entityClass);
-		if (fieldNames == null || fieldNames.length() < 1) return null;
-
-		StringBuilder sql = new StringBuilder("SELECT " + fieldNames + " FROM ");
-		sql.append(getTableName(entityClass)).append(" ");
-
-		return sql;
-	}
-
-	private String getTableName(Class<?> entityClass) {
-		return entityClass.getAnnotation(Table.class).name();
-	}
-
-	private String getPrimyName(Class<?> entityClass) {
-		String idName;
-		try {
-			Field[] fields = entityClass.getDeclaredFields();
-			for (Field f : fields) {
-				if (f.isAnnotationPresent(Id.class)) {
-					idName = f.getAnnotation(Column.class).name();
-					return idName;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private String getFields(Class<?> entityClass) {
-		try {
-			Field[] field = entityClass.getDeclaredFields();
-			StringBuilder fields = new StringBuilder();
-			for (Field f : field) {
-				if (f.getAnnotation(Column.class) == null) continue;
-				fields.append(f.getAnnotation(Column.class).name()).append(",");
-			}
-			return fields.length() == 0 ? null : fields.substring(0, fields.length() - 1);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private JSONObject getColumnCommentByTableName(String tableName) throws Exception {
+	JSONObject getColumnCommentByTableName(String tableName) throws Exception {
 		JSONObject obj = new JSONObject();
 
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
@@ -382,7 +351,13 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return obj;
 	}
 
-	private List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception {
+	/**
+	 * 获取表字段信息
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	List<TableFieldInfo> getFieldInfoByTableName(String tableName) throws Exception {
 		List<TableFieldInfo> fieldInfos = new ArrayList<>();
 
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
@@ -417,7 +392,13 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return fieldInfos;
 	}
 
-	private TableInfo getTableInfoByTableName(String tableName) throws Exception {
+	/**
+	 * 获取表信息
+	 * @param tableName
+	 * @return
+	 * @throws Exception
+	 */
+	TableInfo getTableInfoByTableName(String tableName) throws Exception {
 		Connection conn = getJdbcTemplate().getDataSource().getConnection();
 		Statement stmt = conn.createStatement();
 		ResultSet rs = null;

@@ -34,6 +34,20 @@ public class UserConfig extends DefaultConfig {
     /** 删除状态 */
     public static final int STATUS_DELETE = 1 << 3;
 
+    /** 查看用户需要该权限 */
+    public static final Pair<String, String> RIGHT_CHECK_USER;
+    /** 设置用户需要该权限 */
+    public static final Pair<String, String> RIGHT_SET_USER;
+    /** 创建用户需要该权限 */
+    public static final Pair<String, String> RIGHT_CREATE_USER;
+    /** 删除用户需要该权限 */
+    public static final Pair<String, String> RIGHT_DELETE_USER;
+    /** 重置密码需要该权限 */
+    public static final Pair<String, String> RIGHT_RESET_PSW;
+    /** 锁定用户 */
+    public static final Pair<String, String> RIGHT_LOCK_USER;
+    /** 解锁用户 */
+    public static final Pair<String, String> RIGHT_UNLOCK_USER;
 
     static {
         RIGHT_CHECK_USER = new Pair<>("RIGHT_CHECK_USER", "查看用户");
@@ -44,39 +58,4 @@ public class UserConfig extends DefaultConfig {
         RIGHT_LOCK_USER = new Pair<>("RIGHT_LOCK_USER", "锁定用户");
         RIGHT_UNLOCK_USER = new Pair<>("RIGHT_UNLOCK_USER", "解锁用户");
     }
-
-    /**
-     * 查看用户需要该权限
-     */
-    public static final Pair<String, String> RIGHT_CHECK_USER;
-
-    /**
-     * 设置用户需要该权限
-     */
-    public static final Pair<String, String> RIGHT_SET_USER;
-
-    /**
-     * 创建用户需要该权限
-     */
-    public static final Pair<String, String> RIGHT_CREATE_USER;
-
-    /**
-     * 删除用户需要该权限
-     */
-    public static final Pair<String, String> RIGHT_DELETE_USER;
-
-    /**
-     * 重置密码需要该权限
-     */
-    public static final Pair<String, String> RIGHT_RESET_PSW;
-
-    /**
-     * 锁定用户
-     */
-    public static final Pair<String, String> RIGHT_LOCK_USER;
-
-    /**
-     * 解锁用户
-     */
-    public static final Pair<String, String> RIGHT_UNLOCK_USER;
 }

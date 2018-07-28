@@ -6,6 +6,7 @@ package org.demon.sdk.utils;
  * 100XXX - 系统级错误
  * 300XXX - 用户
  * 301XXX - 鉴权
+ * 302XXX - 角色
  */
 public enum RetCodeEnum {
 
@@ -59,6 +60,13 @@ public enum RetCodeEnum {
     ERR_ILLEGAL_EMAIL_ACCOUNT("非法邮箱", 301014),
     ERR_ILLEGAL_PHONE_ACCOUNT("非法手机号", 301015),
     ERR_TOKEN_UID_MISMATCHING("登录的用户与新建token用户不为一个用户", 301016),
+
+    ERR_ROLE_NOT_FOUND("角色不存在", 302001),
+    ERR_USER_NOT_HAS_THE_ROLE("用户没有该角色", 302002),
+    ERR_ROLE_EXIST("角色已存在", 302003),
+    ERR_ROLE_RIGHT_CONFLICT("角色权限冲突", 302004),
+    ERR_ROLE_RIGHT_INIT_FAILED("初始化角色权限错误", 302005),
+    ERR_RIGHT_INVALID("权限参数不合法", 302006),
 
     ;
 

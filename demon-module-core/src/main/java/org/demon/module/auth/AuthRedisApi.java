@@ -1,6 +1,7 @@
 package org.demon.module.auth;
 
 import org.demon.sdk.entity.vo.Login;
+import org.demon.starter.autoconfigure.redis.RedisApi;
 import org.demon.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,19 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class AuthRedisApi {
+public class AuthRedisApi extends RedisApi {
 
     @Autowired
     @Qualifier("authRedisTemplate")
     public RedisTemplate redisTemplate;
 
-    private RedisTemplate getRedisTemplate() {
+    @Override
+    public RedisTemplate getRedisTemplate() {
         return redisTemplate;
     }
 
-//    public AuthRedisApi(RedisTemplate redisTemplate) {
-//        super(redisTemplate);
-//    }
+    public AuthRedisApi(RedisTemplate redisTemplate) {
+        super(redisTemplate);
+    }
 
     /**
      * 保存登录信息
@@ -54,49 +56,49 @@ public class AuthRedisApi {
         return del(token);
     }
 
-    public boolean setBean(String key, Object obj, long expire) {
-        String value = JsonUtil.toJson(obj);
-        set(key, value);
-        return expire(key, expire);
-    }
-
-    public <T> T getBean(String key, Class<T> clz) {
-        String json = get(key);
-        if (json != null) {
-            return JsonUtil.toBean(json, clz);
-        }
-        return null;
-    }
-
-    private boolean set(final String key, final String value) {
-        return (boolean) getRedisTemplate().execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer serializer = getRedisTemplate().getStringSerializer();
-            connection.set(serializer.serialize(key), serializer.serialize(value));
-            return true;
-        });
-    }
-
-    private String get(final String key) {
-        try {
-            return (String) getRedisTemplate().execute((RedisCallback<String>) connection -> {
-                RedisSerializer<String> serializer = getRedisTemplate().getStringSerializer();
-                byte[] value = connection.get(serializer.serialize(key));
-                return serializer.deserialize(value);
-            });
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private boolean del(String key) {
-        return (boolean) getRedisTemplate().execute((RedisCallback<Boolean>) connection -> {
-            RedisSerializer<String> serializer = getRedisTemplate().getStringSerializer();
-            connection.del(serializer.serialize(key));
-            return true;
-        });
-    }
-
-    private boolean expire(final String key, long expire) {
-        return getRedisTemplate().expire(key, expire, TimeUnit.SECONDS);
-    }
+//    public boolean setBean(String key, Object obj, long expire) {
+//        String value = JsonUtil.toJson(obj);
+//        set(key, value);
+//        return expire(key, expire);
+//    }
+//
+//    public <T> T getBean(String key, Class<T> clz) {
+//        String json = get(key);
+//        if (json != null) {
+//            return JsonUtil.toBean(json, clz);
+//        }
+//        return null;
+//    }
+//
+//    private boolean set(final String key, final String value) {
+//        return (boolean) getRedisTemplate().execute((RedisCallback<Boolean>) connection -> {
+//            RedisSerializer serializer = getRedisTemplate().getStringSerializer();
+//            connection.set(serializer.serialize(key), serializer.serialize(value));
+//            return true;
+//        });
+//    }
+//
+//    private String get(final String key) {
+//        try {
+//            return (String) getRedisTemplate().execute((RedisCallback<String>) connection -> {
+//                RedisSerializer<String> serializer = getRedisTemplate().getStringSerializer();
+//                byte[] value = connection.get(serializer.serialize(key));
+//                return serializer.deserialize(value);
+//            });
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
+//
+//    private boolean del(String key) {
+//        return (boolean) getRedisTemplate().execute((RedisCallback<Boolean>) connection -> {
+//            RedisSerializer<String> serializer = getRedisTemplate().getStringSerializer();
+//            connection.del(serializer.serialize(key));
+//            return true;
+//        });
+//    }
+//
+//    private boolean expire(final String key, long expire) {
+//        return getRedisTemplate().expire(key, expire, TimeUnit.SECONDS);
+//    }
 }
