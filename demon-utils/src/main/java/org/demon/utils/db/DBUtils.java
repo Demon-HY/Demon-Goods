@@ -1,4 +1,4 @@
-package org.demon.utils.mysql;
+package org.demon.utils.db;
 
 import org.demon.utils.ValidUtils;
 

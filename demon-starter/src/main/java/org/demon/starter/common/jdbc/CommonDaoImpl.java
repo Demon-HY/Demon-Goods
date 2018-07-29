@@ -3,7 +3,7 @@ package org.demon.starter.common.jdbc;
 import com.alibaba.fastjson.JSONObject;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.MapUtils;
-import org.demon.utils.mysql.DBUtils;
+import org.demon.utils.db.DBUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -158,14 +156,6 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			args.add(arg);
 		}
 
-//		for (String key : obj.keySet()) {
-//			Object arg = obj.get(key);
-//			if (ValidUtils.isBlank(arg)) continue;
-//
-//			sql1.append(key).append(",");
-//			sql2.append("?,");
-//			args.add(arg);
-//		}
 		sql1.deleteCharAt(sql1.length() - 1);
 		sql1.append(") ");
 		sql2.deleteCharAt(sql2.length() - 1);

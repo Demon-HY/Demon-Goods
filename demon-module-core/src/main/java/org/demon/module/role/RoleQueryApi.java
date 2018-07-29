@@ -102,6 +102,8 @@ public class RoleQueryApi implements IRoleQueryApi {
             throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
         }
 
+        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_ROLE_USER.getValue0());
+
         List<User> users = roleDao.getRoleUsers(role);
         return new RoleUserVo(role, users);
     }

@@ -4,8 +4,7 @@ import org.demon.sdk.entity.Role;
 import org.demon.sdk.entity.User;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
-import org.demon.utils.ValidUtils;
-import org.demon.utils.mysql.DBUtils;
+import org.demon.utils.db.DBUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -70,5 +69,9 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 		sb.append(" user left join role_user on role.`id`=role_user.`role_id` where role.user.`role_id=? ");
 
 		return getJdbcTemplate().query(sb.toString(), new BeanPropertyRowMapper<>(User.class), role.id);
+	}
+
+	public void addRole(Role role) {
+		insert(role);
 	}
 }
