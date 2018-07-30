@@ -3,8 +3,6 @@ package org.demon.web.init;
 import org.demon.module.right.RightApi;
 import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.inner.IRightApi;
-import org.demon.sdk.inner.IRoleApi;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.StringUtils;
 import org.javatuples.Pair;
