@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "right")
 public class Right implements Serializable {
 
-	private static final long serialVersionUID = 263980051051091456L;
+	private static final long serialVersionUID = 754797215340686556L;
 	// 权限ID
 	@Id
 	@Column(name = "right_id")
@@ -41,6 +41,13 @@ public class Right implements Serializable {
 
 
 	public Right(){}
+
+	public Right(String name, Integer type, String displayName, String module) {
+		this.name = name;
+		this.type = type;
+		this.displayName = displayName;
+		this.module = module;
+	}
 
 	public Long getRightId() {
 		return rightId;

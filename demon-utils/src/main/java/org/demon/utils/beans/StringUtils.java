@@ -30,21 +30,8 @@ public class StringUtils {
 		return matcher.matches();
 	}
 
-	public static String firstUpper(String str) {
-		StringBuffer stringbf = new StringBuffer();
-		Matcher m = Pattern.compile("([a-z])([a-z]*)", Pattern.CASE_INSENSITIVE).matcher(str);
-
-		while (m.find()) {
-			return m.group(1).toUpperCase() + m.group(2).toLowerCase();
-//			m.appendReplacement(stringbf, m.group(1).toUpperCase() + m.group(2).toLowerCase());
-		}
-		return m.appendTail(stringbf).toString();
-	}
-
-	static class Test {
-		public static void main(String[] args) {
-			System.out.println(System.currentTimeMillis());
-		}
+	public static String uncapitalize(String str) {
+		return org.apache.commons.lang.StringUtils.uncapitalize(str);
 	}
 }
 

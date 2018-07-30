@@ -1,15 +1,26 @@
 package org.demon.web.init;
 
+import org.demon.module.right.RightApi;
+import org.demon.sdk.entity.Right;
+import org.demon.sdk.environment.Env;
+import org.demon.sdk.inner.IRightApi;
+import org.demon.sdk.inner.IRoleApi;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.StringUtils;
+import org.javatuples.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 监听工程启动的监听事件,完成模块权限初始化
@@ -22,8 +33,19 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
     public ModuleRightInit() {
     }
 
+    /**
+     * 所有要设置权限的模块
+     */
     @Value("${module.properties}")
     private String MODULE_PROPERTY_FILE_NAME;
+
+    /**
+     * 权限字段名前缀
+     */
+    private static final String RIGHT_PREFIX = "RIGHT_";
+
+    @Autowired
+    private RightApi rightApi;
 
     /**
      * 各模块初始化
@@ -46,7 +68,11 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
         }
         for (String moduleName : MODULE_PROPERTY_FILE_NAME.split(",")) {
             try {
-                loadModuleRight(moduleName);
+                try {
+                    loadModuleRight(moduleName);
+                } catch (IllegalAccessException | InstantiationException e) {
+                    logger.error("获取对象实例失败", e);
+                }
             } catch (ClassNotFoundException e) {
                 logger.error("加载模块 {} 类失败.", moduleName, e);
                 System.exit(-1);
@@ -61,10 +87,88 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
      * 加载模块权限
      * @param moduleName 模块名
      */
-    private void loadModuleRight(String moduleName) throws ClassNotFoundException {
+    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         URLClassLoader classLoader = (URLClassLoader) ClassLoader
                 .getSystemClassLoader();
-        Class<?> cls = classLoader.loadClass(String.format("org.demon.module.user.%s.%sConfig",
-                moduleName));
+
+        // 加载权限配置类
+        Class<?> rightInfoClass = classLoader.loadClass(String.format("org.demon.module.user.%s.%sConfig",
+                moduleName, StringUtils.uncapitalize(moduleName)));
+
+        // 获取类中所有字段
+        Field[] fields = rightInfoClass.getDeclaredFields();
+        if (null == fields) {
+            return;
+        }
+
+        Object obj = rightInfoClass.newInstance();
+        List<Right> rights = new ArrayList<>();
+
+        for (Field field : fields) {
+            String name = field.getName();
+            if (name.startsWith(RIGHT_PREFIX)) {
+                Object value = field.get(obj);
+                if (null != value) {
+                    @SuppressWarnings("rawtypes")
+                    Pair<String, String> p = (Pair<String, String>) value;
+                    Object rightName = p.getValue0();
+                    Object displayName = p.getValue1();
+
+                    Right right = new Right(rightName.toString(), 1, displayName.toString(), moduleName);
+                    rights.add(right);
+                }
+            }
+        }
+
+        if (rights.size() == 0) {
+            return;
+        }
+
+        // 获取旧的权限
+        List<Right> oldRights = rightApi.getRights(new Env());
+        // 需要删除的权限
+        List<Right> removeRights = new LinkedList<>();
+        // 需要新增的权限
+        List<Right> addRights = new LinkedList<>();
+
+        // 校验旧的权限是否需要删除
+        checkId(oldRights, rights, removeRights, addRights);
+
+        // 设置权限
+//        if ()
+
+    }
+
+    /**
+     * save item which in oldRights but no in rights to removeRights
+     * @param oldRights 旧权限
+     * @param rights 新权限
+     * @param removeRights 需要删除的权限
+     * @param addRights 需要新增的权限
+     */
+    private void checkId(List<Right> oldRights, List<Right> rights, List<Right> removeRights, List<Right> addRights) {
+        for (Right oldR : oldRights) {
+            boolean in = false;
+            for (Right r : rights) {
+                if (oldR.name.equals(r.name)) {
+                    in = true;
+                    break;
+                }
+            }
+            if (!in) {
+                removeRights.add(oldR);
+            }
+        }
+
+        // 检查旧权限里面没有的权限,放到新增的权限列表中
+        for (Right r : rights) {
+            for (Right oldR : oldRights) {
+                if (r.name.equals(oldR.name)) {
+                    break;
+                }
+                // 旧权限里面没有该权限
+                addRights.add(r);
+            }
+        }
     }
 }

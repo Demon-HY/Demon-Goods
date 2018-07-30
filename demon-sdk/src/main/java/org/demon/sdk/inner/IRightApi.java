@@ -1,6 +1,9 @@
 package org.demon.sdk.inner;
 
+import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
+
+import java.util.List;
 
 /**
  * 内部模块访问接口
@@ -8,4 +11,14 @@ import org.demon.sdk.environment.Env;
  * @author Demon-HY
  */
 public interface IRightApi {
+
+    /**
+     * 获取所有角色
+     * @param env
+     * @return
+     * @throws Exception
+     */
+    List<Right> getRights(Env env) throws Exception;
+
+
 }

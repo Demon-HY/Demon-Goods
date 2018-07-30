@@ -70,7 +70,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
 		StringBuilder sql = getSelectFrom(entityClass);
 		if (sql == null) return null;
-		sql.append(criteria.getCriteriaSQL());
+		if (criteria != null) {
+			sql.append(criteria.getCriteriaSQL());
+		}
 		if (debug) {
 			System.out.println(sql.toString()); return null;
 		}
