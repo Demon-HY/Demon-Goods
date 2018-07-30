@@ -101,6 +101,8 @@ public class AuthApi implements IAuthApi {
 
         // remove token
         tokenDao.removeById(env.login.token.id, Token.class);
+        authRedisApi.clearLoginInfo(env.token);
+
 
         // 发送退出登录后事件
         PostLogoutEvent postLogoutEvent = new PostLogoutEvent(this, env);

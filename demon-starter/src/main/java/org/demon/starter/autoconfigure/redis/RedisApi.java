@@ -12,8 +12,18 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RedisApi {
+    
+    private RedisTemplate redisTemplate;
 
-    public static boolean set(RedisTemplate redisTemplate, final String key, final String value) {
+    public RedisTemplate getRedisTemplate() {
+        return redisTemplate;
+    }
+
+    public RedisApi(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    public boolean set(final String key, final String value) {
         return (boolean) redisTemplate.execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer serializer = redisTemplate.getStringSerializer();
             connection.set(serializer.serialize(key), serializer.serialize(value));
@@ -21,12 +31,12 @@ public class RedisApi {
         });
     }
 
-    public static boolean set(RedisTemplate redisTemplate, final String key, final String value, long expire) {
-        set(redisTemplate, key, value);
-        return expire(redisTemplate, key, expire);
+    public boolean set(final String key, final String value, long expire) {
+        set(key, value);
+        return expire(key, expire);
     }
 
-    public static String get(RedisTemplate redisTemplate, final String key) {
+    public String get(final String key) {
         try {
             return (String) redisTemplate.execute((RedisCallback<String>) connection -> {
                 RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
@@ -38,7 +48,7 @@ public class RedisApi {
         }
     }
 
-    public static Object getBean(RedisTemplate redisTemplate, final String key) {
+    public Object getBean(final String key) {
         try {
             return redisTemplate.execute((RedisConnection connection) -> {
                 RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
@@ -50,38 +60,38 @@ public class RedisApi {
         }
     }
 
-    public static boolean expire(RedisTemplate redisTemplate, final String key, long expire) {
+    public boolean expire(final String key, long expire) {
         return redisTemplate.expire(key, expire, TimeUnit.SECONDS);
     }
 
-    public static <T> boolean setList(RedisTemplate redisTemplate, String key, List<T> list) {
+    public <T> boolean setList(String key, List<T> list) {
         String value = JsonUtil.toJson(list);
-        return set(redisTemplate, key, value);
+        return set(key, value);
     }
 
-    public static <T> List<T> getList(RedisTemplate redisTemplate, String key, Class<T> clz) {
-        String json = get(redisTemplate, key);
+    public <T> List<T> getList(String key, Class<T> clz) {
+        String json = get(key);
         if (json != null) {
             return JsonUtil.toList(json, clz);
         }
         return null;
     }
 
-    public static boolean setBean(RedisTemplate redisTemplate, String key, Object obj, long expire) {
+    public boolean setBean(String key, Object obj, long expire) {
         String value = JsonUtil.toJson(obj);
-        set(redisTemplate, key, value);
-        return expire(redisTemplate, key, expire);
+        set(key, value);
+        return expire(key, expire);
     }
 
-    public static <T> T getBean(RedisTemplate redisTemplate, String key, Class<T> clz) {
-        String json = get(redisTemplate, key);
+    public <T> T getBean(String key, Class<T> clz) {
+        String json = get(key);
         if (json != null) {
             return JsonUtil.toBean(json, clz);
         }
         return null;
     }
 
-    public static long lpush(RedisTemplate redisTemplate, final String key, Object obj) {
+    public long lpush(final String key, Object obj) {
         final String value = JsonUtil.toJson(obj);
         return (long) redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
@@ -89,7 +99,7 @@ public class RedisApi {
         });
     }
 
-    public static long rpush(RedisTemplate redisTemplate, final String key, Object obj) {
+    public long rpush(final String key, Object obj) {
         final String value = JsonUtil.toJson(obj);
         return (long) redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
@@ -97,7 +107,7 @@ public class RedisApi {
         });
     }
 
-    public static String lpop(RedisTemplate redisTemplate, final String key) {
+    public String lpop(final String key) {
         return (String) redisTemplate.execute((RedisCallback<String>) connection -> {
             RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
             byte[] res = connection.lPop(serializer.serialize(key));
@@ -105,11 +115,11 @@ public class RedisApi {
         });
     }
 
-    public static Long incr(RedisTemplate redisTemplate, String key, long growthLength) {
+    public Long incr(String key, long growthLength) {
         return redisTemplate.opsForValue().increment(key, growthLength);
     }
 
-    public static boolean del(RedisTemplate redisTemplate, String key) {
+    public boolean del(String key) {
         return (boolean) redisTemplate.execute((RedisCallback<Boolean>) connection -> {
             RedisSerializer<String> serializer = redisTemplate.getStringSerializer();
             connection.del(serializer.serialize(key));
