@@ -2,6 +2,7 @@ package org.demon.module.role;
 
 import org.demon.sdk.entity.Role;
 import org.demon.sdk.entity.User;
+import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.demon.utils.db.DBUtils;
@@ -16,9 +17,9 @@ import java.util.List;
 public class RoleDaoImpl extends CommonDaoImpl<Role> {
 
 	@Resource
-	private JdbcTemplate jdbcTemplate;
+	private GenertedJdbcTemplate jdbcTemplate;
 
-	private JdbcTemplate getJdbcTemplate() {
+	private GenertedJdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
 
@@ -72,6 +73,6 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	}
 
 	public void addRole(Role role) {
-		insert(role);
+		role.id = insert(role);
 	}
 }

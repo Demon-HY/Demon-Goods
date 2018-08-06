@@ -5,6 +5,7 @@ import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.IRoleBaseApi;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -28,24 +29,26 @@ public class RoleBaseApi implements IRoleBaseApi {
 
         roleDao.addRole(role);
 
-        return null;
-    }
-
-    private void addRole(Env env, Role role) {
-
+        return role;
     }
 
     @Override
-    public Role editRole(Env env, Role role) throws Exception {
+    public Role editRole(Env env, Role role) {
         if (null == role) {
             throw new IllegalArgumentException();
         }
 
-        return null;
+        roleDao.update(role);
+
+        return role;
     }
 
     @Override
-    public boolean deleteRole(Env env, Long roleId) throws Exception {
-        return false;
+    public boolean deleteRole(Env env, Long roleId) {
+        if (ValidUtils.isBlank(roleId)) {
+            throw new IllegalArgumentException();
+        }
+
+        return roleDao.removeById(roleId, Role.class) == 1;
     }
 }

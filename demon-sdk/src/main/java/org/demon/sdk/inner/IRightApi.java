@@ -21,4 +21,15 @@ public interface IRightApi {
     List<Right> getRights(Env env) throws Exception;
 
 
+    /**
+     * 添加权限
+     * @param right
+     */
+    void setRight(Right right);
+
+    /**
+     * 删除权限
+     * @param right
+     */
+    void deleteRight(Right right);
 }

@@ -30,8 +30,13 @@ public class StringUtils {
 		return matcher.matches();
 	}
 
+	/**
+	 * 第一个字符大写
+	 * @param str
+	 * @return
+	 */
 	public static String uncapitalize(String str) {
-		return org.apache.commons.lang.StringUtils.uncapitalize(str);
+		return org.apache.commons.lang.StringUtils.capitalize(str);
 	}
 }
 

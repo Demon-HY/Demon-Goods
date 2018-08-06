@@ -18,10 +18,10 @@ import java.util.concurrent.CountDownLatch;
 @EnableTransactionManagement
 public class Main extends SpringBootServletInitializer {
 
-    @Bean
-    public CountDownLatch closeLatch() {
-        return new CountDownLatch(100);
-    }
+//    @Bean
+//    public CountDownLatch closeLatch() {
+//        return new CountDownLatch(100);
+//    }
 
     public static void main(String[] args) throws InterruptedException {
 

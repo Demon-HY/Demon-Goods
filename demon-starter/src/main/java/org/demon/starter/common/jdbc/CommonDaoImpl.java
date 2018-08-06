@@ -1,6 +1,7 @@
 package org.demon.starter.common.jdbc;
 
 import com.alibaba.fastjson.JSONObject;
+import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.MapUtils;
 import org.demon.utils.db.DBUtils;
@@ -31,9 +32,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Resource
-	private JdbcTemplate jdbcTemplate;
+	private GenertedJdbcTemplate jdbcTemplate;
 
-	private JdbcTemplate getJdbcTemplate() {
+	private GenertedJdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
 
@@ -69,7 +70,6 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
 		StringBuilder sql = DBUtils.getSelectFrom(entityClass);
 		if (sql == null) return null;
-		sql.append(criteria.getCriteriaSQL());
 
 		Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
 
@@ -166,7 +166,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			logger.debug("SQL: {}, Params: {}", sql, args.toArray());
 		}
 
-		return getJdbcTemplate().update(sql, args.toArray());
+		return getJdbcTemplate().updateGenerated(sql, args.toArray());
 	}
 
 	@Override
