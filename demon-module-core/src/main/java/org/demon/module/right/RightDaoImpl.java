@@ -2,6 +2,7 @@ package org.demon.module.right;
 
 import org.demon.sdk.entity.Right;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
+import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,7 @@ public class RightDaoImpl extends CommonDaoImpl<Right> {
     }
 
     public List<Right> getRights() {
-        return selectByCriteria(null, Right.class);
+        CommonDao.Criteria criteria = createCriteria();
+        return selectByCriteria(criteria, Right.class);
     }
 }

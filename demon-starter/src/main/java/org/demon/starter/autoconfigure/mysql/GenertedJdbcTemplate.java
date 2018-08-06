@@ -1,16 +1,25 @@
 package org.demon.starter.autoconfigure.mysql;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ParameterDisposer;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.sql.ResultSet;
 
 /**
  * 封装 JdbcTemplate
  */
 public class GenertedJdbcTemplate extends JdbcTemplate {
+
+
+    public GenertedJdbcTemplate(DataSource dataSource) {
+        super(dataSource);
+    }
 
     /**
      * 插入数据后,获取插入数据的自增ID

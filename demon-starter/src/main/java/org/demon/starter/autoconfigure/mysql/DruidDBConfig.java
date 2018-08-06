@@ -129,4 +129,8 @@ public class DruidDBConfig {
         return new DataSourceTransactionManager(dataSource());
     }
 
+    @Bean
+    public GenertedJdbcTemplate genertedJdbcTemplate() {
+        return new GenertedJdbcTemplate(dataSource());
+    }
 }

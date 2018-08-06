@@ -90,7 +90,7 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
                 .getSystemClassLoader();
 
         // 加载权限配置类
-        Class<?> rightInfoClass = classLoader.loadClass(String.format("org.demon.module.user.%s.%sConfig",
+        Class<?> rightInfoClass = classLoader.loadClass(String.format("org.demon.module.%s.%sConfig",
                 moduleName, StringUtils.uncapitalize(moduleName)));
 
         // 获取类中所有字段
@@ -166,6 +166,10 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
         }
 
         // 检查旧权限里面没有的权限,放到新增的权限列表中
+        if (oldRights.size() == 0) {
+            addRights.addAll(rights);
+            return;
+        }
         for (Right r : rights) {
             for (Right oldR : oldRights) {
                 if (r.name.equals(oldR.name)) {

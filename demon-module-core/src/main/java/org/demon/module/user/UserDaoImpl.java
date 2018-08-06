@@ -12,10 +12,10 @@ import javax.annotation.Resource;
 public class UserDaoImpl extends CommonDaoImpl<User> {
 
     @Resource
-    private GenertedJdbcTemplate jdbcTemplate;
+    private GenertedJdbcTemplate genertedJdbcTemplate;
 
-    private GenertedJdbcTemplate getJdbcTemplate() {
-        return jdbcTemplate;
+    private GenertedJdbcTemplate getGenertedJdbcTemplate() {
+        return genertedJdbcTemplate;
     }
 
     /**
