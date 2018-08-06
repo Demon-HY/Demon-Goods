@@ -128,4 +128,5 @@ public class DruidDBConfig {
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
+
 }

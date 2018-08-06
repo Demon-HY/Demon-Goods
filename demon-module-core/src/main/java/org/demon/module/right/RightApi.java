@@ -16,7 +16,24 @@ public class RightApi implements IRightApi {
 
     @Override
     public List<Right> getRights(Env env) {
-//        CommonDao.Criteria criteria = rightDao.createCriteria();
-        return rightDao.selectByCriteria(null, Right.class);
+        return rightDao.getRights();
+    }
+
+    @Override
+    public void setRight(Right right) {
+        if (right == null) {
+            throw new IllegalArgumentException();
+        }
+
+        rightDao.insert(right);
+    }
+
+    @Override
+    public void deleteRight(Right right) {
+        if (right == null) {
+            throw new IllegalArgumentException();
+        }
+
+        rightDao.removeById(right.rightId, Right.class);
     }
 }

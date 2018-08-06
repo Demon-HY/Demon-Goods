@@ -132,8 +132,15 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
         // 校验旧的权限是否需要删除
         checkId(oldRights, rights, removeRights, addRights);
 
-        // 设置权限
-//        if ()
+        // 设置新权限
+        for (Right right : addRights) {
+            rightApi.setRight(right);
+        }
+
+        // 删除旧权限
+        for (Right right : removeRights) {
+            rightApi.deleteRight(right);
+        }
 
     }
 

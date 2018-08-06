@@ -126,13 +126,4 @@ public class DESEncryptionUtils {
     public static String decryptToString(byte[] data, byte[] key) throws Exception {
         return new String(decrypt(data, key));
     }
-
-    public static void main(String[] args) throws Exception {
-        byte[] data = encrypt("P@ssw0rd".getBytes());
-        System.out.println("encode=" + new String(data));
-        data = decrypt(data);
-        System.out.println("decode=" + new String(data));
-
-        System.out.println(StringUtils.firstUpper("auth"));
-    }
 }
