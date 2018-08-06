@@ -132,7 +132,5 @@ public class DESEncryptionUtils {
         System.out.println("encode=" + new String(data));
         data = decrypt(data);
         System.out.println("decode=" + new String(data));
-
-        System.out.println(StringUtils.firstUpper("auth"));
     }
 }
