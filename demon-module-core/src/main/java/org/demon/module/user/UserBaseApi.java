@@ -8,7 +8,7 @@ import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.type.PostCreateUserEvent;
 import org.demon.sdk.event.type.PreCreateUserEvent;
 import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.inner.IUserBaseApi;
+import org.demon.sdk.inner.user.IUserBaseApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.crypto.SSHAUtils;

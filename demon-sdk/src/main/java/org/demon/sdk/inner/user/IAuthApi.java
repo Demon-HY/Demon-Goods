@@ -1,4 +1,4 @@
-package org.demon.sdk.inner;
+package org.demon.sdk.inner.user;
 
 import org.demon.sdk.entity.request.UserLoginVo;
 import org.demon.sdk.entity.vo.Login;

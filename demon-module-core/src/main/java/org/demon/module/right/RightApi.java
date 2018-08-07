@@ -2,10 +2,11 @@ package org.demon.module.right;
 
 import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.inner.IRightApi;
+import org.demon.sdk.inner.role.IRightApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class RightApi implements IRightApi {
     }
 
     @Override
-    public void setRight(Right right) {
+    public void setRight(Right right) throws SQLException {
         if (right == null) {
             throw new IllegalArgumentException();
         }

@@ -12,7 +12,7 @@ import org.demon.sdk.event.type.PostLogoutEvent;
 import org.demon.sdk.event.type.PreLoginEvent;
 import org.demon.sdk.event.type.PreLogoutEvent;
 import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.inner.IAuthApi;
+import org.demon.sdk.inner.user.IAuthApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.datetime.DateUtils;
 import org.slf4j.Logger;

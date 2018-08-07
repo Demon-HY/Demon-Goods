@@ -1,4 +1,4 @@
-package org.demon.sdk.inner;
+package org.demon.sdk.inner.user;
 
 import org.demon.sdk.environment.Env;
 
@@ -7,5 +7,5 @@ import org.demon.sdk.environment.Env;
  *
  * @author Demon-HY
  */
-public interface IIdCardApi {
+public interface ITokenApi {
 }

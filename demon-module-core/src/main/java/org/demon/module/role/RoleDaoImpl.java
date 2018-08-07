@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -72,7 +73,7 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 		return getJdbcTemplate().query(sb.toString(), new BeanPropertyRowMapper<>(User.class), role.id);
 	}
 
-	public void addRole(Role role) {
+	public void addRole(Role role) throws SQLException {
 		role.id = insert(role);
 	}
 }

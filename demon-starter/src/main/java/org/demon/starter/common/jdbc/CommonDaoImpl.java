@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -133,7 +134,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	}
 
 	@Override
-	public int insert(T entity) {
+	public int insert(T entity) throws SQLException {
 		Field[] fields = entity.getClass().getDeclaredFields();
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
 
@@ -143,10 +144,20 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		StringBuilder sql2 = new StringBuilder(" VALUES(");
 		List<Object> args = new ArrayList<>();
 
+        String pkName = DBUtils.getPrimyName(entity.getClass());
+
+        // 主键ID字段,为了回写自增ID到对象中
+        Field pkField = null;
+
 		for (Field field : fields) {
 			if (field.getAnnotation(Column.class) == null) continue;
 
 			String key = field.getName();
+			if (key.equals(pkName)) {
+                pkField = field;
+			    continue;
+			}
+
 			String name = field.getAnnotation(Column.class).name();
 			Object arg = obj.get(key);
 			if (ValidUtils.isEmpty(arg)) continue;
@@ -166,7 +177,30 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			logger.debug("SQL: {}, Params: {}", sql, args.toArray());
 		}
 
-		return getJdbcTemplate().updateGenerated(sql, args.toArray());
+		int generatedId = getJdbcTemplate().updateGenerated(sql, args.toArray());
+
+        if (pkField != null) {
+            try {
+                pkField.setAccessible(true);
+                if (pkField.getType() == Integer.class) {
+                    pkField.setInt(entity, generatedId);
+                }
+                else if (pkField.getType() == Long.class) {
+                    pkField.setLong(entity, Integer.toUnsignedLong(generatedId));
+                }
+                else if (pkField.getType() == String.class) {
+                    pkField.set(entity, String.valueOf(generatedId));
+                } else {
+                    logger.warn("主键类型目前只支持 Integer/Long/String, 实体类: {} 的主键类型为: {}",
+                            entity.getClass().getName(), pkField.getType());
+                    throw new SQLException("主键类型目前只支持 Integer/Long/String");
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+		return generatedId;
 	}
 
 	@Override

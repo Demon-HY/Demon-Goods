@@ -1,8 +1,9 @@
-package org.demon.sdk.inner;
+package org.demon.sdk.inner.role;
 
 import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public interface IRightApi {
      * 添加权限
      * @param right
      */
-    void setRight(Right right);
+    void setRight(Right right) throws SQLException;
 
     /**
      * 删除权限

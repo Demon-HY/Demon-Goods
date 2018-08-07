@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.net.URLClassLoader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,13 +67,12 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
         }
         for (String moduleName : MODULE_PROPERTY_FILE_NAME.split(",")) {
             try {
-                try {
-                    loadModuleRight(moduleName);
-                } catch (IllegalAccessException | InstantiationException e) {
-                    logger.error("获取对象实例失败", e);
-                }
+                loadModuleRight(moduleName);
             } catch (ClassNotFoundException e) {
                 logger.error("加载模块 {} 类失败.", moduleName, e);
+                System.exit(-1);
+            } catch (Exception e) {
+                logger.error("系统异常", e);
                 System.exit(-1);
             }
         }
@@ -85,21 +85,29 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
      * 加载模块权限
      * @param moduleName 模块名
      */
-    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
         URLClassLoader classLoader = (URLClassLoader) ClassLoader
                 .getSystemClassLoader();
 
         // 加载权限配置类
-        Class<?> rightInfoClass = classLoader.loadClass(String.format("org.demon.module.%s.%sConfig",
-                moduleName, StringUtils.uncapitalize(moduleName)));
+        Field[] fields;
+        Object obj;
+        try {
+            Class<?> rightInfoClass = classLoader.loadClass(String.format("org.demon.module.%s.%sConfig",
+                    moduleName, StringUtils.uncapitalize(moduleName)));
 
-        // 获取类中所有字段
-        Field[] fields = rightInfoClass.getDeclaredFields();
-        if (null == fields) {
+            // 获取类中所有字段
+            fields = rightInfoClass.getDeclaredFields();
+            if (null == fields) {
+                return;
+            }
+
+            obj = rightInfoClass.newInstance();
+        } catch (IllegalAccessException | InstantiationException e) {
+            logger.error("获取对象实例失败", e);
             return;
         }
 
-        Object obj = rightInfoClass.newInstance();
         List<Right> rights = new ArrayList<>();
 
         for (Field field : fields) {

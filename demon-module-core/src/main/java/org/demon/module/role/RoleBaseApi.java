@@ -3,12 +3,11 @@ package org.demon.module.role;
 import org.demon.sdk.entity.Role;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.inner.IRoleBaseApi;
+import org.demon.sdk.inner.role.IRoleBaseApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 @Service
 public class RoleBaseApi implements IRoleBaseApi {

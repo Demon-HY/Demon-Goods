@@ -1,5 +1,6 @@
 package org.demon.starter.common.jdbc;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public interface CommonDao<T> {
      * @param entity 要保存的对象实体
      * @return
      */
-    int insert(T entity);
+    int insert(T entity) throws SQLException;
 
     /**
      * 保存一个对象为一条数据库记录
