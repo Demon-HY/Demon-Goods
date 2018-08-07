@@ -15,6 +15,8 @@ public class RoleConfig extends DefaultConfig {
     public static final Pair<String, String> RIGHT_CHECK_ROLE;
     /** 创建角色需要该权限 */
     public static final Pair<String, String> RIGHT_CREATE_ROLE;
+    /** 编辑角色需要该权限 */
+    public static final Pair<String, String> RIGHT_EDIT_ROLE;
     /** 删除角色需要该权限 */
     public static final Pair<String, String> RIGHT_DELETE_ROLE;
     /** 设置角色权限需要该权限 */
@@ -33,6 +35,7 @@ public class RoleConfig extends DefaultConfig {
     static {
         RIGHT_CHECK_ROLE = new Pair<>("RIGHT_CHECK_ROLE", "查看角色");
         RIGHT_CREATE_ROLE = new Pair<>("RIGHT_CREATE_ROLE", "创建角色");
+        RIGHT_EDIT_ROLE = new Pair<>("RIGHT_EDIT_ROLE", "编辑角色");
         RIGHT_DELETE_ROLE = new Pair<>("RIGHT_DELETE_ROLE", "删除角色");
         RIGHT_SET_ROLE_RIGHT = new Pair<>("RIGHT_SET_ROLE_RIGHT", "设置角色权限");
         RIGHT_SET_USER_ROLE = new Pair<>("RIGHT_SET_USER_ROLE", "设置用户角色");

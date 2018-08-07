@@ -1,5 +1,6 @@
 package org.demon.module.role;
 
+import org.demon.module.right.RightUtils;
 import org.demon.sdk.entity.Role;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
@@ -26,6 +27,9 @@ public class RoleBaseApi implements IRoleBaseApi {
             throw new LogicalException(RetCodeEnum.ERR_ROLE_EXIST);
         }
 
+        // 验证权限
+        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CREATE_ROLE.getValue0());
+
         roleDao.addRole(role);
 
         return role;
@@ -37,6 +41,9 @@ public class RoleBaseApi implements IRoleBaseApi {
             throw new IllegalArgumentException();
         }
 
+        // 验证权限
+        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_EDIT_ROLE.getValue0());
+
         roleDao.update(role);
 
         return role;
@@ -47,6 +54,9 @@ public class RoleBaseApi implements IRoleBaseApi {
         if (ValidUtils.isBlank(roleId)) {
             throw new IllegalArgumentException();
         }
+
+        // 验证权限
+        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_DELETE_ROLE.getValue0());
 
         return roleDao.removeById(roleId, Role.class) == 1;
     }
