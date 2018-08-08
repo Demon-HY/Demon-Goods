@@ -30,7 +30,7 @@ public interface CommonDao<T> {
      * @param entityClass 类型
      * @return 将记录转换成的po类的实例的列表
      */
-    List<T> selectByCriteria(Criteria criteria, Class<T> entityClass);
+    List<T> selectByCriteria(Criteria criteria, Class<T> entityClass) throws SQLException;
 
     /**
      * 根据查询条件返回一条数据，查询多条返回 null
@@ -38,7 +38,7 @@ public interface CommonDao<T> {
      * @param criteria    查询条件
      * @param entityClass 类型
      */
-    T selectOneByCriteria(Criteria criteria, Class<T> entityClass);
+    T selectOneByCriteria(Criteria criteria, Class<T> entityClass) throws SQLException;
 
     /**
      * 查询记录数
@@ -62,7 +62,7 @@ public interface CommonDao<T> {
      * 如果对象主键已经存在，则会更新
      *
      * @param entity 要保存的对象实体
-     * @return
+     * @return 插入数据的自增ID
      */
     int insert(T entity) throws SQLException;
 

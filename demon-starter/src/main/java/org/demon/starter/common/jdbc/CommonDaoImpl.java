@@ -68,7 +68,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	}
 
 	@Override
-	public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
+	public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) throws SQLException {
 		StringBuilder sql = DBUtils.getSelectFrom(entityClass);
 		if (sql == null) return null;
 
@@ -82,7 +82,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	}
 
     @Override
-    public T selectOneByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
+    public T selectOneByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) throws SQLException {
         StringBuilder sql = DBUtils.getSelectFrom(entityClass);
         if (sql == null) return null;
         sql.append(criteria.getCriteriaSQL());

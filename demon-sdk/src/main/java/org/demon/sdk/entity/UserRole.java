@@ -15,7 +15,7 @@ public class UserRole implements Serializable {
     // 主键
     @Id
     @Column(name = "id")
-    public Integer id;
+    public Long id;
 
     // 用户ID
     @Column(name = "user_id")
@@ -33,7 +33,7 @@ public class UserRole implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

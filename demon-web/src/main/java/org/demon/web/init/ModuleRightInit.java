@@ -85,7 +85,7 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
      * 加载模块权限
      * @param moduleName 模块名
      */
-    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, InstantiationException, SQLException {
+    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, SQLException {
         URLClassLoader classLoader = (URLClassLoader) ClassLoader
                 .getSystemClassLoader();
 
@@ -130,6 +130,8 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
             return;
         }
 
+        Env env = new Env();
+
         // 获取旧的权限
         List<Right> oldRights = rightApi.getRights(new Env());
         // 需要删除的权限
@@ -138,54 +140,18 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
         List<Right> addRights = new LinkedList<>();
 
         // 校验旧的权限是否需要删除
-        checkId(oldRights, rights, removeRights, addRights);
+        rightApi.checkId(oldRights, rights, removeRights, addRights);
 
         // 设置新权限
         for (Right right : addRights) {
-            rightApi.setRight(right);
+            rightApi.createRight(env, right);
         }
 
         // 删除旧权限
         for (Right right : removeRights) {
-            rightApi.deleteRight(right);
+            rightApi.deleteRight(env, right);
         }
 
     }
 
-    /**
-     * save item which in oldRights but no in rights to removeRights
-     * @param oldRights 旧权限
-     * @param rights 新权限
-     * @param removeRights 需要删除的权限
-     * @param addRights 需要新增的权限
-     */
-    private void checkId(List<Right> oldRights, List<Right> rights, List<Right> removeRights, List<Right> addRights) {
-        for (Right oldR : oldRights) {
-            boolean in = false;
-            for (Right r : rights) {
-                if (oldR.name.equals(r.name)) {
-                    in = true;
-                    break;
-                }
-            }
-            if (!in) {
-                removeRights.add(oldR);
-            }
-        }
-
-        // 检查旧权限里面没有的权限,放到新增的权限列表中
-        if (oldRights.size() == 0) {
-            addRights.addAll(rights);
-            return;
-        }
-        for (Right r : rights) {
-            for (Right oldR : oldRights) {
-                if (r.name.equals(oldR.name)) {
-                    break;
-                }
-                // 旧权限里面没有该权限
-                addRights.add(r);
-            }
-        }
-    }
 }

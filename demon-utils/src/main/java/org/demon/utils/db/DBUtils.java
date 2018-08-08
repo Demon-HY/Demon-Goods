@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 
 /**
  * Mysql 工具类
@@ -15,12 +16,14 @@ public class DBUtils {
     /**
      * 获取查询的字段信息
      *
-     * @return [select ... from ]
+     * @return [select ... from table]
      */
-    public static StringBuilder getSelectFrom(Class<?> entityClass) {
+    public static StringBuilder getSelectFrom(Class<?> entityClass) throws SQLException {
         String tableName = getTableName(entityClass);
         String fieldNames = getFields(tableName, entityClass);
-        if (fieldNames == null || fieldNames.length() < 1) return null;
+        if (ValidUtils.isBlank(fieldNames)) {
+            throw new SQLException("get table fields failed, fieldNames is null.");
+        }
 
         StringBuilder sql = new StringBuilder("SELECT " + fieldNames + " FROM ");
         sql.append(getTableName(entityClass)).append(" ");

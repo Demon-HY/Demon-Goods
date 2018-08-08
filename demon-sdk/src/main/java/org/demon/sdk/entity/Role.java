@@ -17,7 +17,7 @@ public class Role implements Serializable {
 	// 角色ID
 	@Id
 	@Column(name = "id")
-	public Integer id;
+	public Long id;
 
 	// 角色名称
 	@Column(name = "name")
@@ -42,11 +42,11 @@ public class Role implements Serializable {
 
 	public Role(){}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

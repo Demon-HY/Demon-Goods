@@ -15,6 +15,7 @@ import java.util.concurrent.CountDownLatch;
 //@EnableCaching
 // 异步调用
 //@EnableAsync
+// 开启事务管理
 @EnableTransactionManagement
 public class Main extends SpringBootServletInitializer {
 

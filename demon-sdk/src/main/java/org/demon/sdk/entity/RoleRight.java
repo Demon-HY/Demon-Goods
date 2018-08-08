@@ -17,7 +17,7 @@ public class RoleRight implements Serializable {
 	// 主键
 	@Id
 	@Column(name = "id")
-	public Integer id;
+	public Long id;
 
 	// 角色ID
 	@Column(name = "role_id")
@@ -30,11 +30,16 @@ public class RoleRight implements Serializable {
 
 	public RoleRight(){}
 
-	public Integer getId() {
+	public RoleRight(Long roleId, Long rightId) {
+		this.roleId = roleId;
+		this.rightId = rightId;
+	}
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

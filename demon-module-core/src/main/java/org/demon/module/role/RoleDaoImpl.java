@@ -74,6 +74,6 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	}
 
 	public void addRole(Role role) throws SQLException {
-		role.id = insert(role);
+		insert(role);
 	}
 }

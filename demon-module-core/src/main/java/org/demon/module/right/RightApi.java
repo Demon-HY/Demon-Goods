@@ -1,12 +1,19 @@
 package org.demon.module.right;
 
+import org.demon.module.role.RoleDaoImpl;
 import org.demon.sdk.entity.Right;
+import org.demon.sdk.entity.Role;
 import org.demon.sdk.environment.Env;
+import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.role.IRightApi;
+import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -14,27 +21,111 @@ public class RightApi implements IRightApi {
 
     @Autowired
     private RightDaoImpl rightDao;
+    @Autowired
+    private RoleDaoImpl roleDao;
 
     @Override
-    public List<Right> getRights(Env env) {
+    public List<Right> getRights(Env env) throws Exception {
+        // 校验权限
+        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
+
         return rightDao.getRights();
     }
 
     @Override
-    public void setRight(Right right) throws SQLException {
+    public List<Right> getRoleRights(Env env, Long roleId) throws Exception {
+        if (roleId == null) {
+            throw new IllegalArgumentException();
+        }
+
+        // 校验权限
+        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_ROLE_RIGHT.getValue0());
+
+        return rightDao.getRoleRights(roleId);
+    }
+
+    @Override
+    public void createRight(Env env, Right right) throws SQLException {
         if (right == null) {
             throw new IllegalArgumentException();
         }
+
+        // 校验权限
+        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CREATE_RIGHT.getValue0());
 
         rightDao.insert(right);
     }
 
     @Override
-    public void deleteRight(Right right) {
+    public void deleteRight(Env env, Right right) {
         if (right == null) {
             throw new IllegalArgumentException();
         }
 
+        // 校验权限
+        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_DELETE_RIGHT.getValue0());
+
         rightDao.removeById(right.rightId, Right.class);
+    }
+
+    @Override
+    @Transactional
+    public boolean setRoleRight(Env env, Long roleId, List<Right> rights) throws Exception {
+        if (ValidUtils.isBlank(roleId) || ValidUtils.isBlank(rights)) {
+            throw new IllegalArgumentException();
+        }
+
+        Role role = roleDao.getRole(roleId);
+        if (role == null) {
+            throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
+        }
+
+        // 获取旧的权限
+        List<Right> oldRights = getRoleRights(env, roleId);
+        // 需要删除的权限
+        List<Right> removeRights = new LinkedList<>();
+        // 需要新增的权限
+        List<Right> addRights = new LinkedList<>();
+
+        // 校验旧的权限是否需要删除
+        checkId(oldRights, rights, removeRights, addRights);
+
+
+        for (Right addRight : addRights) {
+            rightDao.setRoleRight(roleId, addRight);
+        }
+
+        return false;
+    }
+
+    @Override
+    public void checkId(List<Right> oldRights, List<Right> rights, List<Right> removeRights, List<Right> addRights) {
+        for (Right oldR : oldRights) {
+            boolean in = false;
+            for (Right r : rights) {
+                if (oldR.name.equals(r.name)) {
+                    in = true;
+                    break;
+                }
+            }
+            if (!in) {
+                removeRights.add(oldR);
+            }
+        }
+
+        // 检查旧权限里面没有的权限,放到新增的权限列表中
+        if (oldRights.size() == 0) {
+            addRights.addAll(rights);
+            return;
+        }
+        for (Right r : rights) {
+            for (Right oldR : oldRights) {
+                if (r.name.equals(oldR.name)) {
+                    break;
+                }
+                // 旧权限里面没有该权限
+                addRights.add(r);
+            }
+        }
     }
 }

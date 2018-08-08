@@ -1,5 +1,6 @@
 package org.demon.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,7 +171,8 @@ public class ValidUtils {
 
         // 如果不为null，需要处理几种特殊对象类型
         if (obj instanceof String) {
-            return obj.equals("") || obj.equals("null");
+            String _obj = (String) obj;
+            return StringUtils.isBlank(_obj);
         } else if (obj instanceof Collection) {
             // 对象为集合
             Collection coll = (Collection) obj;
