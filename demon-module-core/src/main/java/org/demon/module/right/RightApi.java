@@ -23,6 +23,8 @@ public class RightApi implements IRightApi {
     private RightDaoImpl rightDao;
     @Autowired
     private RoleDaoImpl roleDao;
+    @Autowired
+    private RoleRightDaoImpl roleRightDao;
 
     @Override
     public List<Right> getRights(Env env) throws Exception {
@@ -92,7 +94,7 @@ public class RightApi implements IRightApi {
 
 
         for (Right addRight : addRights) {
-            rightDao.setRoleRight(roleId, addRight);
+            roleRightDao.setRoleRight(roleId, addRight);
         }
 
         return false;
