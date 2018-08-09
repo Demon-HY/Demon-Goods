@@ -19,17 +19,17 @@ public class UserRole implements Serializable {
 
     // 用户ID
     @Column(name = "user_id")
-    public Integer userId;
+    public Long userId;
 
     // 角色ID
     @Column(name = "role_id")
-    public Integer roleId;
+    public Long roleId;
 
 
     public UserRole() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -37,19 +37,19 @@ public class UserRole implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 

@@ -15,6 +15,8 @@ public class RoleBaseApi implements IRoleBaseApi {
 
     @Autowired
     private RoleDaoImpl roleDao;
+    @Autowired
+    private RightUtils rightUtils;
 
     @Override
     public Role createRole(Env env, Role role) throws Exception {
@@ -28,7 +30,7 @@ public class RoleBaseApi implements IRoleBaseApi {
         }
 
         // 验证权限
-        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CREATE_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CREATE_ROLE.getValue0());
 
         roleDao.addRole(role);
 
@@ -36,13 +38,13 @@ public class RoleBaseApi implements IRoleBaseApi {
     }
 
     @Override
-    public Role editRole(Env env, Role role) {
+    public Role editRole(Env env, Role role) throws Exception {
         if (null == role) {
             throw new IllegalArgumentException();
         }
 
         // 验证权限
-        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_EDIT_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_EDIT_ROLE.getValue0());
 
         roleDao.update(role);
 
@@ -50,13 +52,13 @@ public class RoleBaseApi implements IRoleBaseApi {
     }
 
     @Override
-    public boolean deleteRole(Env env, Long roleId) {
+    public boolean deleteRole(Env env, Long roleId) throws Exception {
         if (ValidUtils.isBlank(roleId)) {
             throw new IllegalArgumentException();
         }
 
         // 验证权限
-        RightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_DELETE_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_DELETE_ROLE.getValue0());
 
         return roleDao.removeById(roleId, Role.class) == 1;
     }

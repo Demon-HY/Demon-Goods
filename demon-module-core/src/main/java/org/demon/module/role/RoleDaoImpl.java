@@ -29,7 +29,7 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	 * @param roleName
 	 * @return
 	 */
-    public Role getRole(String roleName) {
+    public Role getRole(String roleName) throws SQLException {
 		CommonDao.Criteria criteria = this.createCriteria();
 		criteria.eq("name", roleName);
 
@@ -45,7 +45,7 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	 * @param userId 用户ID
 	 * @return
 	 */
-	public List<Role> getUserRoles(Long userId) {
+	public List<Role> getUserRoles(Long userId) throws SQLException {
 		StringBuilder sb = DBUtils.getSelectFrom(Role.class);
 		sb.append(" role left join role_user on role.`id`=role_user.`role_id` where role_user.`user_id`=? ");
 
@@ -56,7 +56,7 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	 * 获取所有角色
 	 * @return
 	 */
-	public List<Role> getRoles() {
+	public List<Role> getRoles() throws SQLException {
 		CommonDao.Criteria criteria = createCriteria();
 		return selectByCriteria(criteria, Role.class);
 	}
@@ -66,7 +66,7 @@ public class RoleDaoImpl extends CommonDaoImpl<Role> {
 	 * @param role 角色信息
 	 * @return
 	 */
-	public List<User> getRoleUsers(Role role) {
+	public List<User> getRoleUsers(Role role) throws SQLException {
 		StringBuilder sb = DBUtils.getSelectFrom(User.class);
 		sb.append(" user left join role_user on role.`id`=role_user.`role_id` where role.user.`role_id=? ");
 

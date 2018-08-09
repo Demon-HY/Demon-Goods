@@ -10,7 +10,7 @@ import java.util.Map;
  * @author monitor
  *
  */
-public class LogicalException extends Exception {
+public class ServiceException extends Exception {
     
     private static final long serialVersionUID = -2247331292377127222L;
     
@@ -18,7 +18,7 @@ public class LogicalException extends Exception {
     public String errMsg;
     public Map<String, Object> reaultMap;
     
-    public LogicalException(String stat, String errMsg) {
+    public ServiceException(String stat, String errMsg) {
         super(stat + "\t" + errMsg);
         this.stat = stat;
         this.errMsg = errMsg;

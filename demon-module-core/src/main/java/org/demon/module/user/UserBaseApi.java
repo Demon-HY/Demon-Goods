@@ -31,6 +31,8 @@ public class UserBaseApi implements IUserBaseApi {
     private UserDaoImpl userDao;
     @Autowired
     private ApplicationContext applicationContext;
+    @Autowired
+    private RightUtils rightUtils;
 
     @Override
     public User createUser(Env env, UserCreateVo userCreateVo) throws Exception {
@@ -38,7 +40,7 @@ public class UserBaseApi implements IUserBaseApi {
         userQueryApi.checkPasswordIsLegal(userCreateVo.password);
 
         // TODO 校验权限,内部代码还未实现
-        RightUtils.checkRight(env, UserConfig.MODULE_NAME, UserConfig.RIGHT_CREATE_USER.getValue0());
+        rightUtils.checkRight(env, UserConfig.MODULE_NAME, UserConfig.RIGHT_CREATE_USER.getValue0());
 
         AuthUtils.checkAccount("name", userCreateVo.name);
 

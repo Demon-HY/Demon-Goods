@@ -17,13 +17,13 @@ public interface IRightApi {
      * 创建权限
      * @param right
      */
-    void createRight(Env env, Right right) throws SQLException;
+    void createRight(Env env, Right right) throws Exception;
 
     /**
      * 删除权限
      * @param right
      */
-    void deleteRight(Env env, Right right);
+    void deleteRight(Env env, Right right) throws Exception;
 
     /**
      * 设置角色权限
@@ -59,4 +59,14 @@ public interface IRightApi {
      * @throws Exception
      */
     List<Right> getRoleRights(Env env, Long roleId) throws Exception;
+
+    /**
+     * 获取权限
+     * @param env
+     * @param rightName 权限名
+     * @return
+     */
+    Right getRight(Env env, String rightName) throws Exception;
+
+
 }

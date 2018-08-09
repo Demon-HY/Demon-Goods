@@ -7,6 +7,7 @@ package org.demon.sdk.utils;
  * 300XXX - 用户
  * 301XXX - 鉴权
  * 302XXX - 角色
+ * 303XXX - 权限
  */
 public enum RetCodeEnum {
 
@@ -43,7 +44,7 @@ public enum RetCodeEnum {
     ERR_INIT_SERVERADMIN_USER("不能删除系统初始创建的serverAdmin用户", 300020),
     ERR_USER_DELETE("用户已被删除", 300021),
 
-    // 鉴权,
+    // 鉴权
     ERR_TOKEN("无效令牌", 301001),
     ERR_PHONE_ALREADY_BOUND("手机号已经被绑定", 301002),
     ERR_SEND_CODE_FREQUENTLY("请不要重复发送验证码", 301003),
@@ -61,12 +62,17 @@ public enum RetCodeEnum {
     ERR_ILLEGAL_PHONE_ACCOUNT("非法手机号", 301015),
     ERR_TOKEN_UID_MISMATCHING("登录的用户与新建token用户不为一个用户", 301016),
 
+    // 角色
     ERR_ROLE_NOT_FOUND("角色不存在", 302001),
     ERR_USER_NOT_HAS_THE_ROLE("用户没有该角色", 302002),
     ERR_ROLE_EXIST("角色已存在", 302003),
     ERR_ROLE_RIGHT_CONFLICT("角色权限冲突", 302004),
     ERR_ROLE_RIGHT_INIT_FAILED("初始化角色权限错误", 302005),
-    ERR_RIGHT_INVALID("权限参数不合法", 302006),
+    ERR_USER_NOT_ROLE("用户没有角色", 302006),
+
+    // 权限
+    ERR_RIGHT_INVALID("权限参数不合法", 303001),
+    ERR_RIGHT_NOT_FOUND("权限不存在", 303002),
 
     ;
 
@@ -78,26 +84,18 @@ public enum RetCodeEnum {
         this.retCode = retCode;
     }
 
-//    public String getMessage() {
-//        return message;
-//    }
+//    public static String findNameByValue(Integer value){
+//        if (value == null) {
+//            return null;
+//        }
+//        for(org.demon.sdk.utils.RetCodeEnum retCodeEnum : RetCodeEnum.values()){
+//            if(retCodeEnum.retCode.equals(value)){
+//                return retCodeEnum.message;
+//            }
+//        }
 //
-//    public Integer getRetCode() {
-//        return retCode;
+//        return null;
 //    }
-
-    public static String findNameByValue(Integer value){
-        if (value == null) {
-            return null;
-        }
-        for(org.demon.sdk.utils.RetCodeEnum retCodeEnum : RetCodeEnum.values()){
-            if(retCodeEnum.retCode.equals(value)){
-                return retCodeEnum.message;
-            }
-        }
-
-        return null;
-    }
 
     public static RetCodeEnum getRetCodeEnum(Integer retCode) {
         if (retCode == null) {

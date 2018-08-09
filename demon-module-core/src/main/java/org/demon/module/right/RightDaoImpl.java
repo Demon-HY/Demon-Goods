@@ -1,6 +1,7 @@
 package org.demon.module.right;
 
 import org.demon.sdk.entity.Right;
+import org.demon.sdk.entity.Role;
 import org.demon.sdk.entity.RoleRight;
 import org.demon.sdk.entity.User;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
@@ -46,4 +47,10 @@ public class RightDaoImpl extends CommonDaoImpl<Right> {
     }
 
 
+    public Right getRight(String rightName) throws SQLException {
+        CommonDao.Criteria criteria = this.createCriteria();
+        criteria.eq("name", rightName);
+
+        return selectOneByCriteria(criteria, Right.class);
+    }
 }

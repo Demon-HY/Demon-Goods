@@ -4,7 +4,6 @@ import org.demon.sdk.entity.Role;
 import org.demon.sdk.entity.vo.RoleUserVo;
 import org.demon.sdk.entity.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.exception.LogicalException;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface IRoleQueryApi {
      * @param env
      * @return
      */
-    List<Role> getRoles(Env env);
+    List<Role> getRoles(Env env) throws Exception;
 
     /**
      * 获取角色信息
@@ -28,7 +27,7 @@ public interface IRoleQueryApi {
      * @param roleName 角色名
      * @return
      */
-    Role getRole(Env env, String roleName) throws IllegalAccessException;
+    Role getRole(Env env, String roleName) throws Exception;
 
     /**
      * 获取角色信息
@@ -37,7 +36,7 @@ public interface IRoleQueryApi {
      * @param roleId 角色ID
      * @return
      */
-    Role getRole(Env env, Long roleId) throws IllegalAccessException;
+    Role getRole(Env env, Long roleId) throws Exception;
 
     /**
      * 枚举用户角色信息
@@ -46,10 +45,20 @@ public interface IRoleQueryApi {
      * @param userId 用户ID
      * @return
      */
-    UserRoleVo getUserRole(Env env, Long userId) throws IllegalAccessException;
+    UserRoleVo getUserRole(Env env, Long userId) throws Exception;
+
+    /**
+     * 枚举用户角色信息以及权限
+     *
+     * @param env
+     * @param userId 用户ID
+     * @return
+     */
+    UserRoleVo getUserRoleRight(Env env, Long userId) throws Exception;
 
     /**
      * 获取角色用户
+     *
      * @param env
      * @param roleId 角色ID
      * @return
@@ -58,11 +67,12 @@ public interface IRoleQueryApi {
 
     /**
      * 获取角色用户
+     *
      * @param env
      * @param roleName 角色名称
      * @return
      */
     RoleUserVo getRoleUser(Env env, String roleName) throws Exception;
 
-    RoleUserVo getRoleUser(Env env, Role role) throws LogicalException;
+    RoleUserVo getRoleUser(Env env, Role role) throws Exception;
 }

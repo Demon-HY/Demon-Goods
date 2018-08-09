@@ -29,7 +29,7 @@ public class LogicalException extends Exception implements Serializable {
 
     @Override
     public String toString() {
-        return "LogicalException{" +
+        return "ServiceException{" +
                 "stat=" + stat +
                 ", errMsg='" + errMsg + '\'' +
                 '}';

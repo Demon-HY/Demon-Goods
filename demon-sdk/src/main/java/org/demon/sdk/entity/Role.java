@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Demon-HY
@@ -13,7 +14,7 @@ import java.util.Date;
 @Table(name = "role")
 public class Role implements Serializable {
 
-	private static final long serialVersionUID = 8999024410943956008L;
+	private static final long serialVersionUID = -6409319496612103638L;
 	// 角色ID
 	@Id
 	@Column(name = "id")
@@ -38,6 +39,11 @@ public class Role implements Serializable {
 	// 更新时间
 	@Column(name = "update_time")
 	public Date updateTime;
+
+	/**
+	 * 角色拥有的权限
+	 */
+	public List<Right> rights;
 
 
 	public Role(){}
@@ -90,6 +96,14 @@ public class Role implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public List<Right> getRights() {
+		return rights;
+	}
+
+	public void setRights(List<Right> rights) {
+		this.rights = rights;
+	}
+
 	@Override
 	public String toString() {
 		return "Role{" +
@@ -99,6 +113,7 @@ public class Role implements Serializable {
 				", description='" + description + '\'' +
 				", createTime=" + createTime +
 				", updateTime=" + updateTime +
+				", rights=" + rights +
 				'}';
 	}
 }

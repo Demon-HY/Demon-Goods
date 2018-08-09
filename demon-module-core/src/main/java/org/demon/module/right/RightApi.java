@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,11 +24,13 @@ public class RightApi implements IRightApi {
     private RoleDaoImpl roleDao;
     @Autowired
     private RoleRightDaoImpl roleRightDao;
+    @Autowired
+    private RightUtils rightUtils;
 
     @Override
     public List<Right> getRights(Env env) throws Exception {
         // 校验权限
-        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
 
         return rightDao.getRights();
     }
@@ -41,31 +42,31 @@ public class RightApi implements IRightApi {
         }
 
         // 校验权限
-        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_ROLE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_ROLE_RIGHT.getValue0());
 
         return rightDao.getRoleRights(roleId);
     }
 
     @Override
-    public void createRight(Env env, Right right) throws SQLException {
+    public void createRight(Env env, Right right) throws Exception {
         if (right == null) {
             throw new IllegalArgumentException();
         }
 
         // 校验权限
-        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CREATE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CREATE_RIGHT.getValue0());
 
         rightDao.insert(right);
     }
 
     @Override
-    public void deleteRight(Env env, Right right) {
+    public void deleteRight(Env env, Right right) throws Exception {
         if (right == null) {
             throw new IllegalArgumentException();
         }
 
         // 校验权限
-        RightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_DELETE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_DELETE_RIGHT.getValue0());
 
         rightDao.removeById(right.rightId, Right.class);
     }
@@ -129,5 +130,14 @@ public class RightApi implements IRightApi {
                 addRights.add(r);
             }
         }
+    }
+
+    @Override
+    public Right getRight(Env env, String rightName) throws Exception {
+        if (ValidUtils.isBlank(rightName)) {
+            throw new IllegalArgumentException();
+        }
+
+        return rightDao.getRight(rightName);
     }
 }

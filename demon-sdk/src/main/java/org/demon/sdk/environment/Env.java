@@ -14,10 +14,9 @@ import java.io.Serializable;
  */
 public class Env implements Serializable {
 
-    private static final long serialVersionUID = -9163982787261438155L;
+    private static final long serialVersionUID = 8832378654541282722L;
 
-    public Env() {
-    }
+    public Env() {}
 
     /**
      * HTTP 请求所对应的模块名称
@@ -52,6 +51,10 @@ public class Env implements Serializable {
      */
     public Login login;
     /**
+     * 内部接口调用时跳过权限
+     */
+    public Boolean continueRight;
+    /**
      * 错误信息
      */
     public RetCodeEnum retCodeEnum;
@@ -60,11 +63,14 @@ public class Env implements Serializable {
     public String toString() {
         return "Env{" +
                 "moduleName='" + moduleName + '\'' +
+                ", request=" + request +
+                ", response=" + response +
                 ", userId=" + userId +
                 ", token='" + token + '\'' +
                 ", clientIP='" + clientIP + '\'' +
                 ", device='" + device + '\'' +
                 ", login=" + login +
+                ", continueRight=" + continueRight +
                 ", retCodeEnum=" + retCodeEnum +
                 '}';
     }

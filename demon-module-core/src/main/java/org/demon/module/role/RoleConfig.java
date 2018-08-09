@@ -11,6 +11,8 @@ public class RoleConfig extends DefaultConfig {
     // 模块名
     public static final String MODULE_NAME = "role";
 
+    public static final String SUPER_ADMIN_NAME = "超级管理员";
+
     static {
         RIGHT_CHECK_ROLE = new Pair<>("RIGHT_CHECK_ROLE", "查看角色");
         RIGHT_CREATE_ROLE = new Pair<>("RIGHT_CREATE_ROLE", "创建角色");

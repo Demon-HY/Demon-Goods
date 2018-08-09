@@ -1,7 +1,7 @@
 package org.demon.utils;
 
 import com.alibaba.fastjson.JSONObject;
-import org.demon.utils.exception.LogicalException;
+import org.demon.utils.exception.ServiceException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -175,10 +175,10 @@ public class XCodeUtil {
      *
      * @param xCode
      * @return
-     * @throws LogicalException
+     * @throws ServiceException
      */
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> xDecode(String xCode) throws LogicalException {
+    public static Map<String, Object> xDecode(String xCode) throws ServiceException {
         // 1
         String real = xCode.substring(PREFIX_LENGTH);
         byte[] rst = Base64.decodeBase64(real);
@@ -191,7 +191,7 @@ public class XCodeUtil {
         long realValue = byteArrayToLong(realCrc);
         if (!(value == realValue)) {
             System.out.println("license verify failed.");
-            throw new LogicalException("参数错误", null);
+            throw new ServiceException("参数错误", null);
         }
 
         xorCode(data, XOR_KEY);
