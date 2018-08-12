@@ -71,7 +71,7 @@
             <resource>
                 <directory>src/main/resources/environment/${environment}</directory>
                 <includes>
-                    <include>log4j2.xml</include>
+                    <include>logback.xml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

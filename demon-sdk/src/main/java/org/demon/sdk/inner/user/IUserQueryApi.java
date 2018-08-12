@@ -15,21 +15,21 @@ public interface IUserQueryApi {
      * @param userId
      * @return
      */
-    User getUser(Env env, Long userId) throws ParamException;
+    User getUser(Env env, Long userId) throws Exception;
 
     /**
      * 通过用户名获取用户信息
      * @param account
      * @return
      */
-    User getUserByName(Env env, String account) throws ParamException;
+    User getUserByName(Env env, String account) throws Exception;
 
     /**
      * 验证用户状态
      * @param env
      * @param user 用户信息
      */
-    void checkUserStatus(Env env, User user) throws LogicalException;
+    void checkUserStatus(Env env, User user) throws Exception;
 
     /**
      * 检查密码是否符合要求

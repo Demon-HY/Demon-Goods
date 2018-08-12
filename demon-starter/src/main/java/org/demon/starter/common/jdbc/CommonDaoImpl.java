@@ -72,6 +72,8 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		StringBuilder sql = DBUtils.getSelectFrom(entityClass);
 		if (sql == null) return null;
 
+		sql.append(criteria.getCriteriaSQL());
+
 		Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
 
 		if (logger.isDebugEnabled()) {
@@ -103,7 +105,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 
 	@Override
 	public Long countByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) {
-		String sql = "SELECT COUNT(1) AS num FROM " + DBUtils.getTableName(entityClass) + criteria.getCriteriaSQL();
+		String sql = "SELECT COUNT(1) AS num FROM `" + DBUtils.getTableName(entityClass) + "` " +  criteria.getCriteriaSQL();
 
 		Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
 
@@ -118,9 +120,9 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 	@Override
 	public int removeById(Object idObj, Class<T> entityClass) {
 		String sql = new StringBuilder()
-				.append("DELETE FROM ")
+				.append("DELETE FROM `")
 				.append(DBUtils.getTableName(entityClass))
-				.append(" WHERE ")
+				.append("` WHERE ")
 				.append(DBUtils.getPrimyName(entityClass))
 				.append(" = ? ").toString();
 
@@ -138,27 +140,27 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		Field[] fields = entity.getClass().getDeclaredFields();
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
 
-		StringBuilder sql1 = new StringBuilder("INSERT INTO ")
+		StringBuilder sql1 = new StringBuilder("INSERT INTO `")
 				.append(DBUtils.getTableName(entity.getClass()))
-				.append(" (");
+				.append("` (");
 		StringBuilder sql2 = new StringBuilder(" VALUES(");
 		List<Object> args = new ArrayList<>();
 
-        String pkName = DBUtils.getPrimyName(entity.getClass());
+		String pkName = DBUtils.getPrimyName(entity.getClass());
 
-        // 主键ID字段,为了回写自增ID到对象中
-        Field pkField = null;
+		// 主键ID字段,为了回写自增ID到对象中
+		Field pkField = null;
 
 		for (Field field : fields) {
 			if (field.getAnnotation(Column.class) == null) continue;
 
-			String key = field.getName();
-			if (key.equals(pkName)) {
-                pkField = field;
-			    continue;
-			}
+			String key = field.getName(); // 实体类字段名
 
-			String name = field.getAnnotation(Column.class).name();
+			String name = field.getAnnotation(Column.class).name(); // 数据库字段名
+			if (name.equals(pkName)) {
+				pkField = field;
+				continue;
+			}
 			Object arg = obj.get(key);
 			if (ValidUtils.isEmpty(arg)) continue;
 
@@ -183,10 +185,10 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
             try {
                 pkField.setAccessible(true);
                 if (pkField.getType() == Integer.class) {
-                    pkField.setInt(entity, generatedId);
+                    pkField.setInt(entity, new Integer(generatedId));
                 }
                 else if (pkField.getType() == Long.class) {
-                    pkField.setLong(entity, Integer.toUnsignedLong(generatedId));
+					pkField.set(entity, new Long(new Integer(generatedId).longValue()));
                 }
                 else if (pkField.getType() == String.class) {
                     pkField.set(entity, String.valueOf(generatedId));
@@ -203,12 +205,39 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 		return generatedId;
 	}
 
+	public void test(T entity) throws IllegalAccessException {
+		Field[] fields = entity.getClass().getDeclaredFields();
+
+		String pkName = DBUtils.getPrimyName(entity.getClass());
+
+		// 主键ID字段,为了回写自增ID到对象中
+		Field pkField = null;
+
+		for (Field field : fields) {
+			if (field.getAnnotation(Column.class) == null) continue;
+
+			String name = field.getAnnotation(Column.class).name(); // 数据库字段名
+			if (name.equals(pkName)) {
+				pkField = field;
+				break;
+			}
+		}
+
+		if (pkField != null) {
+			pkField.setAccessible(true);
+			Long gen = 20L;
+			pkField.set(entity, gen);
+		}
+
+		System.out.println("1");
+	}
+
 	@Override
 	public int update(T entity) {
 		Map<String, Object> obj = MapUtils.objectToMap(entity);
-		StringBuilder sql1 = new StringBuilder("UPDATE ")
+		StringBuilder sql1 = new StringBuilder("UPDATE `")
 				.append(DBUtils.getTableName(entity.getClass()))
-				.append(" SET ");
+				.append("` SET ");
 		String pkName = DBUtils.getPrimyName(entity.getClass());
 		StringBuilder sql2 = new StringBuilder(" WHERE " + pkName + " = ? ");
 		List<Object> args = new ArrayList<>();

@@ -53,11 +53,11 @@ public class Env implements Serializable {
     /**
      * 内部接口调用时跳过权限
      */
-    public Boolean continueRight;
+    public Boolean continueRight = false;
     /**
      * 错误信息
      */
-    public RetCodeEnum retCodeEnum;
+    public RetCodeEnum retCodeEnum = RetCodeEnum.OK;
 
     @Override
     public String toString() {

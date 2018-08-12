@@ -1,8 +1,9 @@
 package org.demon.web.init;
 
-import org.demon.module.right.RightApi;
 import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
+import org.demon.sdk.environment.EnvUtils;
+import org.demon.sdk.inner.role.IRightApi;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.StringUtils;
 import org.javatuples.Pair;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.net.URLClassLoader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
     private static final String RIGHT_PREFIX = "RIGHT_";
 
     @Autowired
-    private RightApi rightApi;
+    private IRightApi rightApi;
 
     /**
      * 各模块初始化
@@ -83,9 +83,10 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
 
     /**
      * 加载模块权限
+     *
      * @param moduleName 模块名
      */
-    private void loadModuleRight(String moduleName) throws ClassNotFoundException, IllegalAccessException, SQLException {
+    private void loadModuleRight(String moduleName) throws Exception {
         URLClassLoader classLoader = (URLClassLoader) ClassLoader
                 .getSystemClassLoader();
 
@@ -130,10 +131,10 @@ public class ModuleRightInit implements ApplicationListener<ApplicationReadyEven
             return;
         }
 
-        Env env = new Env();
+        Env env = EnvUtils.systemEnv();
 
         // 获取旧的权限
-        List<Right> oldRights = rightApi.getRights(new Env());
+        List<Right> oldRights = rightApi.getRights(env, moduleName);
         // 需要删除的权限
         List<Right> removeRights = new LinkedList<>();
         // 需要新增的权限

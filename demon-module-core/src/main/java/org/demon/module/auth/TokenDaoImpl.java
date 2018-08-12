@@ -7,6 +7,7 @@ import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 
 @Repository
 public class TokenDaoImpl extends CommonDaoImpl<Token> {
@@ -24,7 +25,7 @@ public class TokenDaoImpl extends CommonDaoImpl<Token> {
      * @param token 用户唯一标识
      * @return
      */
-    public Token getToken(String token) {
+    public Token getToken(String token) throws SQLException {
         CommonDao.Criteria criteria = this.createCriteria();
         criteria.eq("token", token);
         return selectOneByCriteria(criteria, Token.class);

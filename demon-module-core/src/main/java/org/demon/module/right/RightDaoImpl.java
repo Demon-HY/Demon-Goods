@@ -34,6 +34,16 @@ public class RightDaoImpl extends CommonDaoImpl<Right> {
     }
 
     /**
+     * 获取模块所有权限
+     * @param moduleName 模块名
+     */
+    List<Right> getRights(String moduleName) throws SQLException {
+        CommonDao.Criteria criteria = createCriteria();
+        criteria.eq("module", moduleName);
+        return selectByCriteria(criteria, Right.class);
+    }
+
+    /**
      * 获取角色所有权限
      *
      * @param roleId 角色ID

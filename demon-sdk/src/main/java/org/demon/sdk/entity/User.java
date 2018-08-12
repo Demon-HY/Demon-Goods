@@ -16,7 +16,7 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 8390645454224381806L;
 	// 用户 Id
 	@Id
-	@Column(name = "u_id")
+	@Column(name = "uid")
 	public Long uid;
 
 	// 用户名:手机号/邮箱

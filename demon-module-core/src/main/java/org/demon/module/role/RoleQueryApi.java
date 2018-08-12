@@ -9,6 +9,7 @@ import org.demon.sdk.entity.vo.RoleUserVo;
 import org.demon.sdk.entity.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
+import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
@@ -25,7 +26,7 @@ public class RoleQueryApi implements IRoleQueryApi {
     @Autowired
     private RightUtils rightUtils;
     @Autowired
-    private RightApi rightApi;
+    private IRightApi rightApi;
 
 
     @Override

@@ -25,8 +25,8 @@ public class DBUtils {
             throw new SQLException("get table fields failed, fieldNames is null.");
         }
 
-        StringBuilder sql = new StringBuilder("SELECT " + fieldNames + " FROM ");
-        sql.append(getTableName(entityClass)).append(" ");
+        StringBuilder sql = new StringBuilder("SELECT " + fieldNames + " FROM `");
+        sql.append(getTableName(entityClass)).append("` ");
 
         return sql;
     }

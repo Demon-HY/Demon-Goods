@@ -53,6 +53,15 @@ public interface IRightApi {
     List<Right> getRights(Env env) throws Exception;
 
     /**
+     * 获取所有权限
+     * @param env
+     * @param moduleName 模块名
+     * @return
+     * @throws Exception
+     */
+    List<Right> getRights(Env env, String moduleName) throws Exception;
+
+    /**
      * 获取所有角色权限
      * @param env
      * @return

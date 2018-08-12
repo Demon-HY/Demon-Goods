@@ -36,6 +36,14 @@ public class RightApi implements IRightApi {
     }
 
     @Override
+    public List<Right> getRights(Env env, String moduleName) throws Exception {
+        // 校验权限
+        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
+
+        return rightDao.getRights(moduleName);
+    }
+
+    @Override
     public List<Right> getRoleRights(Env env, Long roleId) throws Exception {
         if (roleId == null) {
             throw new IllegalArgumentException();
@@ -122,10 +130,17 @@ public class RightApi implements IRightApi {
             return;
         }
         for (Right r : rights) {
+
+            boolean flag = true; // 是否需要新增权限
+
             for (Right oldR : oldRights) {
                 if (r.name.equals(oldR.name)) {
+                    flag = false;
                     break;
                 }
+            }
+
+            if (flag) {
                 // 旧权限里面没有该权限
                 addRights.add(r);
             }

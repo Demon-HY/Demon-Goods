@@ -20,7 +20,7 @@ public class UserQueryApi implements IUserQueryApi {
     private UserBaseApi userBaseApi;
 
     @Override
-    public User getUser(Env env, Long userId) throws ParamException {
+    public User getUser(Env env, Long userId) throws Exception {
         if (ValidUtils.isBlank(userId)) {
             throw new ParamException();
         }
@@ -29,7 +29,7 @@ public class UserQueryApi implements IUserQueryApi {
     }
 
     @Override
-    public User getUserByName(Env env, String account) throws ParamException {
+    public User getUserByName(Env env, String account) throws Exception {
         if (ValidUtils.isBlank(account)) {
             throw new ParamException();
         }
@@ -37,7 +37,7 @@ public class UserQueryApi implements IUserQueryApi {
     }
 
     @Override
-    public void checkUserStatus(Env env, User user) throws LogicalException {
+    public void checkUserStatus(Env env, User user) throws Exception {
         switch (user.status) {
             case UserConfig.STATUS_NORMAL :
                 break;

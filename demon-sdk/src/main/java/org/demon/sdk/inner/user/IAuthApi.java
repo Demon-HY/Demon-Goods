@@ -32,5 +32,5 @@ public interface IAuthApi {
      * @param env
      * @return Login
      */
-    Login checkLogin(Env env) throws LogicalException;
+    Login checkLogin(Env env) throws Exception;
 }

@@ -117,7 +117,7 @@ public class AuthApi implements IAuthApi {
     }
 
     @Override
-    public Login checkLogin(Env env) throws LogicalException {
+    public Login checkLogin(Env env) throws Exception {
         String token = env.token;
         if (null == token) {
             throw new IllegalArgumentException();
