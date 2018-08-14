@@ -1,5 +1,6 @@
 package org.demon.utils.crypto;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -28,14 +29,13 @@ public class PasswordGenerator {
 	
 	/**
 	 * 创建加密密码
-	 * @param infos
 	 * @param params
 	 */
 	public static String createPassword(String name, String password, String creator, Object...params) {
 		JSONObject json = new JSONObject();
-		json.put("username", name);
+//		json.put("username", name);
 		json.put("password", password);
-		json.put("creator", "monitor");
+//		json.put("creator", "monitor");
 		
         String info = json.toJSONString();
         byte[] data = info.getBytes();
@@ -141,12 +141,12 @@ public class PasswordGenerator {
 		return sb.toString();
 	}
 	
-//	public static void main(String[] args) throws IOException {
-//		String passCode = createPassword("186711862XX", "SO2nH9!#$%&&*SKN", "monitor");
-//		System.out.println(passCode);
-//		Map<String, Object> infos = parsePassword(passCode);
-//		System.out.println(infos.get("username"));
-//		System.out.println(infos.get("password"));
-//		System.out.println(infos.get("creator"));
-//	}
+	public static void main(String[] args) throws IOException {
+		String passCode = createPassword("18671186205", "ksbau1", "Demon-HY");
+		System.out.println(passCode);
+		Map<String, Object> infos = parsePassword(passCode);
+		System.out.println(infos.get("username"));
+		System.out.println(infos.get("password"));
+		System.out.println(infos.get("creator"));
+	}
 }
