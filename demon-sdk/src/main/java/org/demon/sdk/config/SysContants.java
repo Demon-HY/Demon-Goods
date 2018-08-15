@@ -17,4 +17,9 @@ public class SysContants implements Serializable {
      * 请求头中的用户唯一标识
      */
     public static final String HEADER_TOKEN = "X-Token";
+    /**
+     * 请求响应头,记录请求的唯一标识,方便排错
+     */
+    public static final String REQUEST_ID = "X-RequestId";
+
 }

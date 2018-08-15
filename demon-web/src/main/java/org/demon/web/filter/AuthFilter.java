@@ -1,5 +1,7 @@
 package org.demon.web.filter;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.demon.module.auth.AuthConfig;
 import org.demon.module.auth.AuthRedisApi;
 import org.demon.sdk.config.SysContants;
@@ -8,6 +10,7 @@ import org.demon.sdk.environment.Env;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.utils.JsonUtil;
+import org.demon.utils.RandomUtil;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.http.IPUtils;
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 
 /**
  * 登录拦截
@@ -47,8 +51,6 @@ public class AuthFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        logger.info("AuthFilter start ...");
-
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setCharacterEncoding("UTF-8");
@@ -60,9 +62,11 @@ public class AuthFilter implements Filter {
 
         RetCodeEnum retCodeEnum = handler(request, response);
 
+        // 请求前记录日志
+        doBefore(request, retCodeEnum);
+
         if (retCodeEnum.equals(RetCodeEnum.OK)) {
             filterChain.doFilter(servletRequest, servletResponse);
-            logger.info("AuthFilter end ...");
             return;
         }
 
@@ -116,6 +120,31 @@ public class AuthFilter implements Filter {
         env.response = response;
 
         return env;
+    }
+
+    /**
+     * 请求前记录日志
+     */
+    public void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum) {
+        // 请求唯一标识
+        String requestId = RandomUtil.getRequestId();
+        request.setAttribute(SysContants.REQUEST_ID, requestId);
+
+        // 记录下请求内容
+        String url = request.getRequestURI();
+        if (StringUtils.isNotBlank(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
+            return;
+        }
+        String httpMethod = request.getMethod();
+        JSONObject obj = new JSONObject(); // 请求参数
+        //获取所有参数
+        Enumeration<String> enu = request.getParameterNames();
+        while (enu.hasMoreElements()) {
+            String paraName = enu.nextElement();
+            obj.put(paraName, request.getParameter(paraName));
+        }
+        logger.info("{}  {}  OK  REQ  {}  {}  {}  {}", IPUtils.getIPAddr(request), requestId, url, httpMethod,
+                obj.toString(), retCodeEnum);
     }
 
     @Override
