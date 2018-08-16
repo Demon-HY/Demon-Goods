@@ -1,5 +1,7 @@
 package org.demon.sdk.entity;
 
+import lombok.Data;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,6 +12,7 @@ import java.util.Date;
  * @author Demon-HY
  * @since 1.0
  */
+@Data
 @Table(name = "id_card")
 public class IdCard implements Serializable {
 
@@ -63,118 +66,4 @@ public class IdCard implements Serializable {
 
 
 	public IdCard(){}
-
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public Integer getSex() {
-		return sex;
-	}
-
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Integer getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(Integer postcode) {
-		this.postcode = postcode;
-	}
-
-	public String getTrueName() {
-		return trueName;
-	}
-
-	public void setTrueName(String trueName) {
-		this.trueName = trueName;
-	}
-
-	public String getCardCode() {
-		return cardCode;
-	}
-
-	public void setCardCode(String cardCode) {
-		this.cardCode = cardCode;
-	}
-
-	public String getCardPositiveImg() {
-		return cardPositiveImg;
-	}
-
-	public void setCardPositiveImg(String cardPositiveImg) {
-		this.cardPositiveImg = cardPositiveImg;
-	}
-
-	public String getCardBackImg() {
-		return cardBackImg;
-	}
-
-	public void setCardBackImg(String cardBackImg) {
-		this.cardBackImg = cardBackImg;
-	}
-
-	public String getCardHandImg() {
-		return cardHandImg;
-	}
-
-	public void setCardHandImg(String cardHandImg) {
-		this.cardHandImg = cardHandImg;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	@Override
-	public String toString() {
-		return "IdCard{" +
-				"uid=" + uid +
-				", age=" + age +
-				", sex=" + sex +
-				", city='" + city + '\'' +
-				", postcode=" + postcode +
-				", trueName='" + trueName + '\'' +
-				", cardCode='" + cardCode + '\'' +
-				", cardPositiveImg='" + cardPositiveImg + '\'' +
-				", cardBackImg='" + cardBackImg + '\'' +
-				", cardHandImg='" + cardHandImg + '\'' +
-				", createTime=" + createTime +
-				", updateTime=" + updateTime +
-				'}';
-	}
 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 @ApiModel(value = "客户端获取数据")
 public class ClientResult<T> implements Serializable {
 
-    private static final long serialVersionUID = -5552820761684566855L;
+    private static final long serialVersionUID = 3593561370510117488L;
 
     @ApiModelProperty(value = "错误消息")
     private String message = RetCodeEnum.OK.message;
@@ -36,16 +36,16 @@ public class ClientResult<T> implements Serializable {
         this.success = success;
     }
 
-    public ClientResult() {
+    private ClientResult() {
     }
 
-    public ClientResult(RetCodeEnum retCodeEnum) {
+    private ClientResult(RetCodeEnum retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
         this.success = false;
     }
 
-    public ClientResult(RetCodeEnum retCodeEnum, String message) {
+    private ClientResult(RetCodeEnum retCodeEnum, String message) {
         this.retCode = retCodeEnum.retCode;
         this.message = message;
         this.success = false;
@@ -55,7 +55,7 @@ public class ClientResult<T> implements Serializable {
         return message;
     }
 
-    public ClientResult<T> setMessage(String message) {
+    private ClientResult<T> setMessage(String message) {
         this.message = message;
         this.retCode = RetCodeEnum.ERR_SERVER_EXCEPTION.retCode;
         this.success = false;
@@ -66,16 +66,16 @@ public class ClientResult<T> implements Serializable {
         return result;
     }
 
-    public ClientResult<T> setResult(T result) {
+    private ClientResult<T> setResult(T result) {
         this.result = result;
         return this;
     }
 
-    public Integer getRetCode() {
+    private Integer getRetCode() {
         return retCode;
     }
 
-    public ClientResult<T> setRetCode(RetCodeEnum retCodeEnum) {
+    private ClientResult<T> setRetCode(RetCodeEnum retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
         this.success = false;
@@ -93,7 +93,7 @@ public class ClientResult<T> implements Serializable {
     }
 
     /**
-     * 错误
+     * 错误: 不支持该操作
      *
      * @param message 错误描述
      * @return ClientResult

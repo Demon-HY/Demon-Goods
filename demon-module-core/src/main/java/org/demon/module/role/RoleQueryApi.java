@@ -39,7 +39,7 @@ public class RoleQueryApi implements IRoleQueryApi {
 
     @Override
     public Role getRole(Env env, String roleName) throws Exception {
-        if (ValidUtils.isEmpty(roleName)) {
+        if (ValidUtils.isBlank(roleName)) {
             throw new IllegalAccessException();
         }
 

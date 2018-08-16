@@ -2,16 +2,18 @@ package org.demon.sdk.entity.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
  * 创建用户
  */
+@Data
 @ApiModel(value = "创建用户属性")
 public class UserCreateVo implements Serializable {
 
-    private static final long serialVersionUID = -5169678047284371631L;
+    private static final long serialVersionUID = -7847323514181408636L;
 
     public UserCreateVo() {
     }
@@ -39,16 +41,4 @@ public class UserCreateVo implements Serializable {
     // QQ 号
     @ApiModelProperty(value = "QQ 号", position = 6)
     public String qq;
-
-    @Override
-    public String toString() {
-        return "UserCreateVo{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", nick='" + nick + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", qq='" + qq + '\'' +
-                '}';
-    }
 }

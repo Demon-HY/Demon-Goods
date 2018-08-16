@@ -107,16 +107,16 @@ public class UserBaseApi implements IUserBaseApi {
         user.loadTime = new Date();
 
         // 设置默认值
-        if (ValidUtils.isEmpty(user.phone)) {
+        if (ValidUtils.isBlank(user.phone)) {
             user.phone = "";
         }
-        if (ValidUtils.isEmpty(user.email)) {
+        if (ValidUtils.isBlank(user.email)) {
             user.email = "";
         }
-        if (ValidUtils.isEmpty(user.qq)) {
+        if (ValidUtils.isBlank(user.qq)) {
             user.qq = "";
         }
-        if (ValidUtils.isEmpty(user.exattr)) {
+        if (ValidUtils.isBlank(user.exattr)) {
             user.exattr = "";
         }
 

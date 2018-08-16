@@ -162,7 +162,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 				continue;
 			}
 			Object arg = obj.get(key);
-			if (ValidUtils.isEmpty(arg)) continue;
+			if (ValidUtils.isBlank(arg)) continue;
 
 			sql1.append(name).append(",");
 			sql2.append("?,");
@@ -245,7 +245,7 @@ public class CommonDaoImpl<T> implements CommonDao<T> {
 			if (key.equals(pkName)) continue;
 
 			Object arg = obj.get(key);
-			if (ValidUtils.isEmpty(arg)) continue;
+			if (ValidUtils.isBlank(arg)) continue;
 
 			sql1.append(key).append(" = ?,");
 			args.add(arg);
