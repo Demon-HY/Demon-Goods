@@ -9,6 +9,7 @@ import org.demon.sdk.entity.vo.Login;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.JsonUtil;
 import org.demon.utils.RandomUtil;
 import org.demon.utils.ValidUtils;
@@ -34,9 +35,7 @@ import java.util.Enumeration;
 @Component
 @ServletComponentScan
 @WebFilter(urlPatterns = "/api/*", filterName = "authFilter")
-public class AuthFilter implements Filter {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class AuthFilter extends AbstractLogClass implements Filter {
 
     @Autowired
     private AuthRedisApi authRedisApi;

@@ -1,6 +1,7 @@
 package org.demon.starter.autoconfigure.web;
 
 import org.demon.starter.autoconfigure.annotion.RequestEnv;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -13,9 +14,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 /**
  * 请求参数拦截器,为了在请求中加入默认的 Evn 对象
  */
-public class RequestJsonHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class RequestJsonHandlerMethodArgumentResolver extends AbstractLogClass implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {

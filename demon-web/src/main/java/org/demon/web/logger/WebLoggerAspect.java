@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.demon.sdk.config.SysContants;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.beans.BeanUtils;
 import org.demon.utils.http.IPUtils;
 import org.slf4j.Logger;
@@ -24,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Aspect
 @Component
-public class WebLoggerAspect {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class WebLoggerAspect extends AbstractLogClass {
 
     /**
      * 定义一个切入点

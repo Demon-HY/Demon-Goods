@@ -4,6 +4,7 @@ import org.demon.sdk.entity.Right;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.environment.EnvUtils;
 import org.demon.sdk.inner.role.IRightApi;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.StringUtils;
 import org.javatuples.Pair;
@@ -25,9 +26,7 @@ import java.util.List;
  * 监听工程启动的监听事件,完成模块权限初始化
  */
 @Component
-public class ModuleRightInit implements ApplicationListener<ApplicationReadyEvent> {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class ModuleRightInit extends AbstractLogClass implements ApplicationListener<ApplicationReadyEvent> {
 
     public ModuleRightInit() {
     }

@@ -10,6 +10,7 @@ import org.demon.sdk.event.type.PreCreateUserEvent;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.user.IUserBaseApi;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.crypto.SSHAUtils;
 import org.slf4j.Logger;
@@ -21,9 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class UserBaseApi implements IUserBaseApi {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
 
     @Autowired
     private UserQueryApi userQueryApi;

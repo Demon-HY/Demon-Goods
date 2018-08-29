@@ -3,6 +3,7 @@ package org.demon.starter.autoconfigure.mysql;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,10 +21,7 @@ import java.sql.SQLException;
 
 @Configuration
 @EnableTransactionManagement
-public class DruidDBConfig {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+public class DruidDBConfig extends AbstractLogClass {
 
     @Value("${spring.datasource.url}")
     private String dbUrl;

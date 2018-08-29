@@ -14,6 +14,7 @@ import org.demon.sdk.event.type.PreLogoutEvent;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.user.IAuthApi;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.datetime.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthApi implements IAuthApi {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class AuthApi extends AbstractLogClass implements IAuthApi {
 
     @Autowired
     private ApplicationContext applicationContext;

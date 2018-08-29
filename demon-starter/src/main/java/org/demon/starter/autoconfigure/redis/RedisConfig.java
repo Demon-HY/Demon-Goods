@@ -1,5 +1,6 @@
 package org.demon.starter.autoconfigure.redis;
 
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
-public class RedisConfig {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class RedisConfig extends AbstractLogClass {
 
     @Autowired
     private Environment environment;

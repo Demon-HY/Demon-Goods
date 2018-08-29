@@ -9,6 +9,7 @@ import org.demon.sdk.environment.Env;
 import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +22,7 @@ import java.util.List;
  * 权限校验
  */
 @Service
-public class RightUtils {
-
-    private static Logger logger = LoggerFactory.getLogger(RightUtils.class);
+public class RightUtils extends AbstractLogClass {
 
     @Autowired
     private IRightApi rightApi;
