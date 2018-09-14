@@ -13,19 +13,16 @@ public class OS {
      */
     public static String getSystemInfo() {
         String os = getOSName().toLowerCase();
-//        System.out.println(os);
         if (os.startsWith("windows")) {
             String cpuWindows = Windows.getWindowsCPUID();
             String biosWindows = Windows.getWindowsBoardID();
-            String windowsInfo = String.format("%s%s", cpuWindows, biosWindows);
 
-            return windowsInfo;
+            return String.format("%s%s", cpuWindows, biosWindows);
         } else {
             String cpuLinux = Linux.getLinuxCPUID();
             String biosLinux = Linux.getLinuxBoardID();
-            String linuxInfo = String.format("%s%s", cpuLinux, biosLinux);
 
-            return linuxInfo;
+            return String.format("%s%s", cpuLinux, biosLinux);
         }
     }
 }

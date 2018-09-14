@@ -19,28 +19,25 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class PasswordGenerator {
  
-	private static final String passwordKey = "H0eYaNPasW0e";
-	private static final String crcKey = "MQP0TGVX0KFBX5F6";
+	private static final String PASSWORD_KEY = "H0eYaNPasW0e";
+	private static final String CRC_KEY = "MQP0TGVX0KFBX5F6";
 	/**
 	 *  加密后的密码的前三位的无效码
 	 */
-	private static final int prefixLength = 3;
-	private static final String digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXWZ";
+	private static final int PREFIX_LENGTH = 3;
+	private static final String DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXWZ";
 	
 	/**
 	 * 创建加密密码
-	 * @param params
 	 */
 	public static String createPassword(String name, String password, String creator, Object...params) {
 		JSONObject json = new JSONObject();
-//		json.put("username", name);
 		json.put("password", password);
-//		json.put("creator", "monitor");
-		
+
         String info = json.toJSONString();
         byte[] data = info.getBytes();
         
-        passwordCode(data, passwordKey);
+        passwordCode(data, PASSWORD_KEY);
         byte[] crc = crcUnsigned(data);
         byte[] tmp = new byte[data.length + crc.length];
         for (int i = 0; i < data.length; i++) {
@@ -50,7 +47,7 @@ public class PasswordGenerator {
             tmp[i+data.length] = crc[i];
         }
         data = tmp;
-        return createPrefix(prefixLength) + Base64.encodeBase64URLSafeString(data);
+        return createPrefix(PREFIX_LENGTH) + Base64.encodeBase64URLSafeString(data);
 	}
 	/**
 	 * 解密密码
@@ -59,7 +56,7 @@ public class PasswordGenerator {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, Object> parsePassword(String password) {
-		String real = password.substring(prefixLength);
+		String real = password.substring(PREFIX_LENGTH);
 		byte[] rst = Base64.decodeBase64(real);
 		
 		byte[] data = Arrays.copyOf(rst, rst.length-(Long.SIZE / Byte.SIZE));
@@ -73,7 +70,7 @@ public class PasswordGenerator {
 		    System.exit(0);
 		}
 		
-		passwordCode(data, passwordKey);
+		passwordCode(data, PASSWORD_KEY);
 		
 		String info = new String(data);
 		
@@ -100,7 +97,7 @@ public class PasswordGenerator {
 	private static byte[] crcUnsigned(byte[] str) {
         CRC32 crc = new CRC32();
         crc.update(str);
-        crc.update(crcKey.getBytes());
+        crc.update(CRC_KEY.getBytes());
         
         long value = crc.getValue();
         if (value < 0) {
@@ -134,8 +131,8 @@ public class PasswordGenerator {
 			if (tmp < 0) {
 				tmp = -tmp;
 			}
-			int index = tmp % digits.length();
-			sb.append(digits.charAt(index));
+			int index = tmp % DIGITS.length();
+			sb.append(DIGITS.charAt(index));
 		}
 		
 		return sb.toString();

@@ -13,8 +13,6 @@ import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.crypto.SSHAUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,7 @@ public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
         userQueryApi.checkPasswordIsLegal(userCreateVo.password);
 
         // TODO 校验权限,内部代码还未实现
-        rightUtils.checkRight(env, UserConfig.MODULE_NAME, UserConfig.RIGHT_CREATE_USER.getValue0());
+        rightUtils.checkRight(env, UserConfigAbstract.MODULE_NAME, UserConfigAbstract.RIGHT_CREATE_USER.getValue0());
 
         AuthUtils.checkAccount("name", userCreateVo.name);
 
@@ -53,14 +51,14 @@ public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
         }
 
         // 校验账号是否已存在
-        User _user = userDao.findByAccount(userCreateVo.name);
-        if (_user != null) {
+        User tempUser = userDao.findByAccount(userCreateVo.name);
+        if (tempUser != null) {
             throw new LogicalException(RetCodeEnum.ERR_ACCOUNT_EXIST);
         }
         // 检查手机号是否唯一
         if (ValidUtils.isNotBlank(userCreateVo.phone)) {
-            _user = userDao.findByPhone(userCreateVo.phone);
-            if (_user != null) {
+            tempUser = userDao.findByPhone(userCreateVo.phone);
+            if (tempUser != null) {
                 throw new LogicalException(RetCodeEnum.ERR_PHONE_ALREADY_BOUND);
             }
         }
@@ -99,7 +97,7 @@ public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
             user.nick = user.name;
         }
         user.password = SSHAUtils.getSaltedPassword(user.password);
-        user.status = UserConfig.STATUS_NORMAL;
+        user.status = UserConfigAbstract.STATUS_NORMAL;
         user.type = 1;
         user.createTime = new Date();
         user.updateTime = new Date();

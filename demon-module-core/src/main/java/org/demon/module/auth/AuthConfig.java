@@ -1,17 +1,15 @@
 package org.demon.module.auth;
 
-import org.demon.sdk.config.DefaultConfig;
+import org.demon.sdk.config.AbstractDefaultConfig;
 
 /**
  * 登录鉴权配置文件
+ * @author Demon-HY
  */
-public class AuthConfig extends DefaultConfig {
+public class AuthConfig extends AbstractDefaultConfig {
 
     public static final String MODULE_NAME = "auth";
-    /**
-     * 支持匿名访问的路径
-     */
-    public static final String ANNO_PATH = "/anon/";
+
     /**
      * 默认token的寿命,单位秒
      */

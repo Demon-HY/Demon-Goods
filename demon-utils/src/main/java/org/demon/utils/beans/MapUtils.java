@@ -19,8 +19,8 @@ public class MapUtils {
 	/**
 	 * 字典转对象
 	 */
-	public static <T> T mapToObject(Map<String, Object> map, Class<T> T) {
-		return JSON.parseObject(JSON.toJSONString(map), T);
+	public static <T> T mapToObject(Map<String, Object> map, Class<T> t) {
+		return JSON.parseObject(JSON.toJSONString(map), t);
 	}
 
 }

@@ -87,8 +87,9 @@ public class BeanUtils {
      */
     public static void setField(Object bean, Field field, Object value, boolean access) {
         try {
-            if (!field.isAccessible() && access)
+            if (!field.isAccessible() && access) {
                 field.setAccessible(true);
+            }
             field.set(bean, value);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException e) {
             logger.error("set field with bean error", e);

@@ -8,6 +8,13 @@ import java.util.regex.Pattern;
  * 字符串操作类
  */
 public class StringUtils {
+
+    // 判断一个字符串是否都为数字
+    private static final String NUMBER = "[0-9]+";
+
+    // 判断一个字符串是否都为数字
+    private static final Pattern PATTERN_NUMBER = Pattern.compile(NUMBER);
+
     private StringUtils() {
     }
 
@@ -27,8 +34,7 @@ public class StringUtils {
      * 判断一个字符串是否都为数字
      */
     public static boolean isDigit(String strNum) {
-        Pattern pattern = Pattern.compile("[0-9]+");
-        Matcher matcher = pattern.matcher((CharSequence) strNum);
+        Matcher matcher = PATTERN_NUMBER.matcher(strNum);
         return matcher.matches();
     }
 
@@ -148,7 +154,6 @@ public class StringUtils {
      */
     public static int getCharacterPosition(String string, int index, String character) {
         //这里是获取"/"符号的位置
-        // Matcher slashMatcher = Pattern.compile("/").matcher(string);
         Matcher slashMatcher = Pattern.compile(character).matcher(string);
         int mIdx = 0;
         while (slashMatcher.find()) {

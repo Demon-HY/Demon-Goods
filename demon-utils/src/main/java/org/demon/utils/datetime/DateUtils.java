@@ -30,7 +30,7 @@ public class DateUtils {
     public final static long HOUR = 60 * MONUTE;// 1小时
     public final static long DAY = 24 * HOUR;// 1天
     public final static long MONTH = 31 * DAY;// 月
-    public final static long year = 12 * MONTH;// 年
+    public final static long YEAR = 12 * MONTH;// 年
 
     public final static String DATE_SEQUENCE = "yyyyMMddHHmmssSSS";
     /**
@@ -193,10 +193,10 @@ public class DateUtils {
         if (date == null) {
             return null;
         }
-        long diff = new Date().getTime() - date;
+        long diff = System.currentTimeMillis() - date;
         long r;
-        if (diff > year) {
-            r = (diff / year);
+        if (diff > YEAR) {
+            r = (diff / YEAR);
             return r + "年前";
         }
         if (diff > MONTH) {
@@ -248,14 +248,15 @@ public class DateUtils {
      * @return long
      */
     public static long diffDate(int diffType, String start, String end) {
-        if (DIFF_DAY == diffType)
+        if (DIFF_DAY == diffType) {
             return doDiff(start, end, "yyyy-MM-dd", DAY_MILLIS);
-        else if (DIFF_HOUR == diffType)
+        } else if (DIFF_HOUR == diffType) {
             return doDiff(start, end, "yyyy-MM-dd HH", HOUR_MILLIS);
-        else if (DIFF_MINUTE == diffType)
+        } else if (DIFF_MINUTE == diffType) {
             return doDiff(start, end, "yyyy-MM-dd HH:mm", MINT_MILLIS);
-        else if (DIFF_SECOND == diffType)
+        } else if (DIFF_SECOND == diffType) {
             return doDiff(start, end, GENERAL_PATTERN, SECOND);
+        }
         return 0;
     }
 

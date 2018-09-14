@@ -13,6 +13,6 @@ public class RoleUtils {
      * @return
      */
     public static boolean checkSuperAdmin(Role role) {
-        return role.name.equals(RoleConfig.SUPER_ADMIN_NAME);
+        return role.name.equals(RoleConfigAbstract.SUPER_ADMIN_NAME);
     }
 }

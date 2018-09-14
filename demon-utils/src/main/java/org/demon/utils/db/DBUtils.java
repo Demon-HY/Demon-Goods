@@ -64,7 +64,9 @@ public class DBUtils {
             Field[] field = entityClass.getDeclaredFields();
             StringBuilder fields = new StringBuilder();
             for (Field f : field) {
-                if (f.getAnnotation(Column.class) == null) continue;
+                if (f.getAnnotation(Column.class) == null) {
+                    continue;
+                }
                 if (ValidUtils.isBlank(tableName)) {
                     fields.append(f.getAnnotation(Column.class).name()).append(",");
                 } else {

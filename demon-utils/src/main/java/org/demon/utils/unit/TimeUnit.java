@@ -1,27 +1,27 @@
 package org.demon.utils.unit;
 
-public class TimeUnit extends NumberUtil {
+public class TimeUnit extends BaseNumberUtil {
     
-    public static final String timeRegex = "(\\d)+((\\.)(\\d)+)?(\\s)*(ms|s|m|h|d|w)*";
-    
-    public static final long VALUE_WEEK = 1000l * 60 * 60 * 24 * 7;
-    public static final long VALUE_DAY = 1000l * 60 * 60 * 24;
-    public static final long VALUE_HOUR = 1000l * 60 * 60;
-    public static final long VALUE_MINUTE = 1000l * 60;
-    public static final long VALUE_SECOND = 1000l;
-    public static final long VALUE_MILLISECOND = 1;
-    public static final String UNIT_MILLISECOND = "ms";
-    public static final String UNIT_SECOND = "s";
-    public static final String UNIT_MINUTE = "min";
-    public static final String UNIT_HOUR = "h";
-    public static final String UNIT_DAY = "d";
-    public static final String UNIT_WEEK = "w";
+    private static final String TIME_REGEX = "(\\d)+((\\.)(\\d)+)?(\\s)*(ms|s|m|h|d|w)*";
+
+    private static final long VALUE_WEEK = 1000L * 60 * 60 * 24 * 7L;
+    private static final long VALUE_DAY = 1000L * 60 * 60 * 24;
+    private static final long VALUE_HOUR = 1000L * 60 * 60;
+    private static final long VALUE_MINUTE = 1000L * 60;
+    private static final long VALUE_SECOND = 1000L;
+    private static final long VALUE_MILLISECOND = 1;
+    private static final String UNIT_MILLISECOND = "ms";
+    private static final String UNIT_SECOND = "s";
+    private static final String UNIT_MINUTE = "min";
+    private static final String UNIT_HOUR = "h";
+    private static final String UNIT_DAY = "d";
+    private static final String UNIT_WEEK = "w";
     
     public Double value;
-    public String unit;
+    private String unit;
     
     public TimeUnit(String str) {
-        super(timeRegex, str);
+        super(TIME_REGEX, str);
         this.value = Double.parseDouble(super.value);
         this.unit = toStanderUnit(super.unit);
         toMSValue();
@@ -72,6 +72,7 @@ public class TimeUnit extends NumberUtil {
         case UNIT_WEEK :
             value = value * VALUE_WEEK;
             break;
+            default: break;
         }
     }
     
@@ -92,11 +93,13 @@ public class TimeUnit extends NumberUtil {
         return unit;
     }
     
+    @Override
     public String toStrWithUnit() {
         String unit = getSuitUnit(value);
         return toStrWithUnit(unit);
     }
 
+    @Override
     public String toStrWithUnit(String unit) {
         if (null == unit) {
             throw new IllegalArgumentException();
@@ -132,7 +135,7 @@ public class TimeUnit extends NumberUtil {
         }
         
         String tmp = String.format("%.2f", result);
-        if (tmp.equals("0.00")) {
+        if ("0.00".equals(tmp)) {
             tmp = "0.01";
         }
         

@@ -30,7 +30,7 @@ public class RoleBaseApi implements IRoleBaseApi {
         }
 
         // 验证权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CREATE_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CREATE_ROLE.getValue0());
 
         roleDao.addRole(role);
 
@@ -44,7 +44,7 @@ public class RoleBaseApi implements IRoleBaseApi {
         }
 
         // 验证权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_EDIT_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_EDIT_ROLE.getValue0());
 
         roleDao.update(role);
 
@@ -58,7 +58,7 @@ public class RoleBaseApi implements IRoleBaseApi {
         }
 
         // 验证权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_DELETE_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_DELETE_ROLE.getValue0());
 
         return roleDao.removeById(roleId, Role.class) == 1;
     }

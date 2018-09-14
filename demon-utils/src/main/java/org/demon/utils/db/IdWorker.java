@@ -5,24 +5,24 @@ package org.demon.utils.db;
  */
 public class IdWorker {
     private final long workerId;
-    private final static long twepoch = 1361753741828L;
+    private final static long TWEPOCH = 1361753741828L;
     private long sequence = 0L;
-    private final static long workerIdBits = 4L;
-    private final static long maxWorkerId = -1L ^ -1L << workerIdBits;
-    private final static long sequenceBits = 10L;
+    private final static long WORKER_ID_BITS = 4L;
+    private final static long MAX_WORKER_ID = -1L ^ -1L << WORKER_ID_BITS;
+    private final static long SEQUENCE_BITS = 10L;
 
-    private final static long workerIdShift = sequenceBits;
-    private final static long timestampLeftShift = sequenceBits + workerIdBits;
-    private final static long sequenceMask = -1L ^ -1L << sequenceBits;
+    private final static long WORKER_ID_SHIFT = SEQUENCE_BITS;
+    private final static long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS;
+    private final static long SEQUENCE_MASK = -1L ^ -1L << SEQUENCE_BITS;
 
     private long lastTimestamp = -1L;
 
     public IdWorker(final long workerId) {
         super();
-        if (workerId > maxWorkerId || workerId < 0) {
+        if (workerId > MAX_WORKER_ID || workerId < 0) {
             throw new IllegalArgumentException(String.format(
                     "worker Id can't be greater than %d or less than 0",
-                    maxWorkerId));
+                    MAX_WORKER_ID));
         }
         this.workerId = workerId;
     }
@@ -35,7 +35,7 @@ public class IdWorker {
     public synchronized long nextId() {
         long timestamp = this.timeGen();
         if (this.lastTimestamp == timestamp) {
-            this.sequence = (this.sequence + 1) & sequenceMask;
+            this.sequence = (this.sequence + 1) & SEQUENCE_MASK;
             if (this.sequence == 0) {
                 timestamp = this.tilNextMillis(this.lastTimestamp);
             }
@@ -54,12 +54,11 @@ public class IdWorker {
         }
 
         this.lastTimestamp = timestamp;
-        long nextId = ((timestamp - twepoch << timestampLeftShift))
-                | (this.workerId << this.workerIdShift) | (this.sequence);
-//		System.out.println("timestamp:" + timestamp + ",timestampLeftShift:"
-//				+ timestampLeftShift + ",nextId:" + nextId + ",workerId:"
+        //		System.out.println("timestamp:" + timestamp + ",TIMESTAMP_LEFT_SHIFT:"
+//				+ TIMESTAMP_LEFT_SHIFT + ",nextId:" + nextId + ",workerId:"
 //				+ workerId + ",sequence:" + sequence);
-        return nextId;
+        return ((timestamp - TWEPOCH << TIMESTAMP_LEFT_SHIFT))
+                | (this.workerId << IdWorker.WORKER_ID_SHIFT) | (this.sequence);
     }
 
     private long tilNextMillis(final long lastTimestamp) {

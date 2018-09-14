@@ -49,8 +49,9 @@ public class IPUtils {
     public static boolean checkIpMultiSection(String ip, String expression) {
         if (null != ip && null != expression) {
             for (String exp : expression.split(",")) {
-                if (checkIp(ip, exp))
+                if (checkIp(ip, exp)) {
                     return true;
+                }
             }
         }
         return false;
@@ -148,7 +149,7 @@ public class IPUtils {
             }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
-                if (ipAddress.equals("127.0.0.1")) {
+                if ("127.0.0.1".equals(ipAddress)) {
                     // 根据网卡取本机配置的IP
                     InetAddress inet;
                     try {

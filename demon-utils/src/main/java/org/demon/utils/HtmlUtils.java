@@ -8,17 +8,22 @@ import java.util.regex.Pattern;
  */
 public class HtmlUtils {
 
-	/**
-	 * get webpage charset
-	 *
-	 * @param content content text
-	 * @return charset
-	 */
-	public static String matchCharset(String content) {
-		Pattern p = Pattern.compile("(?<=charset=)(.+)(?=\")");
-		Matcher m = p.matcher(content);
-		if (m.find())
-			return m.group();
-		return null;
-	}
+    // 获取页面编码
+    private static final String CHARSET = "\"(?<=charset=)(.+)(?=\\\")\"";
+    // 获取页面编码
+    private static final Pattern PATTERN_CHARSET = Pattern.compile(CHARSET);
+
+    /**
+     * get webpage charset
+     *
+     * @param content content text
+     * @return charset
+     */
+    public static String matchCharset(String content) {
+        Matcher m = PATTERN_CHARSET.matcher(content);
+        if (m.find()) {
+            return m.group();
+        }
+        return null;
+    }
 }

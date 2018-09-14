@@ -1,7 +1,5 @@
 package org.demon.utils.crypto;
 
-import org.demon.utils.beans.StringUtils;
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -18,7 +16,7 @@ public class DESEncryptionUtils {
     private DESEncryptionUtils() { }
 
     private final static String DES = "DES";
-    private static final String key = "DE6K9MO7N";
+    private static final String KEY = "DE6K9MO7N";
 
     /**
      * 加密数据，采用默认密钥
@@ -27,7 +25,7 @@ public class DESEncryptionUtils {
      * @throws Exception
      */
     public static byte[] encrypt(byte[] data) throws Exception {
-        return encrypt(data, key.getBytes());
+        return encrypt(data, KEY.getBytes());
     }
 
     /**
@@ -59,7 +57,7 @@ public class DESEncryptionUtils {
      * @throws Exception
      */
     public static byte[] decrypt(byte[] data) throws Exception { //解密代码
-        return decrypt(data, key.getBytes());
+        return decrypt(data, KEY.getBytes());
     }
 
     /**
@@ -81,8 +79,7 @@ public class DESEncryptionUtils {
         Cipher cipher = Cipher.getInstance(DES);
         // 用密钥初始化Cipher对象
         cipher.init(Cipher.DECRYPT_MODE, securekey, sr);
-        byte[] _data =  cipher.doFinal(data);
-        return _data;
+        return cipher.doFinal(data);
     }
 
     /**
@@ -92,7 +89,7 @@ public class DESEncryptionUtils {
      * @throws Exception
      */
     public static String encryptToString(byte[] data) throws Exception {
-        return new String(encrypt(data, key.getBytes()));
+        return new String(encrypt(data, KEY.getBytes()));
     }
 
     /**
@@ -113,7 +110,7 @@ public class DESEncryptionUtils {
      * @throws Exception
      */
     public static String decryptToString(byte[] data) throws Exception {
-        return new String(decrypt(data, key.getBytes()));
+        return new String(decrypt(data, KEY.getBytes()));
     }
 
     /**

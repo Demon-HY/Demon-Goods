@@ -6,7 +6,6 @@ import org.demon.module.auth.AuthConfig;
 import org.demon.sdk.entity.request.UserLoginVo;
 import org.demon.sdk.entity.vo.Login;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.starter.autoconfigure.annotion.RequestEnv;
@@ -23,17 +22,14 @@ import springfox.documentation.annotations.ApiIgnore;
  * 登录鉴权接口
  */
 @RestController
-@RequestMapping("/api/" + AuthConfig.MODULE_NAME)
+@RequestMapping(ApiURL.API_PREFIX + AuthConfig.MODULE_NAME)
 public class AuthHttpApi {
 
     @Autowired
     private AuthApi authApi;
 
     @ApiOperation(value = "登录", httpMethod = "POST")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userLoginVo", value = "用户登录信息", paramType = "body")
-//    })
-    @RequestMapping(value = AuthConfig.ANNO_PATH + "login.do", method = RequestMethod.POST,
+    @RequestMapping(value = ApiURL.ANNO_PATH + "login.do", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ClientResult<Login> login(@ApiIgnore @RequestEnv Env env, @RequestBody UserLoginVo userLoginVo) throws Exception {
         if (ValidUtils.isBlanks(userLoginVo.account, userLoginVo.password, userLoginVo.type)) {
@@ -46,7 +42,7 @@ public class AuthHttpApi {
     }
 
     @ApiOperation(value = "验证登录", httpMethod = "GET")
-    @RequestMapping(value = AuthConfig.ANNO_PATH + "checkLogin.do")
+    @RequestMapping(value = ApiURL.ANNO_PATH + "checkLogin.do")
     public ClientResult<Login> checkLogin(@ApiIgnore @RequestEnv Env env) throws Exception {
 
         Login login = authApi.checkLogin(env);

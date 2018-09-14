@@ -32,8 +32,8 @@ public class ValidUtils {
 
         // 如果不为null，需要处理几种特殊对象类型
         if (obj instanceof String) {
-            String _obj = (String) obj;
-            return StringUtils.isBlank(_obj);
+            String s = (String) obj;
+            return StringUtils.isBlank(s);
         } else if (obj instanceof Collection) {
             // 对象为集合
             Collection coll = (Collection) obj;

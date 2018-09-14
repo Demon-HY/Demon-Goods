@@ -79,7 +79,6 @@ public class NumberUtils {
 			temp = temp1.subtract(temp2);
 		}
 		temp = temp.divide(new BigDecimal(100));
-		//return NumberFormat.getCurrencyInstance().format(value);
 		return NumberUtils.formatMoneyByDouble(temp);
 	}
 
@@ -97,7 +96,6 @@ public class NumberUtils {
 			temp = new BigDecimal(value.toString());
 		}
 		temp = temp.divide(new BigDecimal(100));
-		//return NumberFormat.getCurrencyInstance().format(value);
 		return NumberUtils.formatMoneyByDoubleNoThousands(temp);
 	}
 
@@ -115,7 +113,6 @@ public class NumberUtils {
 			temp = new BigDecimal(value.toString());
 		}
 		temp = temp.divide(new BigDecimal(100));
-		//return NumberFormat.getCurrencyInstance().format(value);
 
 		BigDecimal targetValue = null;
 		if (value != null && org.apache.commons.lang3.StringUtils.isNotBlank(value.toString())) {
@@ -127,8 +124,6 @@ public class NumberUtils {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);// 设置使用美国数字格式(千分位)
 		df.applyPattern(formatStr);// 设置应用金额格式
 		return df.format(targetValue);
-
-//        return NumberUtilss.formatMoneyByDoubleNoThousands(temp);
 	}
 
 
@@ -387,7 +382,9 @@ public class NumberUtils {
 	}
 
 	public String replace(String str, int start, int end, String replacement) {
-		if (org.apache.commons.lang3.StringUtils.isBlank(str)) return null;
+		if (org.apache.commons.lang3.StringUtils.isBlank(str)) {
+            return null;
+        }
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
 			if (i >= start && i <= end) {
@@ -422,7 +419,9 @@ public class NumberUtils {
 	 * @return
 	 */
 	public static int compare(String val1, String val2) {
-		if (val1 == null || val2 == null || val1.equals("") || val2.equals("")) return -1;
+		if (val1 == null || val2 == null || "".equals(val1) || "".equals(val2)) {
+            return -1;
+        }
 		BigDecimal b1 = new BigDecimal(val1);
 		BigDecimal b2 = new BigDecimal(val2);
 		return b1.compareTo(b2);
@@ -483,12 +482,12 @@ public class NumberUtils {
 			String temp1 = val1.substring(0, val1.length() - 8);
 			String temp2 = val1.substring(val1.length() - 8, val1.length() - 4);
 			String temp3 = val1.substring(val1.length() - 4);
-			if (temp2.equals("0000")) {
+			if ("0000".equals(temp2)) {
 				temp2 = "";
 			} else {
 				temp2 = temp2 + "万";
 			}
-			if (temp3.equals("0000")) {
+			if ("0000".equals(temp3)) {
 				temp3 = "";
 			} else {
 				temp3 = temp3 + "元";
@@ -497,7 +496,7 @@ public class NumberUtils {
 		} else if (val1.length() >= 5) {
 			String temp2 = val1.substring(0, val1.length() - 4);
 			String temp3 = val1.substring(val1.length() - 4);
-			if (temp3.equals("0000")) {
+			if ("0000".equals(temp3)) {
 				temp3 = "";
 			} else {
 				temp3 = temp3 + "元";
@@ -522,7 +521,7 @@ public class NumberUtils {
 		}
 
 		if (obj instanceof String) {
-			if (((String) obj).length() > 0 && !((String) obj).equals("null") && !((String) obj).trim().equals("")) {
+			if (((String) obj).length() > 0 && !"null".equals((String) obj) && !"".equals(((String) obj).trim())) {
 				return String.valueOf(obj);
 			} else {
 				return null;

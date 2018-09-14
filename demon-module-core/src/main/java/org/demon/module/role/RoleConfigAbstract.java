@@ -1,12 +1,12 @@
 package org.demon.module.role;
 
-import org.demon.sdk.config.DefaultConfig;
+import org.demon.sdk.config.AbstractDefaultConfig;
 import org.javatuples.Pair;
 
 /**
  * 角色模块配置文件
  */
-public class RoleConfig extends DefaultConfig {
+public class RoleConfigAbstract extends AbstractDefaultConfig {
 
     // 模块名
     public static final String MODULE_NAME = "role";

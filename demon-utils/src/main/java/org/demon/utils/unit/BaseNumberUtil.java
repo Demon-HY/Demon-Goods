@@ -1,11 +1,11 @@
 package org.demon.utils.unit;
 
-public abstract class NumberUtil {
+public abstract class BaseNumberUtil {
     
     public String value;
     public String unit;
     
-    public NumberUtil(String regex, String str) {
+    public BaseNumberUtil(String regex, String str) {
         if (null == str) {
             throw new IllegalArgumentException();
         }

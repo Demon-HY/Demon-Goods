@@ -38,7 +38,7 @@ public class RightUtils extends AbstractLogClass {
      */
     public void checkRight(Env env, String moduleName, String rightName) throws Exception {
         if (env.continueRight) {
-//           logger.warn("模块:{} 内部调用接口,跳过权限校验", env.moduleName);
+           logger.warn("模块:{} 内部调用接口,跳过权限校验", env.moduleName);
            return;
         }
 

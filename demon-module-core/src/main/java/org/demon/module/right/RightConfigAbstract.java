@@ -1,12 +1,12 @@
 package org.demon.module.right;
 
-import org.demon.sdk.config.DefaultConfig;
+import org.demon.sdk.config.AbstractDefaultConfig;
 import org.javatuples.Pair;
 
 /**
  * 角色模块配置文件
  */
-public class RightConfig extends DefaultConfig {
+public class RightConfigAbstract extends AbstractDefaultConfig {
 
     public static final String MODULE_NAME = "right";
 

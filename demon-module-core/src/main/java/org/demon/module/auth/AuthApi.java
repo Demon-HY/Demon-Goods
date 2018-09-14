@@ -16,8 +16,6 @@ import org.demon.sdk.inner.user.IAuthApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.datetime.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -139,10 +137,10 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         }
 
         long uid = login.user.uid;
-        String token_uid = login.token.token;
+        String tokenUid = login.token.token;
         // 检查当前 token 和 用户的ID是否匹配
-        if (token_uid.length() > 11) {
-            String[] splitToken = token_uid.split("@");
+        if (tokenUid.length() > 11) {
+            String[] splitToken = tokenUid.split("@");
             if (splitToken.length == 2) {
                 if (!splitToken[1].endsWith(uid + "")) {
                     throw new LogicalException(RetCodeEnum.ERR_TOKEN_UID_MISMATCHING);

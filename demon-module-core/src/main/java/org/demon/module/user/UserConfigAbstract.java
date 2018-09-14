@@ -1,16 +1,16 @@
 package org.demon.module.user;
 
-import org.demon.sdk.config.DefaultConfig;
+import org.demon.sdk.config.AbstractDefaultConfig;
 import org.javatuples.Pair;
 
-public class UserConfig extends DefaultConfig {
+public class UserConfigAbstract extends AbstractDefaultConfig {
 
     public static final String MODULE_NAME = "user";
 
     /**
      * 默认用户类型是 type=1(客户)
      */
-    public static final int defaultUserType = 1;
+    public static final int DEFAULT_USER_TYPE = 1;
 
     /**
      * 用户名特殊字符过滤规则

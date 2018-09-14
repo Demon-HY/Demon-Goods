@@ -1,7 +1,6 @@
 package org.demon.module.role;
 
 import org.apache.commons.lang3.StringUtils;
-import org.demon.module.right.RightApi;
 import org.demon.module.right.RightUtils;
 import org.demon.sdk.entity.Role;
 import org.demon.sdk.entity.User;
@@ -32,7 +31,7 @@ public class RoleQueryApi implements IRoleQueryApi {
     @Override
     public List<Role> getRoles(Env env) throws Exception {
         // 验证是否有查询所有角色的权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_ROLE.getValue0());
 
         return roleDao.getRoles();
     }
@@ -44,7 +43,7 @@ public class RoleQueryApi implements IRoleQueryApi {
         }
 
         // 验证是否有查看角色权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_ROLE.getValue0());
 
         return roleDao.getRole(roleName);
     }
@@ -56,7 +55,7 @@ public class RoleQueryApi implements IRoleQueryApi {
         }
 
         // 验证是否有查看角色权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_ROLE.getValue0());
 
         return roleDao.getRole(roleId);
     }
@@ -68,7 +67,7 @@ public class RoleQueryApi implements IRoleQueryApi {
         }
 
         // 验证是否有获取用户角色的权限
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_USER_ROLE.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_USER_ROLE.getValue0());
 
         List<Role> roles = roleDao.getUserRoles(userId);
 
@@ -121,7 +120,7 @@ public class RoleQueryApi implements IRoleQueryApi {
             throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
         }
 
-        rightUtils.checkRight(env, RoleConfig.MODULE_NAME, RoleConfig.RIGHT_CHECK_ROLE_USER.getValue0());
+        rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_ROLE_USER.getValue0());
 
         List<User> users = roleDao.getRoleUsers(role);
         return new RoleUserVo(role, users);

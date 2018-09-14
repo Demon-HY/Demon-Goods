@@ -2,9 +2,8 @@ package org.demon.web.http;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.demon.module.auth.AuthConfig;
 import org.demon.module.user.UserBaseApi;
-import org.demon.module.user.UserConfig;
+import org.demon.module.user.UserConfigAbstract;
 import org.demon.sdk.entity.User;
 import org.demon.sdk.entity.request.UserCreateVo;
 import org.demon.sdk.environment.Env;
@@ -22,23 +21,14 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @Api(description = "用户接口")
 @RestController
-@RequestMapping("/api/" + UserConfig.MODULE_NAME)
+@RequestMapping(ApiURL.API_PREFIX + UserConfigAbstract.MODULE_NAME)
 public class UserHttpApi {
 
     @Autowired
     private UserBaseApi userBaseApi;
 
-    /**
-     * 创建用户
-     *
-     * @param env
-     * @param userCreateVo
-     * @return
-     * @throws Exception
-     */
     @ApiOperation(value = "创建用户", httpMethod = "POST")
-    @RequestMapping(value = AuthConfig.ANNO_PATH + "createUser.do", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "createUser.do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ClientResult createUser(@ApiIgnore @RequestEnv Env env,
                                    @RequestBody UserCreateVo userCreateVo) throws Exception {
         if (ValidUtils.isBlanks(userCreateVo.name, userCreateVo.password)) {

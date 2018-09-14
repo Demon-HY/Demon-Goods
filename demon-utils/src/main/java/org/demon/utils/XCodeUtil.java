@@ -204,7 +204,7 @@ public class XCodeUtil {
     private static final int PREFIX_LENGTH = 3;
     private static final String XOR_KEY = "Pp0cH6sBQZC";
     private static final String CRC_KEY = "MQP0TGVX0KFBF5F6";
-    private static final String digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXWZ";
+    private static final String DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXWZ";
 
     public static String createPrefix(int prefixLength) {
         Random random = new Random();
@@ -214,8 +214,8 @@ public class XCodeUtil {
             if (tmp < 0) {
                 tmp = -tmp;
             }
-            int index = tmp % digits.length();
-            sb.append(digits.charAt(index));
+            int index = tmp % DIGITS.length();
+            sb.append(DIGITS.charAt(index));
         }
 
         return sb.toString();

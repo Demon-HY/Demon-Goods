@@ -30,7 +30,7 @@ public class RightApi implements IRightApi {
     @Override
     public List<Right> getRights(Env env) throws Exception {
         // 校验权限
-        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfigAbstract.MODULE_NAME, RightConfigAbstract.RIGHT_CHECK_RIGHT.getValue0());
 
         return rightDao.getRights();
     }
@@ -38,7 +38,7 @@ public class RightApi implements IRightApi {
     @Override
     public List<Right> getRights(Env env, String moduleName) throws Exception {
         // 校验权限
-        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfigAbstract.MODULE_NAME, RightConfigAbstract.RIGHT_CHECK_RIGHT.getValue0());
 
         return rightDao.getRights(moduleName);
     }
@@ -50,7 +50,7 @@ public class RightApi implements IRightApi {
         }
 
         // 校验权限
-        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CHECK_ROLE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfigAbstract.MODULE_NAME, RightConfigAbstract.RIGHT_CHECK_ROLE_RIGHT.getValue0());
 
         return rightDao.getRoleRights(roleId);
     }
@@ -62,7 +62,7 @@ public class RightApi implements IRightApi {
         }
 
         // 校验权限
-        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_CREATE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfigAbstract.MODULE_NAME, RightConfigAbstract.RIGHT_CREATE_RIGHT.getValue0());
 
         rightDao.insert(right);
     }
@@ -74,7 +74,7 @@ public class RightApi implements IRightApi {
         }
 
         // 校验权限
-        rightUtils.checkRight(env, RightConfig.MODULE_NAME, RightConfig.RIGHT_DELETE_RIGHT.getValue0());
+        rightUtils.checkRight(env, RightConfigAbstract.MODULE_NAME, RightConfigAbstract.RIGHT_DELETE_RIGHT.getValue0());
 
         rightDao.removeById(right.rightId, Right.class);
     }

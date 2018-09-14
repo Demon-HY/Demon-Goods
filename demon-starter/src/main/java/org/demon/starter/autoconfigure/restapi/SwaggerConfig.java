@@ -1,20 +1,14 @@
 package org.demon.starter.autoconfigure.restapi;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -27,7 +21,6 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Swagger 相关配置
@@ -44,14 +37,11 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
      * API版本
      */
     @Value("${swagger.version:1.0-SNAPSHOT}")
-    private String VERSION;
+    private String version;
     @Value("${swagger.title:Rest API 接口}")
     private String title;
     @Value("${swagger.description:Rest API 接口}")
     private String description;
-
-    @Autowired
-    private Environment env;
 
     /**
      * 构建ApiInfo对象
@@ -60,11 +50,11 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Demon-Goods RESTful APIs")
-                .description("Demon-Goods")
-                .termsOfServiceUrl("Demon-Goods")
-                .contact("Demon-HY")
-                .version(VERSION)
+                .title("Demon RESTful APIs")
+                .description("Demon")
+                .termsOfServiceUrl("")
+                .contact(new Contact("Demon-HY", "", "heyan_kafeibuku@sina.com"))
+                .version(version)
                 .build();
     }
 

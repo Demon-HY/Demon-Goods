@@ -239,14 +239,11 @@ public class Base64 {
         int nextSeparatorIndex = CHUNK_SIZE;
         int chunksSoFar = 0;
 
-        // log.debug("number of triplets = " + numberTriplets);
         for (i = 0; i < numberTriplets; i++) {
             dataIndex = i * 3;
             b1 = binaryData[dataIndex];
             b2 = binaryData[dataIndex + 1];
             b3 = binaryData[dataIndex + 2];
-
-            // log.debug("b1= " + b1 +", b2= " + b2 + ", b3= " + b3);
 
             l = (byte) (b2 & 0x0f);
             k = (byte) (b1 & 0x03);
@@ -259,9 +256,6 @@ public class Base64 {
                     : (byte) ((b3) >> 6 ^ 0xfc);
 
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
-            // log.debug( "val2 = " + val2 );
-            // log.debug( "k4   = " + (k<<4) );
-            // log.debug( "vak  = " + (val2 | (k<<4)) );
             encodedData[encodedIndex + 1] = lookUpBase64Alphabet[val2
                     | (k << 4)];
             encodedData[encodedIndex + 2] = lookUpBase64Alphabet[(l << 2)
@@ -290,8 +284,6 @@ public class Base64 {
         if (fewerThan24bits == EIGHTBIT) {
             b1 = binaryData[dataIndex];
             k = (byte) (b1 & 0x03);
-            // log.debug("b1=" + b1);
-            // log.debug("b1<<2 = " + (b1>>2) );
             byte val1 = ((b1 & SIGN) == 0) ? (byte) (b1 >> 2)
                     : (byte) ((b1) >> 2 ^ 0xc0);
             encodedData[encodedIndex] = lookUpBase64Alphabet[val1];
@@ -461,8 +453,8 @@ public class Base64 {
      * @return A byte array containing only Base64 character data
      */
     public static String encode(byte[] pArray) {
-        byte[] _data = encodeBase64(pArray, false);
-        return Arrays.toString(_data);
+        byte[] bytes = encodeBase64(pArray, false);
+        return Arrays.toString(bytes);
     }
 
     // public static String encode(String str) throws
@@ -475,8 +467,9 @@ public class Base64 {
 
     public static String decode(String cryptoStr)
             throws UnsupportedEncodingException {
-        if (cryptoStr.length() < 40)
+        if (cryptoStr.length() < 40) {
             return "";
+        }
         try {
             String tempStr = new String(decode(cryptoStr.getBytes("UTF-8")));
             String result = tempStr.substring(40, tempStr.length());

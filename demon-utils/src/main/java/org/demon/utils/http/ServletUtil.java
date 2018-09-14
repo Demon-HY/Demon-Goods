@@ -155,15 +155,15 @@ public class ServletUtil {
 				byte[] bytes = new String(new char[]{ch}).getBytes();
 				for (int j = 0; j < bytes.length; j++) {
 					buf.append('%');
-					buf.append(digits.charAt((bytes[j] & 0xf0) >> 4));
-					buf.append(digits.charAt(bytes[j] & 0xf));
+					buf.append(DIGITS.charAt((bytes[j] & 0xf0) >> 4));
+					buf.append(DIGITS.charAt(bytes[j] & 0xf));
 				}
 			}
 		}
 		return buf.toString();
 	}
 
-	private static final String digits = "0123456789ABCDEF";
+	private static final String DIGITS = "0123456789ABCDEF";
 
 	/**
 	 * 不会将 "+" 号解码成空格 " " 的 URLDecode
@@ -194,23 +194,27 @@ public class ServletUtil {
 			switch (c) {
 				case '%':
 					try {
-						if (bytes == null)
-							bytes = new byte[(numChars - i) / 3];
+						if (bytes == null) {
+                            bytes = new byte[(numChars - i) / 3];
+                        }
 						int pos = 0;
 
 						while (((i + 2) < numChars) && (c == '%')) {
 							int v = Integer.parseInt(s.substring(i + 1, i + 3), 16);
-							if (v < 0)
-								throw new IllegalArgumentException(
-										"URLDecoder: Illegal hex characters in escape (%) pattern - negative value");
+							if (v < 0) {
+                                throw new IllegalArgumentException(
+                                        "URLDecoder: Illegal hex characters in escape (%) pattern - negative value");
+                            }
 							bytes[pos++] = (byte) v;
 							i += 3;
-							if (i < numChars)
-								c = s.charAt(i);
+							if (i < numChars) {
+                                c = s.charAt(i);
+                            }
 						}
 
-						if ((i < numChars) && (c == '%'))
-							throw new IllegalArgumentException("URLDecoder: Incomplete trailing escape (%) pattern");
+						if ((i < numChars) && (c == '%')) {
+                            throw new IllegalArgumentException("URLDecoder: Incomplete trailing escape (%) pattern");
+                        }
 
 						sb.append(new String(bytes, 0, pos, enc));
 					} catch (NumberFormatException e) {

@@ -8,8 +8,6 @@ import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.beans.StringUtils;
 import org.javatuples.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -35,7 +33,7 @@ public class ModuleRightInit extends AbstractLogClass implements ApplicationList
      * 所有要设置权限的模块
      */
     @Value("${module.properties}")
-    private String MODULE_PROPERTY_FILE_NAME;
+    private String modulePropertyFileName;
 
     /**
      * 权限字段名前缀
@@ -60,11 +58,11 @@ public class ModuleRightInit extends AbstractLogClass implements ApplicationList
         }
 
         // 考虑到效率问题,核心模块的配置文件包直接写死
-        if (ValidUtils.isBlank(MODULE_PROPERTY_FILE_NAME)) {
+        if (ValidUtils.isBlank(modulePropertyFileName)) {
             logger.warn("需要在 application.properties 中设置 module.properties, 用来加载各模块的权限");
             System.exit(-1);
         }
-        for (String moduleName : MODULE_PROPERTY_FILE_NAME.split(",")) {
+        for (String moduleName : modulePropertyFileName.split(",")) {
             try {
                 loadModuleRight(moduleName);
             } catch (ClassNotFoundException e) {

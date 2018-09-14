@@ -1,4 +1,4 @@
-package org.demon.starter.autoconfigure.web;
+package org.demon.starter.autoconfigure.web.converter;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;

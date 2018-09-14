@@ -9,13 +9,13 @@ import org.demon.sdk.entity.vo.Login;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.autoconfigure.web.context.RequestContext;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.JsonUtil;
 import org.demon.utils.RandomUtil;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.http.IPUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.demon.web.http.ApiURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +34,7 @@ import java.util.Enumeration;
  */
 @Component
 @ServletComponentScan
-@WebFilter(urlPatterns = "/api/*", filterName = "authFilter")
+@WebFilter(urlPatterns = ApiURL.API_PREFIX + "*", filterName = "authFilter")
 public class AuthFilter extends AbstractLogClass implements Filter {
 
     @Autowired
@@ -54,6 +54,8 @@ public class AuthFilter extends AbstractLogClass implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
+
+        RequestContext.setHttpServletRequest(request);
 
         // 兼容IE下AJAX 跨域重定向问题
         response.setHeader("P3P", "CP=CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT " +
@@ -100,10 +102,6 @@ public class AuthFilter extends AbstractLogClass implements Filter {
 
     /**
      * 解析请求信息
-     *
-     * @param request
-     * @param response
-     * @return
      */
     private Env parseServlet(HttpServletRequest request, HttpServletResponse response) {
         Env env = new Env();
@@ -124,7 +122,7 @@ public class AuthFilter extends AbstractLogClass implements Filter {
     /**
      * 请求前记录日志
      */
-    public void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum) {
+    private void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum) {
         // 请求唯一标识
         String requestId = RandomUtil.getRequestId();
         request.setAttribute(SysContants.REQUEST_ID, requestId);
@@ -148,5 +146,6 @@ public class AuthFilter extends AbstractLogClass implements Filter {
 
     @Override
     public void destroy() {
+        RequestContext.clearHttpReq();
     }
 }

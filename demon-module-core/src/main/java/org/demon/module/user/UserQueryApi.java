@@ -39,12 +39,13 @@ public class UserQueryApi implements IUserQueryApi {
     @Override
     public void checkUserStatus(Env env, User user) throws Exception {
         switch (user.status) {
-            case UserConfig.STATUS_NORMAL :
+            case UserConfigAbstract.STATUS_NORMAL :
                 break;
-            case UserConfig.STATUS_LOCK :
+            case UserConfigAbstract.STATUS_LOCK :
                 throw new LogicalException(RetCodeEnum.ERR_USER_LOCKED);
-            case UserConfig.STATUS_DELETE :
+            case UserConfigAbstract.STATUS_DELETE :
                 throw new LogicalException(RetCodeEnum.ERR_USER_DELETE);
+                default:break;
         }
 
         // TODO 检查用户所在角色是否被锁定
@@ -53,8 +54,9 @@ public class UserQueryApi implements IUserQueryApi {
 
     @Override
     public boolean checkPasswordIsLegal(String password) throws Exception {
-        if (ValidUtils.isBlank(password) || password.matches("[u4e00-u9fa5]"))
+        if (ValidUtils.isBlank(password) || password.matches("[u4e00-u9fa5]")) {
             throw new LogicalException(RetCodeEnum.ERR_ILLEGAL_PASSWORD);
+        }
         return true;
     }
 

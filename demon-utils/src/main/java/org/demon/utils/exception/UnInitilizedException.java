@@ -7,23 +7,23 @@ package org.demon.utils.exception;
  * @author monitor
  *
  */
-public class UnInitilized extends Exception {
+public class UnInitilizedException extends Exception {
 
     private static final long serialVersionUID = 1230554992550126245L;
 
-    public UnInitilized() {
+    public UnInitilizedException() {
         super();
     }
     
-    public UnInitilized(String message) {
+    public UnInitilizedException(String message) {
         super(message);
     }
     
-    public UnInitilized(String message, Throwable cause) {
+    public UnInitilizedException(String message, Throwable cause) {
         super(message, cause);
     }
     
-    public UnInitilized(Throwable cause) {
+    public UnInitilizedException(Throwable cause) {
         super(cause);
     }
 

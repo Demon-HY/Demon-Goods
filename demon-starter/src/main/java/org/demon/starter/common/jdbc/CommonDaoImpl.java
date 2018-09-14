@@ -38,10 +38,14 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
     public T selectById(Object idObj, Class<T> entityClass) {
         try {
             String idName = DBUtils.getPrimyName(entityClass);
-            if (idName == null || idName.length() < 1) return null;
+            if (idName == null || idName.length() < 1) {
+                return null;
+            }
 
             StringBuilder sql = DBUtils.getSelectFrom(entityClass);
-            if (sql == null) return null;
+            if (sql == null) {
+                return null;
+            }
 
             sql.append(" WHERE ").append(idName).append(" = ? ");
 
@@ -65,7 +69,9 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
     @Override
     public List<T> selectByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) throws SQLException {
         StringBuilder sql = DBUtils.getSelectFrom(entityClass);
-        if (sql == null) return null;
+        if (sql == null) {
+            return null;
+        }
 
         sql.append(criteria.getCriteriaSQL());
 
@@ -81,7 +87,9 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
     @Override
     public T selectOneByCriteria(CommonDao.Criteria criteria, Class<T> entityClass) throws SQLException {
         StringBuilder sql = DBUtils.getSelectFrom(entityClass);
-        if (sql == null) return null;
+        if (sql == null) {
+            return null;
+        }
         sql.append(criteria.getCriteriaSQL());
 
         Object[] params = criteria.getParam().toArray(new Object[criteria.getParam().size()]);
@@ -147,7 +155,9 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
         Field pkField = null;
 
         for (Field field : fields) {
-            if (field.getAnnotation(Column.class) == null) continue;
+            if (field.getAnnotation(Column.class) == null) {
+                continue;
+            }
 
             String key = field.getName(); // 实体类字段名
 
@@ -157,7 +167,9 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
                 continue;
             }
             Object arg = obj.get(key);
-            if (ValidUtils.isBlank(arg)) continue;
+            if (ValidUtils.isBlank(arg)) {
+                continue;
+            }
 
             sql1.append(name).append(",");
             sql2.append("?,");
@@ -207,7 +219,9 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
         Field pkField = null;
 
         for (Field field : fields) {
-            if (field.getAnnotation(Column.class) == null) continue;
+            if (field.getAnnotation(Column.class) == null) {
+                continue;
+            }
 
             String name = field.getAnnotation(Column.class).name(); // 数据库字段名
             if (name.equals(pkName)) {
@@ -235,10 +249,14 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
         StringBuilder sql2 = new StringBuilder(" WHERE " + pkName + " = ? ");
         List<Object> args = new ArrayList<>();
         for (String key : obj.keySet()) {
-            if (key.equals(pkName)) continue;
+            if (key.equals(pkName)) {
+                continue;
+            }
 
             Object arg = obj.get(key);
-            if (ValidUtils.isBlank(arg)) continue;
+            if (ValidUtils.isBlank(arg)) {
+                continue;
+            }
 
             sql1.append(key).append(" = ?,");
             args.add(arg);
@@ -280,6 +298,7 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
             limitStr = "";
         }
 
+        @Override
         public Criteria not() {
             not = true;
             return this;
@@ -307,6 +326,7 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
             or = false;
         }
 
+        @Override
         public Criteria eq(String field, Object val) {
             link();
             if (not) {
@@ -322,6 +342,7 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
             return this;
         }
 
+        @Override
         public Criteria like(String field, Object val) {
             link();
             if (not) {
@@ -337,6 +358,7 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
             return this;
         }
 
+        @Override
         public Criteria between(String field, Object val1, Object val2) {
             link();
             if (not) {
@@ -359,10 +381,12 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
             return this;
         }
 
+        @Override
         public List<Object> getParam() {
             return this.param;
         }
 
+        @Override
         public StringBuilder getCriteriaSQL() {
             return new StringBuilder(criteriaSQL.toString() + limitStr);
         }
@@ -419,12 +443,12 @@ public class CommonDaoImpl<T> extends AbstractLogClass implements CommonDao<T> {
                 fieldInfo.setFieldComment(rs.getString("Comment"));
                 fieldInfo.setFieldType(rs.getString("Type"));
                 String key = rs.getString("Key");
-                if (key != null && key.equals("PRI")) {
+                if ("PRI".equals(key)) {
                     fieldInfo.setPrimary(true);
                 } else {
                     fieldInfo.setPrimary(false);
                 }
-                fieldInfo.setNull(rs.getString("Null").equals("YES"));
+                fieldInfo.setNull("YES".equals(rs.getString("Null")));
 
                 fieldInfos.add(fieldInfo);
             }

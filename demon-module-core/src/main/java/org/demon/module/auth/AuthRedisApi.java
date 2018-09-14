@@ -2,15 +2,10 @@ package org.demon.module.auth;
 
 import org.demon.sdk.entity.vo.Login;
 import org.demon.starter.autoconfigure.redis.RedisApi;
-import org.demon.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class AuthRedisApi extends RedisApi {

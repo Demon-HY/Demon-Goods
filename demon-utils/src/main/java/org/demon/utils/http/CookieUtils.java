@@ -65,8 +65,12 @@ public class CookieUtils {
 		try {
 			Cookie cookie = new Cookie(name,value);
 			cookie.setPath("/");
-			if (cookieDomain != null) cookie.setDomain(cookieDomain);
-			if(maxAge>0)  cookie.setMaxAge(maxAge);
+			if (cookieDomain != null) {
+                cookie.setDomain(cookieDomain);
+            }
+			if(maxAge>0) {
+                cookie.setMaxAge(maxAge);
+            }
 			resp.addCookie(cookie);
 		} catch (Exception e) {
 			e.printStackTrace();
