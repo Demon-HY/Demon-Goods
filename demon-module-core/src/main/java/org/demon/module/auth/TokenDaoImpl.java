@@ -1,6 +1,6 @@
 package org.demon.module.auth;
 
-import org.demon.sdk.entity.Token;
+import org.demon.sdk.model.entity.Token;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;

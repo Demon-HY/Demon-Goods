@@ -2,10 +2,10 @@ package org.demon.module.role;
 
 import org.apache.commons.lang3.StringUtils;
 import org.demon.module.right.RightUtils;
-import org.demon.sdk.entity.Role;
-import org.demon.sdk.entity.User;
-import org.demon.sdk.entity.vo.RoleUserVo;
-import org.demon.sdk.entity.vo.UserRoleVo;
+import org.demon.sdk.model.entity.Role;
+import org.demon.sdk.model.entity.User;
+import org.demon.sdk.model.vo.RoleUserVo;
+import org.demon.sdk.model.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.role.IRightApi;
@@ -71,7 +71,7 @@ public class RoleQueryApi implements IRoleQueryApi {
 
         List<Role> roles = roleDao.getUserRoles(userId);
 
-        return new UserRoleVo(env.login.user, roles);
+        return new UserRoleVo(env.loginVo.user, roles);
     }
 
     @Override

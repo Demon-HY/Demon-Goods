@@ -1,6 +1,7 @@
-package org.demon.sdk.entity;
+package org.demon.sdk.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -13,11 +14,12 @@ import java.util.Date;
  * @since 1.0
  */
 @Data
+@NoArgsConstructor
 @Table(name = "id_card")
 public class IdCard implements Serializable {
 
-	private static final long serialVersionUID = -1728214073773690607L;
-	// 用户ID
+    private static final long serialVersionUID = -6751522627251124079L;
+    // 用户ID
 	@Id
 	@Column(name = "uid")
 	public Long uid;
@@ -63,7 +65,4 @@ public class IdCard implements Serializable {
 
 	@Column(name = "update_time")
 	public Date updateTime;
-
-
-	public IdCard(){}
 }

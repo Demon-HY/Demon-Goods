@@ -1,6 +1,6 @@
 package org.demon.module.user;
 
-import org.demon.sdk.entity.IdCard;
+import org.demon.sdk.model.entity.IdCard;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package org.demon.sdk.event.type;
 
-import org.demon.sdk.entity.vo.Login;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.Event;
 
@@ -18,17 +18,17 @@ public class PostLoginEvent extends Event {
 
     public Env env;
 
-    public Login login;
+    public LoginVo loginVo;
 
     /**
      * 事件构造函数
      *
      * @param env   上下文
-     * @param login 登录信息
+     * @param loginVo 登录信息
      */
-    public PostLoginEvent(Object source, Env env, Login login) {
+    public PostLoginEvent(Object source, Env env, LoginVo loginVo) {
         super(source);
         this.env = env;
-        this.login = login;
+        this.loginVo = loginVo;
     }
 }

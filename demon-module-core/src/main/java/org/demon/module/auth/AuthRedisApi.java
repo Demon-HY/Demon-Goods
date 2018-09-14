@@ -1,6 +1,6 @@
 package org.demon.module.auth;
 
-import org.demon.sdk.entity.vo.Login;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.starter.autoconfigure.redis.RedisApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,11 +26,11 @@ public class AuthRedisApi extends RedisApi {
     /**
      * 保存登录信息
      *
-     * @param login
+     * @param loginVo
      * @return
      */
-    public boolean saveLoginInfo(Login login) {
-        return setBean(login.token.token, login, AuthConfig.DEFAULT_TOKEN_AGE);
+    public boolean saveLoginInfo(LoginVo loginVo) {
+        return setBean(loginVo.token.token, loginVo, AuthConfig.DEFAULT_TOKEN_AGE);
     }
 
     /**
@@ -38,8 +38,8 @@ public class AuthRedisApi extends RedisApi {
      *
      * @param token 用户唯一标识
      */
-    public Login getLoginInfo(String token) {
-        return getBean(token, Login.class);
+    public LoginVo getLoginInfo(String token) {
+        return getBean(token, LoginVo.class);
     }
 
     /**

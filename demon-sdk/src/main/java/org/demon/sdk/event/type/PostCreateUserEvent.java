@@ -1,7 +1,6 @@
 package org.demon.sdk.event.type;
 
-import org.demon.sdk.entity.User;
-import org.demon.sdk.entity.request.UserCreateVo;
+import org.demon.sdk.model.entity.User;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.Event;
 

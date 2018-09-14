@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.demon.module.auth.AuthConfig;
 import org.demon.module.auth.AuthRedisApi;
 import org.demon.sdk.config.SysContants;
-import org.demon.sdk.entity.vo.Login;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
@@ -90,12 +90,12 @@ public class AuthFilter extends AbstractLogClass implements Filter {
             return RetCodeEnum.OK;
         }
         // 从缓存中读取token数据
-        Login login = authRedisApi.getLoginInfo(env.token);
-        if (login == null) {
+        LoginVo loginVo = authRedisApi.getLoginInfo(env.token);
+        if (loginVo == null) {
             return RetCodeEnum.ERR_TOKEN_NOT_FOUND;
         }
 
-        env.login = login;
+        env.loginVo = loginVo;
 
         return RetCodeEnum.OK;
     }

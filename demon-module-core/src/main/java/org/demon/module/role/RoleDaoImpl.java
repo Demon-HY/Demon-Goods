@@ -1,13 +1,12 @@
 package org.demon.module.role;
 
-import org.demon.sdk.entity.Role;
-import org.demon.sdk.entity.User;
+import org.demon.sdk.model.entity.Role;
+import org.demon.sdk.model.entity.User;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.demon.utils.db.DBUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

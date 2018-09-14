@@ -1,6 +1,6 @@
 package org.demon.module.role;
 
-import org.demon.sdk.entity.Role;
+import org.demon.sdk.model.entity.Role;
 
 /**
  * 角色工具类

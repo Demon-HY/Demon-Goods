@@ -1,7 +1,7 @@
 package org.demon.sdk.inner.user;
 
-import org.demon.sdk.entity.User;
-import org.demon.sdk.entity.request.UserCreateVo;
+import org.demon.sdk.model.entity.User;
+import org.demon.sdk.model.dto.create.UserCreateDto;
 import org.demon.sdk.environment.Env;
 
 /**
@@ -12,10 +12,10 @@ public interface IUserBaseApi {
     /**
      * 创建用户
      *
-     * @param userCreateVo
+     * @param userCreateDto
      * @return
      */
-    User createUser(Env env, UserCreateVo userCreateVo) throws Exception;
+    User createUser(Env env, UserCreateDto userCreateDto) throws Exception;
 
     /**
      * 清除密码

@@ -1,8 +1,9 @@
-package org.demon.sdk.entity.request;
+package org.demon.sdk.model.dto.request;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -10,14 +11,11 @@ import java.io.Serializable;
  * 用户登录对象
  */
 @Data
+@NoArgsConstructor
 @ApiModel(value = "用户登录对象")
 public class UserLoginVo implements Serializable {
 
-    private static final long serialVersionUID = -6801287314372848505L;
-
-    public UserLoginVo() {
-    }
-
+    private static final long serialVersionUID = 7812076455904605538L;
     /**
      * 用户名
      */

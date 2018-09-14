@@ -1,7 +1,6 @@
 package org.demon.sdk.event.type;
 
-import org.demon.sdk.entity.request.UserCreateVo;
-import org.demon.sdk.entity.request.UserLoginVo;
+import org.demon.sdk.model.dto.create.UserCreateDto;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.Event;
 
@@ -19,17 +18,17 @@ public class PreCreateUserEvent extends Event {
 
     public Env env;
 
-    public UserCreateVo userCreateVo;
+    public UserCreateDto userCreateDto;
 
     /**
      * 事件构造函数
      *
      * @param env      上下文
-     * @param userCreateVo  用户创建信息
+     * @param userCreateDto  用户创建信息
      */
-    public PreCreateUserEvent(Object source, Env env, UserCreateVo userCreateVo) {
+    public PreCreateUserEvent(Object source, Env env, UserCreateDto userCreateDto) {
         super(source);
         this.env = env;
-        this.userCreateVo = userCreateVo;
+        this.userCreateDto = userCreateDto;
     }
 }

@@ -1,8 +1,7 @@
 package org.demon.module.user;
 
-import org.apache.poi.ss.formula.functions.T;
-import org.demon.sdk.entity.RoleRight;
-import org.demon.sdk.entity.User;
+import org.demon.sdk.model.entity.RoleRight;
+import org.demon.sdk.model.entity.User;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDao;
 import org.demon.starter.common.jdbc.CommonDaoImpl;

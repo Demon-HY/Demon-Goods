@@ -2,17 +2,15 @@ package org.demon.module.right;
 
 import org.demon.module.right.exception.RightCheckException;
 import org.demon.module.role.RoleUtils;
-import org.demon.sdk.entity.Right;
-import org.demon.sdk.entity.Role;
-import org.demon.sdk.entity.vo.UserRoleVo;
+import org.demon.sdk.model.entity.Right;
+import org.demon.sdk.model.entity.Role;
+import org.demon.sdk.model.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +45,7 @@ public class RightUtils extends AbstractLogClass {
             throw new RightCheckException(RetCodeEnum.ERR_RIGHT_INVALID);
         }
         // 检查用户信息是否存在
-        if (env.login == null) {
+        if (env.loginVo == null) {
             throw new RightCheckException(RetCodeEnum.ERR_USER_NOT_LOGIN);
         }
 

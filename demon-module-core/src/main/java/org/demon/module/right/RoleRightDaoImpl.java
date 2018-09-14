@@ -1,8 +1,8 @@
 package org.demon.module.right;
 
 
-import org.demon.sdk.entity.Right;
-import org.demon.sdk.entity.RoleRight;
+import org.demon.sdk.model.entity.Right;
+import org.demon.sdk.model.entity.RoleRight;
 import org.demon.starter.autoconfigure.mysql.GenertedJdbcTemplate;
 import org.demon.starter.common.jdbc.CommonDaoImpl;
 import org.springframework.stereotype.Repository;

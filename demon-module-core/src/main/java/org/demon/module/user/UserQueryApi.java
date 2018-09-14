@@ -1,6 +1,6 @@
 package org.demon.module.user;
 
-import org.demon.sdk.entity.User;
+import org.demon.sdk.model.entity.User;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.exception.ParamException;

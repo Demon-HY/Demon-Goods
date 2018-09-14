@@ -1,6 +1,6 @@
 package org.demon.web.init;
 
-import org.demon.sdk.entity.Right;
+import org.demon.sdk.model.entity.Right;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.environment.EnvUtils;
 import org.demon.sdk.inner.role.IRightApi;

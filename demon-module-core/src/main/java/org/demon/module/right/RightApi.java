@@ -1,8 +1,8 @@
 package org.demon.module.right;
 
 import org.demon.module.role.RoleDaoImpl;
-import org.demon.sdk.entity.Right;
-import org.demon.sdk.entity.Role;
+import org.demon.sdk.model.entity.Right;
+import org.demon.sdk.model.entity.Role;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.exception.LogicalException;
 import org.demon.sdk.inner.role.IRightApi;

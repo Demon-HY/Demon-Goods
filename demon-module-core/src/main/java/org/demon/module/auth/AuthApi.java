@@ -2,10 +2,10 @@ package org.demon.module.auth;
 
 import org.demon.module.user.UserQueryApi;
 import org.demon.module.user.UserDaoImpl;
-import org.demon.sdk.entity.Token;
-import org.demon.sdk.entity.User;
-import org.demon.sdk.entity.request.UserLoginVo;
-import org.demon.sdk.entity.vo.Login;
+import org.demon.sdk.model.entity.Token;
+import org.demon.sdk.model.entity.User;
+import org.demon.sdk.model.dto.request.UserLoginVo;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.type.PostLoginEvent;
 import org.demon.sdk.event.type.PostLogoutEvent;
@@ -36,7 +36,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
     private TokenDaoImpl tokenDao;
 
     @Override
-    public Login login(Env env, UserLoginVo userLoginVo) throws Exception {
+    public LoginVo login(Env env, UserLoginVo userLoginVo) throws Exception {
         // 发送登录前事件
         PreLoginEvent preLoginEvent = new PreLoginEvent(this, env, userLoginVo);
         applicationContext.publishEvent(preLoginEvent);
@@ -68,13 +68,13 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         // save token
         tokenDao.insert(token);
 
-        Login login = new Login(token, user);
+        LoginVo loginVo = new LoginVo(token, user);
 
-        // save login to redis
-        authRedisApi.saveLoginInfo(login);
+        // save loginVo to redis
+        authRedisApi.saveLoginInfo(loginVo);
 
         // 发送登录后事件
-        PostLoginEvent postLoginEvent = new PostLoginEvent(this, env, login);
+        PostLoginEvent postLoginEvent = new PostLoginEvent(this, env, loginVo);
         applicationContext.publishEvent(postLoginEvent);
         if (!preLoginEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
@@ -82,7 +82,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
             throw new LogicalException(preLoginEvent.retCodeEnum);
         }
 
-        return login;
+        return loginVo;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         }
 
         // remove token
-        tokenDao.removeById(env.login.token.id, Token.class);
+        tokenDao.removeById(env.loginVo.token.id, Token.class);
         authRedisApi.clearLoginInfo(env.token);
 
 
@@ -114,14 +114,14 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
     }
 
     @Override
-    public Login checkLogin(Env env) throws Exception {
+    public LoginVo checkLogin(Env env) throws Exception {
         String token = env.token;
         if (null == token) {
             throw new IllegalArgumentException();
         }
 
-        Login login = env.login;
-        if (login == null) {
+        LoginVo loginVo = env.loginVo;
+        if (loginVo == null) {
             // 从数据库中获取 token
             Token tokenInfo = tokenDao.getToken(token);
             if (tokenInfo == null) {
@@ -131,13 +131,13 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
                 throw new LogicalException(RetCodeEnum.ERR_TOKEN_EXPIRED);
             }
             User user = userDao.selectById(tokenInfo.uid, User.class);
-            login = new Login(tokenInfo, user);
+            loginVo = new LoginVo(tokenInfo, user);
 
             // 保存登录信息到缓存
         }
 
-        long uid = login.user.uid;
-        String tokenUid = login.token.token;
+        long uid = loginVo.user.uid;
+        String tokenUid = loginVo.token.token;
         // 检查当前 token 和 用户的ID是否匹配
         if (tokenUid.length() > 11) {
             String[] splitToken = tokenUid.split("@");
@@ -149,8 +149,8 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         }
 
         // check user status
-        userQueryApi.checkUserStatus(env, login.user);
+        userQueryApi.checkUserStatus(env, loginVo.user);
 
-        return login;
+        return loginVo;
     }
 }

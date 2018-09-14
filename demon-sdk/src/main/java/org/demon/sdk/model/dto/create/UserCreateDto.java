@@ -1,8 +1,9 @@
-package org.demon.sdk.entity.request;
+package org.demon.sdk.model.dto.create;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,13 +12,10 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(value = "创建用户属性")
-public class UserCreateVo implements Serializable {
+@NoArgsConstructor
+public class UserCreateDto implements Serializable {
 
-    private static final long serialVersionUID = -7847323514181408636L;
-
-    public UserCreateVo() {
-    }
-
+    private static final long serialVersionUID = 2809999206266210853L;
     // 用户名
     @ApiModelProperty(value = "用户名", required = true, position = 1)
     public String name;

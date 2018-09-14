@@ -1,6 +1,6 @@
 package org.demon.sdk.inner.role;
 
-import org.demon.sdk.entity.Role;
+import org.demon.sdk.model.entity.Role;
 import org.demon.sdk.environment.Env;
 
 /**

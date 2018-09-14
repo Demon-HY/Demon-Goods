@@ -1,8 +1,9 @@
-package org.demon.sdk.entity;
+package org.demon.sdk.model.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.demon.utils.datetime.DateUtils;
-import org.demon.utils.datetime.Time;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -17,9 +18,11 @@ import java.util.UUID;
  * @since 1.0
  */
 @Table(name = "token")
+@Data
+@NoArgsConstructor
 public class Token implements Serializable {
 
-	private static final long serialVersionUID = 9062964531025160405L;
+	private static final long serialVersionUID = -5935097954977447840L;
 	// 自增ID
 	@Id
 	@Column(name = "id")
@@ -59,9 +62,6 @@ public class Token implements Serializable {
 	@Column(name = "update_time")
 	public Date updateTime;
 
-
-	public Token(){}
-
 	public Token(String token, long uid, Date expires, Date createTime, String ip, String device, String userAgent) {
 		this.token = token;
 		this.uid = uid;
@@ -100,83 +100,5 @@ public class Token implements Serializable {
 		long uuid = UUID.randomUUID().getMostSignificantBits();
 		byte[] uuidBytes = ByteBuffer.allocate(8).putLong(uuid).array();
 		return Base64.encodeBase64URLSafeString(uuidBytes);
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public Long getUid() {
-		return uid;
-	}
-
-	public void setUid(Long uid) {
-		this.uid = uid;
-	}
-
-	public Date getExpires() {
-		return expires;
-	}
-
-	public void setExpires(Date expires) {
-		this.expires = expires;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public String getDevice() {
-		return device;
-	}
-
-	public void setDevice(String device) {
-		this.device = device;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	@Override
-	public String toString() {
-		return "Token{" +
-				"id=" + id +
-				", token='" + token + '\'' +
-				", uid=" + uid +
-				", expires=" + expires +
-				", ip='" + ip + '\'' +
-				", device='" + device + '\'' +
-				", createTime=" + createTime +
-				", updateTime=" + updateTime +
-				'}';
 	}
 }

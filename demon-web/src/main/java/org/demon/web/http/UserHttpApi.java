@@ -4,8 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.demon.module.user.UserBaseApi;
 import org.demon.module.user.UserConfigAbstract;
-import org.demon.sdk.entity.User;
-import org.demon.sdk.entity.request.UserCreateVo;
+import org.demon.sdk.model.entity.User;
+import org.demon.sdk.model.dto.create.UserCreateDto;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
@@ -30,12 +30,12 @@ public class UserHttpApi {
     @ApiOperation(value = "创建用户", httpMethod = "POST")
     @RequestMapping(value = "createUser.do", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ClientResult createUser(@ApiIgnore @RequestEnv Env env,
-                                   @RequestBody UserCreateVo userCreateVo) throws Exception {
-        if (ValidUtils.isBlanks(userCreateVo.name, userCreateVo.password)) {
+                                   @RequestBody UserCreateDto userCreateDto) throws Exception {
+        if (ValidUtils.isBlanks(userCreateDto.name, userCreateDto.password)) {
             return ClientResult.error(RetCodeEnum.ERR_BAD_PARAMS);
         }
 
-        User user = userBaseApi.createUser(env, userCreateVo);
+        User user = userBaseApi.createUser(env, userCreateDto);
 
         return ClientResult.success(user);
     }

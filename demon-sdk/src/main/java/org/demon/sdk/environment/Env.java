@@ -1,6 +1,6 @@
 package org.demon.sdk.environment;
 
-import org.demon.sdk.entity.vo.Login;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.utils.RetCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +49,7 @@ public class Env implements Serializable {
     /**
      * 用户登录信息
      */
-    public Login login;
+    public LoginVo loginVo;
     /**
      * 内部接口调用时跳过权限
      */
@@ -69,7 +69,7 @@ public class Env implements Serializable {
                 ", token='" + token + '\'' +
                 ", clientIP='" + clientIP + '\'' +
                 ", device='" + device + '\'' +
-                ", login=" + login +
+                ", loginVo=" + loginVo +
                 ", continueRight=" + continueRight +
                 ", retCodeEnum=" + retCodeEnum +
                 '}';
