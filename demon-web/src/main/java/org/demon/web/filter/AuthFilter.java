@@ -5,8 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.demon.module.auth.AuthConfig;
 import org.demon.module.auth.AuthRedisApi;
 import org.demon.sdk.config.SysContants;
-import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
+import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.utils.ClientResult;
 import org.demon.sdk.utils.RetCodeEnum;
 import org.demon.starter.autoconfigure.web.context.RequestContext;
@@ -55,16 +55,18 @@ public class AuthFilter extends AbstractLogClass implements Filter {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
 
+        // 保存Request到上下文环境
         RequestContext.setHttpServletRequest(request);
 
-        // 兼容IE下AJAX 跨域重定向问题
-        response.setHeader("P3P", "CP=CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT " +
-                "DEM STA PRE COM NAV OTC NOI DSP COR");
+        // 请求唯一标识
+        String requestId = RandomUtil.getRequestId();
+        request.setAttribute(SysContants.REQUEST_ID, requestId);
+        response.setHeader(SysContants.REQUEST_ID, requestId);
 
         RetCodeEnum retCodeEnum = handler(request, response);
 
         // 请求前记录日志
-        doBefore(request, retCodeEnum);
+        doBefore(request, retCodeEnum, requestId);
 
         if (retCodeEnum.equals(RetCodeEnum.OK)) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -122,17 +124,11 @@ public class AuthFilter extends AbstractLogClass implements Filter {
     /**
      * 请求前记录日志
      */
-    private void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum) {
-        // 请求唯一标识
-        String requestId = RandomUtil.getRequestId();
-        request.setAttribute(SysContants.REQUEST_ID, requestId);
-
+    private void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum, String requestId) {
         // 记录下请求内容
         String url = request.getRequestURI();
-        if (StringUtils.isNotBlank(url) && url.contains("hello")) { // 屏蔽阿里的健康检查
-            return;
-        }
         String httpMethod = request.getMethod();
+
         JSONObject obj = new JSONObject(); // 请求参数
         //获取所有参数
         Enumeration<String> enu = request.getParameterNames();

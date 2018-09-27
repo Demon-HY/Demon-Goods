@@ -38,10 +38,8 @@ public class WebLoggerAspect extends AbstractLogClass {
     public void doAfterReturning(JoinPoint joinPoint, Object result) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
-        HttpServletResponse resp = attributes.getResponse();
-        // 请求的唯一标识，客户端通过这个可以查询到该次请求记录
+        // TODO 请求的唯一标识，客户端通过这个可以查询到该次请求记录,需要在拦截器里写入该属性
         String requestId = (String) req.getAttribute(SysContants.REQUEST_ID);
-        resp.setHeader(SysContants.REQUEST_ID, requestId);
 
         // 处理完请求，返回内容
         logger.info("HTTP-OK  {}  {}  {}  {}  P:{}  R:{}",
@@ -53,17 +51,15 @@ public class WebLoggerAspect extends AbstractLogClass {
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
-        HttpServletResponse resp = attributes.getResponse();
         // 请求的唯一标识，客户端通过这个可以查询到该次请求记录
         String requestId = (String) req.getAttribute(SysContants.REQUEST_ID);
-        resp.setHeader(SysContants.REQUEST_ID, requestId);
 
         // 这里可以捕获异常，但无法处理异常，异常还是会抛给 JVM
 
         // 处理完请求，返回内容
         logger.error("HTTP-ERROR  {}  {}  {}  {}  P:{}  E:{}",
                 IPUtils.getIPAddr(req), requestId, req.getMethod(), getRequestUrl(req),
-                joinPoint.getArgs(), e.getMessage(), e);
+                joinPoint.getArgs(), e.getMessage(), e.getMessage());
     }
 
     /**
