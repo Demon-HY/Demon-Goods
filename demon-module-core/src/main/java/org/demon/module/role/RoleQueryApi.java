@@ -10,7 +10,7 @@ import org.demon.sdk.environment.Env;
 import org.demon.starter.exception.LogicalException;
 import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,7 +94,7 @@ public class RoleQueryApi implements IRoleQueryApi {
 
         Role role = roleDao.getRole(roleId);
         if (role == null) {
-            throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
+            throw new LogicalException(BizRetCode.ERR_ROLE_NOT_FOUND);
         }
 
         return getRoleUser(env, role);
@@ -108,7 +108,7 @@ public class RoleQueryApi implements IRoleQueryApi {
 
         Role role = roleDao.getRole(roleName);
         if (role == null) {
-            throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
+            throw new LogicalException(BizRetCode.ERR_ROLE_NOT_FOUND);
         }
 
         return getRoleUser(env, role);
@@ -117,7 +117,7 @@ public class RoleQueryApi implements IRoleQueryApi {
     @Override
     public RoleUserVo getRoleUser(Env env, Role role) throws Exception {
         if (role == null) {
-            throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
+            throw new LogicalException(BizRetCode.ERR_ROLE_NOT_FOUND);
         }
 
         rightUtils.checkRight(env, RoleConfigAbstract.MODULE_NAME, RoleConfigAbstract.RIGHT_CHECK_ROLE_USER.getValue0());

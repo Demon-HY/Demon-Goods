@@ -5,7 +5,7 @@ import org.demon.sdk.model.entity.Role;
 import org.demon.sdk.environment.Env;
 import org.demon.starter.exception.LogicalException;
 import org.demon.sdk.inner.role.IRoleBaseApi;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class RoleBaseApi implements IRoleBaseApi {
 
         Role temp = roleDao.getRole(role.name);
         if (temp != null) {
-            throw new LogicalException(RetCodeEnum.ERR_ROLE_EXIST);
+            throw new LogicalException(BizRetCode.ERR_ROLE_EXIST);
         }
 
         // 验证权限

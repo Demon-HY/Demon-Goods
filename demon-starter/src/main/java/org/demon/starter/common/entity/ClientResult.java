@@ -1,51 +1,45 @@
-package org.demon.starter.utils;
+package org.demon.starter.common.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.demon.starter.common.retCode.BaseRetCode;
 
 import java.io.Serializable;
 
-@ApiModel(value = "客户端获取数据")
+/**
+ * 配合前端统一返回结果的格式工具类
+ * @param <T>
+ */
+@Data
+@ApiModel(value = "配合前端统一返回结果的格式工具类")
 public class ClientResult<T> implements Serializable {
 
-    private static final long serialVersionUID = 3593561370510117488L;
+    private static final long serialVersionUID = -1L;
 
     @ApiModelProperty(value = "错误消息")
-    private String message = RetCodeEnum.OK.message;
+    private String message = BaseRetCode.OK.message;
 
     @ApiModelProperty(value = "返回数据")
     private T result;
 
     @ApiModelProperty(value = "是否成功")
-    private boolean success = true;
+    private Boolean success = true;
 
     // 接口返回码定义
     @ApiModelProperty(value = "错误码")
-    private Integer retCode = RetCodeEnum.OK.retCode;
-
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public boolean isError() {
-        return !isSuccess();
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+    private Integer retCode = BaseRetCode.OK.retCode;
 
     private ClientResult() {
     }
 
-    private ClientResult(RetCodeEnum retCodeEnum) {
+    private ClientResult(BaseRetCode.RetCode retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
         this.success = false;
     }
 
-    private ClientResult(RetCodeEnum retCodeEnum, String message) {
+    private ClientResult(BaseRetCode.RetCode retCodeEnum, String message) {
         this.retCode = retCodeEnum.retCode;
         this.message = message;
         this.success = false;
@@ -57,19 +51,11 @@ public class ClientResult<T> implements Serializable {
         this.success = false;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
     private ClientResult<T> setMessage(String message) {
         this.message = message;
-        this.retCode = RetCodeEnum.ERR_SERVER_EXCEPTION.retCode;
+        this.retCode = BaseRetCode.ERR_SERVER_EXCEPTION.retCode;
         this.success = false;
         return this;
-    }
-
-    public T getResult() {
-        return result;
     }
 
     private ClientResult<T> setResult(T result) {
@@ -77,11 +63,7 @@ public class ClientResult<T> implements Serializable {
         return this;
     }
 
-    private Integer getRetCode() {
-        return retCode;
-    }
-
-    private ClientResult<T> setRetCode(RetCodeEnum retCodeEnum) {
+    private ClientResult<T> setRetCode(BaseRetCode.RetCode retCodeEnum) {
         this.retCode = retCodeEnum.retCode;
         this.message = retCodeEnum.message;
         this.success = false;
@@ -94,7 +76,7 @@ public class ClientResult<T> implements Serializable {
      * @param retCodeEnum 错误码
      * @return ClientResult
      */
-    public static ClientResult error(RetCodeEnum retCodeEnum) {
+    public static ClientResult error(BaseRetCode.RetCode retCodeEnum) {
         return new ClientResult(retCodeEnum);
     }
 
@@ -105,7 +87,7 @@ public class ClientResult<T> implements Serializable {
      * @return ClientResult
      */
     public static ClientResult error(String message) {
-        return new ClientResult(RetCodeEnum.ERR_OPERATION_NOT_SUPPORTED, message);
+        return new ClientResult(BaseRetCode.ERR_OPERATION_NOT_SUPPORTED, message);
     }
 
     /**
@@ -136,5 +118,19 @@ public class ClientResult<T> implements Serializable {
      */
     public static ClientResult success() {
         return new ClientResult<>();
+    }
+
+    /**
+     * 是否成功
+     */
+    public Boolean isSuccess() {
+        return success;
+    }
+
+    /**
+     * 是否失败
+     */
+    public Boolean isFailed() {
+        return !isSuccess();
     }
 }

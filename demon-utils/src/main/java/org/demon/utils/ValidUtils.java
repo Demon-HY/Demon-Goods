@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 有效验证
  * <p>
- * Created by Demon on 2017/7/22 0022.
+ * Created by Demon-HY on 2017/7/22 0022.
  */
 public class ValidUtils {
 

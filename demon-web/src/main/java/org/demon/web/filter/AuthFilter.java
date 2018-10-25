@@ -5,8 +5,8 @@ import org.demon.module.auth.AuthConfig;
 import org.demon.module.auth.AuthRedisApi;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.model.vo.LoginVo;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
+import org.demon.starter.common.entity.ClientResult;
 import org.demon.starter.web.context.RequestContext;
 import org.demon.starter.common.constants.SysContants;
 import org.demon.starter.common.logger.AbstractLogClass;
@@ -62,20 +62,20 @@ public class AuthFilter extends AbstractLogClass implements Filter {
         request.setAttribute(SysContants.REQUEST_ID, requestId);
         response.setHeader(SysContants.REQUEST_ID, requestId);
 
-        RetCodeEnum retCodeEnum = handler(request, response);
+        BizRetCode.RetCode bizRetCode = handler(request, response);
 
         // 请求前记录日志
-        doBefore(request, retCodeEnum, requestId);
+        doBefore(request, bizRetCode, requestId);
 
-        if (retCodeEnum.equals(RetCodeEnum.OK)) {
+        if (bizRetCode.equals(BizRetCode.OK)) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        JsonUtil.sendJsonResponse(response, ClientResult.error(retCodeEnum));
+        JsonUtil.sendJsonResponse(response, ClientResult.error(bizRetCode));
     }
 
-    private RetCodeEnum handler(HttpServletRequest request, HttpServletResponse response) {
+    private BizRetCode.RetCode handler(HttpServletRequest request, HttpServletResponse response) {
         Env env = parseServlet(request, response);
         request.setAttribute("env", env);
 
@@ -83,22 +83,22 @@ public class AuthFilter extends AbstractLogClass implements Filter {
 
         // 该拦截器只拦截接口请求
         if (!uri.contains(".do")) {
-            return RetCodeEnum.OK;
+            return BizRetCode.OK;
         }
 
         // 匿名接口可以跳过登录
         if (uri.contains(AuthConfig.ANNO_PATH)) {
-            return RetCodeEnum.OK;
+            return BizRetCode.OK;
         }
         // 从缓存中读取token数据
         LoginVo loginVo = authRedisApi.getLoginInfo(env.token);
         if (loginVo == null) {
-            return RetCodeEnum.ERR_TOKEN_NOT_FOUND;
+            return BizRetCode.ERR_TOKEN_NOT_FOUND;
         }
 
         env.loginVo = loginVo;
 
-        return RetCodeEnum.OK;
+        return BizRetCode.OK;
     }
 
     /**
@@ -123,7 +123,7 @@ public class AuthFilter extends AbstractLogClass implements Filter {
     /**
      * 请求前记录日志
      */
-    private void doBefore(HttpServletRequest request, RetCodeEnum retCodeEnum, String requestId) {
+    private void doBefore(HttpServletRequest request, BizRetCode.RetCode bizRetCode, String requestId) {
         // 记录下请求内容
         String url = request.getRequestURI();
         String httpMethod = request.getMethod();
@@ -136,7 +136,7 @@ public class AuthFilter extends AbstractLogClass implements Filter {
             obj.put(paraName, request.getParameter(paraName));
         }
         logger.info("{}  {}  OK  REQ  {}  {}  {}  {}", IPUtils.getIPAddr(request), requestId, url, httpMethod,
-                obj.toString(), retCodeEnum);
+                obj.toString(), bizRetCode);
     }
 
     @Override

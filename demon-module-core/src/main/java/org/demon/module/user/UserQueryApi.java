@@ -2,10 +2,10 @@ package org.demon.module.user;
 
 import org.demon.sdk.model.entity.User;
 import org.demon.sdk.environment.Env;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.starter.exception.LogicalException;
 import org.demon.starter.exception.ParamException;
 import org.demon.sdk.inner.user.IUserQueryApi;
-import org.demon.starter.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,9 +42,9 @@ public class UserQueryApi implements IUserQueryApi {
             case UserConfigAbstract.STATUS_NORMAL :
                 break;
             case UserConfigAbstract.STATUS_LOCK :
-                throw new LogicalException(RetCodeEnum.ERR_USER_LOCKED);
+                throw new LogicalException(BizRetCode.ERR_USER_LOCKED);
             case UserConfigAbstract.STATUS_DELETE :
-                throw new LogicalException(RetCodeEnum.ERR_USER_DELETE);
+                throw new LogicalException(BizRetCode.ERR_USER_DELETE);
                 default:break;
         }
 
@@ -55,7 +55,7 @@ public class UserQueryApi implements IUserQueryApi {
     @Override
     public boolean checkPasswordIsLegal(String password) throws Exception {
         if (ValidUtils.isBlank(password) || password.matches("[u4e00-u9fa5]")) {
-            throw new LogicalException(RetCodeEnum.ERR_ILLEGAL_PASSWORD);
+            throw new LogicalException(BizRetCode.ERR_ILLEGAL_PASSWORD);
         }
         return true;
     }

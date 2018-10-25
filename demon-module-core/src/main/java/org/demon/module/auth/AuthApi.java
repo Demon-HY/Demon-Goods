@@ -11,9 +11,9 @@ import org.demon.sdk.event.type.PostLoginEvent;
 import org.demon.sdk.event.type.PostLogoutEvent;
 import org.demon.sdk.event.type.PreLoginEvent;
 import org.demon.sdk.event.type.PreLogoutEvent;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.starter.exception.LogicalException;
 import org.demon.sdk.inner.user.IAuthApi;
-import org.demon.starter.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.datetime.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,17 +43,17 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         if (!preLoginEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
                     PreLoginEvent.EVENT_TYPE, preLoginEvent.lastHandler.getName(), preLoginEvent.breakReason);
-            throw new LogicalException(preLoginEvent.retCodeEnum);
+            throw new LogicalException(preLoginEvent.retCode);
         }
 
         User user = userDao.findByAccount(userLoginVo.account);
         if (user == null) {
-            throw new LogicalException(RetCodeEnum.ERR_NO_SUCH_ACCOUNT);
+            throw new LogicalException(BizRetCode.ERR_NO_SUCH_ACCOUNT);
         }
         // check password
         if (!AuthUtils.checkPassword(user, userLoginVo.password)) {
             // TODO 校验密码失败,后期可以锁定用户
-            throw new LogicalException(RetCodeEnum.ERR_INVALID_PASSWORD);
+            throw new LogicalException(BizRetCode.ERR_ILLEGAL_PASSWORD);
         }
         // check user status
         userQueryApi.checkUserStatus(env, user);
@@ -79,7 +79,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         if (!preLoginEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
                     PostLoginEvent.EVENT_TYPE, postLoginEvent.lastHandler.getName(), postLoginEvent.breakReason);
-            throw new LogicalException(preLoginEvent.retCodeEnum);
+            throw new LogicalException(preLoginEvent.retCode);
         }
 
         return loginVo;
@@ -93,7 +93,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         if (!preLogoutEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
                     PreLogoutEvent.EVENT_TYPE, preLogoutEvent.lastHandler.getName(), preLogoutEvent.breakReason);
-            throw new LogicalException(preLogoutEvent.retCodeEnum);
+            throw new LogicalException(preLogoutEvent.retCode);
         }
 
         // remove token
@@ -107,7 +107,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
         if (!postLogoutEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}",
                     PreLoginEvent.EVENT_TYPE, postLogoutEvent.lastHandler.getName(), postLogoutEvent.breakReason);
-            throw new LogicalException(postLogoutEvent.retCodeEnum);
+            throw new LogicalException(postLogoutEvent.retCode);
         }
 
         return true;
@@ -125,10 +125,10 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
             // 从数据库中获取 token
             Token tokenInfo = tokenDao.getToken(token);
             if (tokenInfo == null) {
-                throw new LogicalException(RetCodeEnum.ERR_TOKEN_NOT_FOUND);
+                throw new LogicalException(BizRetCode.ERR_TOKEN_NOT_FOUND);
             }
             if (tokenInfo.expires.compareTo(DateUtils.getCurrentTimeDate()) <= 0) {
-                throw new LogicalException(RetCodeEnum.ERR_TOKEN_EXPIRED);
+                throw new LogicalException(BizRetCode.ERR_TOKEN_EXPIRED);
             }
             User user = userDao.selectById(tokenInfo.uid, User.class);
             loginVo = new LoginVo(tokenInfo, user);
@@ -143,7 +143,7 @@ public class AuthApi extends AbstractLogClass implements IAuthApi {
             String[] splitToken = tokenUid.split("@");
             if (splitToken.length == 2) {
                 if (!splitToken[1].endsWith(uid + "")) {
-                    throw new LogicalException(RetCodeEnum.ERR_TOKEN_UID_MISMATCHING);
+                    throw new LogicalException(BizRetCode.ERR_TOKEN_UID_MISMATCHING);
                 }
             }
         }

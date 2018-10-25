@@ -7,9 +7,9 @@ import org.demon.sdk.model.dto.create.UserCreateDto;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.event.type.PostCreateUserEvent;
 import org.demon.sdk.event.type.PreCreateUserEvent;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.starter.exception.LogicalException;
 import org.demon.sdk.inner.user.IUserBaseApi;
-import org.demon.starter.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.demon.utils.crypto.SSHAUtils;
@@ -47,19 +47,19 @@ public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
         if (!preCreateUserEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}", PreCreateUserEvent.EVENT_TYPE,
                     preCreateUserEvent.lastHandler.getName(), preCreateUserEvent.breakReason);
-            throw new LogicalException(preCreateUserEvent.retCodeEnum);
+            throw new LogicalException(preCreateUserEvent.retCode);
         }
 
         // 校验账号是否已存在
         User tempUser = userDao.findByAccount(userCreateDto.name);
         if (tempUser != null) {
-            throw new LogicalException(RetCodeEnum.ERR_ACCOUNT_EXIST);
+            throw new LogicalException(BizRetCode.ERR_ACCOUNT_EXIST);
         }
         // 检查手机号是否唯一
         if (ValidUtils.isNotBlank(userCreateDto.phone)) {
             tempUser = userDao.findByPhone(userCreateDto.phone);
             if (tempUser != null) {
-                throw new LogicalException(RetCodeEnum.ERR_PHONE_ALREADY_BOUND);
+                throw new LogicalException(BizRetCode.ERR_PHONE_ALREADY_BOUND);
             }
         }
         // 补全用户信息
@@ -72,7 +72,7 @@ public class UserBaseApi extends AbstractLogClass implements IUserBaseApi {
         if (!postCreateUserEvent.isContinue) {
             logger.warn("{} 事件被 {} 拦截, 拦截原因: {}", PostCreateUserEvent.EVENT_TYPE,
                     postCreateUserEvent.lastHandler.getName(), postCreateUserEvent.breakReason);
-            throw new LogicalException(postCreateUserEvent.retCodeEnum);
+            throw new LogicalException(postCreateUserEvent.retCode);
         }
 
         return user;

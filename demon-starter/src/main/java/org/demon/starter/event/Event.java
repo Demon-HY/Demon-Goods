@@ -1,6 +1,6 @@
 package org.demon.starter.event;
 
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.starter.common.retCode.BaseRetCode;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -12,10 +12,10 @@ public class Event extends ApplicationEvent {
 
     private static final long serialVersionUID = 544976410916533776L;
 
-	/**
-	 * 是否停止事件广播
-	 */
-	public boolean stopDispatch = false;
+    /**
+     * 是否停止事件广播
+     */
+    public boolean stopDispatch = false;
 
     /**
      * 告知逻辑是否继续往下走
@@ -28,20 +28,20 @@ public class Event extends ApplicationEvent {
      */
     public String breakReason = "";
 
-	/**
-	 * 被处理的次数
-	 */
-	public int iteration = 0;
+    /**
+     * 被处理的次数
+     */
+    public int iteration = 0;
 
     /**
      * 错误信息
      */
-    public RetCodeEnum retCodeEnum;
+    public BaseRetCode.RetCode retCode;
 
-	/**
-	 * 最后一个处理该事件的类
-	 */
-	public Class<?> lastHandler;
+    /**
+     * 最后一个处理该事件的类
+     */
+    public Class<?> lastHandler;
 
     /**
      * Create a new ApplicationEvent.

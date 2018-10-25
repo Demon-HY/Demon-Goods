@@ -6,7 +6,7 @@ import org.demon.sdk.model.entity.Role;
 import org.demon.sdk.environment.Env;
 import org.demon.starter.exception.LogicalException;
 import org.demon.sdk.inner.role.IRightApi;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -88,7 +88,7 @@ public class RightApi implements IRightApi {
 
         Role role = roleDao.getRole(roleId);
         if (role == null) {
-            throw new LogicalException(RetCodeEnum.ERR_ROLE_NOT_FOUND);
+            throw new LogicalException(BizRetCode.ERR_ROLE_NOT_FOUND);
         }
 
         // 获取旧的权限

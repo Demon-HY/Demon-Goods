@@ -7,8 +7,8 @@ import org.demon.module.user.UserConfigAbstract;
 import org.demon.sdk.model.entity.User;
 import org.demon.sdk.model.dto.create.UserCreateDto;
 import org.demon.sdk.environment.Env;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
+import org.demon.starter.common.entity.ClientResult;
 import org.demon.starter.autoconfigure.annotion.RequestEnv;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class UserHttpApi {
     public ClientResult createUser(@ApiIgnore @RequestEnv Env env,
                                    @RequestBody UserCreateDto userCreateDto) throws Exception {
         if (ValidUtils.isBlanks(userCreateDto.name, userCreateDto.password)) {
-            return ClientResult.error(RetCodeEnum.ERR_BAD_PARAMS);
+            return ClientResult.error(BizRetCode.ERR_BAD_PARAMS);
         }
 
         User user = userBaseApi.createUser(env, userCreateDto);

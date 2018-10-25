@@ -1,8 +1,8 @@
 package org.demon.web.exception;
 
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.starter.exception.LogicalException;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.starter.common.entity.ClientResult;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -23,8 +23,8 @@ public class GlobalExceptionHandler extends AbstractLogClass {
 
     @ExceptionHandler(Exception.class)
     public ClientResult handleException(Exception e) {
-        logger.error("{}", RetCodeEnum.ERR_SERVER_EXCEPTION.message, e);
-        return ClientResult.error(RetCodeEnum.ERR_SERVER_EXCEPTION);
+        logger.error("{}", BizRetCode.ERR_SERVER_EXCEPTION.message, e);
+        return ClientResult.error(BizRetCode.ERR_SERVER_EXCEPTION);
     }
 
     @ExceptionHandler(LogicalException.class)
@@ -47,6 +47,6 @@ public class GlobalExceptionHandler extends AbstractLogClass {
         FieldError error = result.getFieldError();
 
         logger.error(error.getDefaultMessage(), e);
-        return ClientResult.error(error.getDefaultMessage(), RetCodeEnum.ERR_BAD_PARAMS.retCode);
+        return ClientResult.error(error.getDefaultMessage(), BizRetCode.ERR_BAD_PARAMS.retCode);
     }
 }

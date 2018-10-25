@@ -3,7 +3,7 @@ package org.demon.sdk.environment;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.demon.sdk.model.vo.LoginVo;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,5 +58,5 @@ public class Env implements Serializable {
     /**
      * 错误信息
      */
-    public RetCodeEnum retCodeEnum = RetCodeEnum.OK;
+    public BizRetCode.RetCode bizRetCode = BizRetCode.OK;
 }

@@ -8,7 +8,7 @@ import org.demon.sdk.model.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,18 +42,18 @@ public class RightUtils extends AbstractLogClass {
 
         // 检查参数
         if (ValidUtils.isBlank(moduleName) || ValidUtils.isBlank(rightName)) {
-            throw new RightCheckException(RetCodeEnum.ERR_RIGHT_INVALID);
+            throw new RightCheckException(BizRetCode.ERR_RIGHT_INVALID);
         }
         // 检查用户信息是否存在
         if (env.loginVo == null) {
-            throw new RightCheckException(RetCodeEnum.ERR_USER_NOT_LOGIN);
+            throw new RightCheckException(BizRetCode.ERR_USER_NOT_LOGIN);
         }
 
         // 获取用户所有角色及权限
         UserRoleVo userRoleRight = roleQueryApi.getUserRoleRight(env, env.userId);
         List<Role> roles = userRoleRight.roles;
         if (ValidUtils.isBlank(roles)) {
-            throw new RightCheckException(RetCodeEnum.ERR_USER_NOT_ROLE);
+            throw new RightCheckException(BizRetCode.ERR_USER_NOT_ROLE);
         }
 
         // 获取要验证的权限信息
@@ -78,7 +78,7 @@ public class RightUtils extends AbstractLogClass {
         }
 
         logger.error("用户: {} 没有访问权限: {} 的权限", env.userId, rightName);
-        throw new RightCheckException(RetCodeEnum.ERR_FORBIDDEN);
+        throw new RightCheckException(BizRetCode.ERR_FORBIDDEN);
     }
 
 }

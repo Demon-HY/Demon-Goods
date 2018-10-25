@@ -6,8 +6,8 @@ import org.demon.module.auth.AuthConfig;
 import org.demon.sdk.model.dto.request.UserLoginVo;
 import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
+import org.demon.starter.common.entity.ClientResult;
 import org.demon.starter.autoconfigure.annotion.RequestEnv;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class AuthHttpApi {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ClientResult<LoginVo> login(@ApiIgnore @RequestEnv Env env, @RequestBody UserLoginVo userLoginVo) throws Exception {
         if (ValidUtils.isBlanks(userLoginVo.account, userLoginVo.password, userLoginVo.type)) {
-            return ClientResult.error(RetCodeEnum.ERR_BAD_PARAMS);
+            return ClientResult.error(BizRetCode.ERR_BAD_PARAMS);
         }
 
         LoginVo loginVo = authApi.login(env, userLoginVo);

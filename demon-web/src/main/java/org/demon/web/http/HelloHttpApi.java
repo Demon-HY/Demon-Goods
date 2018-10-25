@@ -2,8 +2,8 @@ package org.demon.web.http;
 
 import io.swagger.annotations.ApiOperation;
 import org.demon.sdk.environment.Env;
-import org.demon.starter.utils.ClientResult;
-import org.demon.starter.utils.RetCodeEnum;
+import org.demon.sdk.retCode.BizRetCode;
+import org.demon.starter.common.entity.ClientResult;
 import org.demon.starter.autoconfigure.annotion.RequestEnv;
 import org.demon.utils.ValidUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ public class HelloHttpApi {
     @RequestMapping("/hello")
     public ClientResult hello(@RequestEnv Env env, String flag) {
         if (ValidUtils.isBlank(flag)) {
-            return ClientResult.error(RetCodeEnum.ERR_BAD_PARAMS);
+            return ClientResult.error(BizRetCode.ERR_BAD_PARAMS);
         }
 
         return ClientResult.success(flag);
