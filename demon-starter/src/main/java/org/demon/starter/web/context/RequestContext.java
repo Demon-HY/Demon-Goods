@@ -16,18 +16,30 @@ public class RequestContext {
         reqLocal.set(request);
     }
 
+    /**
+     * 清除request线程变量。
+     */
     public static void clearHttpReq() {
         reqLocal.remove();
     }
 
+    /**
+     * 获取当前请求的Request
+     */
     public static HttpServletRequest getHttpServletRequest() {
         return reqLocal.get();
     }
 
+    /**
+     * 获取当前Session
+     */
     public static HttpSession getHttpSession() {
         return reqLocal.get().getSession();
     }
 
+    /**
+     * 获取当前上下文的值
+     */
     public static Object getAttribute(String key) {
         Object retVal = getHttpSession().getAttribute(key);
         if (null == retVal) {
