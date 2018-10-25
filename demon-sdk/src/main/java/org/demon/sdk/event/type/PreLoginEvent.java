@@ -2,7 +2,7 @@ package org.demon.sdk.event.type;
 
 import org.demon.sdk.model.dto.request.UserLoginVo;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.event.Event;
+import org.demon.starter.event.Event;
 
 /**
  * 登录前事件

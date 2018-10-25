@@ -1,4 +1,4 @@
-package org.demon.sdk.utils;
+package org.demon.starter.utils;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -51,6 +51,12 @@ public class ClientResult<T> implements Serializable {
         this.success = false;
     }
 
+    private ClientResult(Integer retCode, String message) {
+        this.retCode = retCode;
+        this.message = message;
+        this.success = false;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -98,8 +104,18 @@ public class ClientResult<T> implements Serializable {
      * @param message 错误描述
      * @return ClientResult
      */
-    public static ClientResult errorMsg(String message) {
+    public static ClientResult error(String message) {
         return new ClientResult(RetCodeEnum.ERR_OPERATION_NOT_SUPPORTED, message);
+    }
+
+    /**
+     * 错误
+     *
+     * @param message 错误描述
+     * @return ClientResult
+     */
+    public static ClientResult error(String message, Integer statCode) {
+        return new ClientResult(statCode, message);
     }
 
     /**

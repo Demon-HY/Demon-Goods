@@ -1,4 +1,4 @@
-//package org.demon.starter.autoconfigure.email;
+//package org.demon.starter.email;
 //
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;

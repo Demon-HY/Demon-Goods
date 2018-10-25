@@ -19,7 +19,7 @@ public class RandomUtil {
     public static String getRequestId() {
         long uuid = UUID.randomUUID().getMostSignificantBits();
         byte[] uuidBytes = ByteBuffer.allocate(8).putLong(uuid).array();
-        return Base64.encodeBase64URLSafeString(uuidBytes).toLowerCase();
+        return "R_" + Base64.encodeBase64URLSafeString(uuidBytes).toLowerCase();
     }
     
 }

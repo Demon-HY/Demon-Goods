@@ -1,15 +1,14 @@
 package org.demon.web.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.StringUtils;
 import org.demon.module.auth.AuthConfig;
 import org.demon.module.auth.AuthRedisApi;
-import org.demon.sdk.config.SysContants;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.model.vo.LoginVo;
-import org.demon.sdk.utils.ClientResult;
-import org.demon.sdk.utils.RetCodeEnum;
-import org.demon.starter.autoconfigure.web.context.RequestContext;
+import org.demon.starter.utils.ClientResult;
+import org.demon.starter.utils.RetCodeEnum;
+import org.demon.starter.web.context.RequestContext;
+import org.demon.starter.common.constants.SysContants;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.JsonUtil;
 import org.demon.utils.RandomUtil;

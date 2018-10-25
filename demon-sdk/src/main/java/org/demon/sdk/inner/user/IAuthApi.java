@@ -3,7 +3,7 @@ package org.demon.sdk.inner.user;
 import org.demon.sdk.model.dto.request.UserLoginVo;
 import org.demon.sdk.model.vo.LoginVo;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.exception.LogicalException;
+import org.demon.starter.exception.LogicalException;
 
 /**
  * 登录鉴权接口

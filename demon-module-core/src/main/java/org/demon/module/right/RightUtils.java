@@ -8,7 +8,7 @@ import org.demon.sdk.model.vo.UserRoleVo;
 import org.demon.sdk.environment.Env;
 import org.demon.sdk.inner.role.IRightApi;
 import org.demon.sdk.inner.role.IRoleQueryApi;
-import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.utils.RetCodeEnum;
 import org.demon.starter.common.logger.AbstractLogClass;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;

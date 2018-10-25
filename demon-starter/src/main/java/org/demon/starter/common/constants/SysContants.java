@@ -1,4 +1,4 @@
-package org.demon.sdk.config;
+package org.demon.starter.common.constants;
 
 import java.io.Serializable;
 

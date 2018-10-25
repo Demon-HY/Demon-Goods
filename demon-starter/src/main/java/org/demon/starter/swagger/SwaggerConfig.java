@@ -1,4 +1,4 @@
-package org.demon.starter.autoconfigure.restapi;
+package org.demon.starter.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

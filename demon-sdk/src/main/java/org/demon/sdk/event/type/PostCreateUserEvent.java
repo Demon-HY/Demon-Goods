@@ -2,7 +2,7 @@ package org.demon.sdk.event.type;
 
 import org.demon.sdk.model.entity.User;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.event.Event;
+import org.demon.starter.event.Event;
 
 /**
  * 创建用户后事件

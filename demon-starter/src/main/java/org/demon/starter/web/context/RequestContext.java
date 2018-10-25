@@ -1,6 +1,8 @@
-package org.demon.starter.autoconfigure.web.context;
+package org.demon.starter.web.context;
 
 import lombok.NoArgsConstructor;
+import org.demon.starter.common.constants.SysContants;
+import org.demon.utils.RandomUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,5 +35,18 @@ public class RequestContext {
         }
 
         return retVal;
+    }
+
+    /**
+     * 获取请求ID
+     */
+    public static String getRequestId() {
+        try {
+            return (String) reqLocal.get().getAttribute(SysContants.REQUEST_ID);
+        } catch (Exception e) {
+            String requestId = RandomUtil.getRequestId();
+            reqLocal.get().setAttribute(SysContants.REQUEST_ID, requestId);
+            return requestId;
+        }
     }
 }

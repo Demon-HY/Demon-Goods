@@ -1,4 +1,4 @@
-package org.demon.sdk.event;
+package org.demon.starter.event;
 
 /**
  * Created by Demon-HY on 2018/4/30 0030.

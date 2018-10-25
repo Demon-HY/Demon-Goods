@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.demon.sdk.model.vo.LoginVo;
-import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.utils.RetCodeEnum;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,6 +1,7 @@
-package org.demon.sdk.exception;
+package org.demon.starter.exception;
 
-import org.demon.sdk.utils.RetCodeEnum;
+
+import org.demon.starter.utils.RetCodeEnum;
 
 /**
  * 参数错误异常
@@ -9,7 +10,7 @@ import org.demon.sdk.utils.RetCodeEnum;
  */
 public class ParamException extends LogicalException {
 
-    private static final long serialVersionUID = -2434647353423193324L;
+    private static final long serialVersionUID = -1L;
 
     public ParamException() {
         super(RetCodeEnum.ERR_BAD_PARAMS);

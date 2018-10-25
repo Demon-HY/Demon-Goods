@@ -1,22 +1,18 @@
-package org.demon.web.logger;
+package org.demon.starter.common.logger;
 
+import com.alibaba.fastjson.JSONObject;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.demon.sdk.config.SysContants;
-import org.demon.starter.common.logger.AbstractLogClass;
+import org.aspectj.lang.annotation.*;
+import org.demon.starter.web.context.RequestContext;
 import org.demon.utils.beans.BeanUtils;
 import org.demon.utils.http.IPUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * Web 请求信息记录
@@ -28,10 +24,46 @@ import javax.servlet.http.HttpServletResponse;
 public class WebLoggerAspect extends AbstractLogClass {
 
     /**
-     * 定义一个切入点
+     * mvc 出参打印的最大长度字符数
      */
-    @Pointcut("execution(* org.demon.web.http..*.*(..))")
+    @Value("${server.mvc.print.return.limit:1024}")
+    private Integer retStrLimit;
+
+    /*************************************************
+     * 在Controller 加日志切面，排除健康检查  {@link org.demon.starter.autoconfigure.annotion.LogIgnore}注解
+     */
+    @Pointcut(value = "((@within(org.springframework.web.bind.annotation.RestController))"
+            + "||(@within(org.springframework.stereotype.Controller))"
+            + "||(@annotation(org.springframework.web.bind.annotation.GetMapping))"
+            + "||(@annotation(org.springframework.web.bind.annotation.PostMapping))"
+            + "||(@annotation(org.springframework.web.bind.annotation.RequestMapping))"
+            + ") && !(@within(org.demon.starter.autoconfigure.annotion.LogIgnore))")
     public void webLog() {
+    }
+
+    /**
+     * 请求前记录日志
+     */
+    @Before("webLog()")
+    public void doBefore(JoinPoint joinPoint) {
+        // 接收到请求，记录请求内容
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        // 记录下请求内容
+        String url = request.getRequestURI();
+
+        String httpMethod = request.getMethod();
+        JSONObject obj = new JSONObject(); // 请求参数
+        //获取所有参数
+        Enumeration<String> enu = request.getParameterNames();
+        while (enu.hasMoreElements()) {
+            String paraName = enu.nextElement();
+            obj.put(paraName, request.getParameter(paraName));
+        }
+
+        String requestId = RequestContext.getRequestId();
+
+        logger.info("{}  {}  OK  REQ  {}  {}  {}", IPUtils.getIPAddr(request), requestId, url, httpMethod, obj.toString());
     }
 
     @AfterReturning(value = "webLog()", returning = "result")
@@ -39,7 +71,7 @@ public class WebLoggerAspect extends AbstractLogClass {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
         // TODO 请求的唯一标识，客户端通过这个可以查询到该次请求记录,需要在拦截器里写入该属性
-        String requestId = (String) req.getAttribute(SysContants.REQUEST_ID);
+        String requestId = RequestContext.getRequestId();
 
         // 处理完请求，返回内容
         logger.info("HTTP-OK  {}  {}  {}  {}  P:{}  R:{}",
@@ -52,7 +84,7 @@ public class WebLoggerAspect extends AbstractLogClass {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest req = attributes.getRequest();
         // 请求的唯一标识，客户端通过这个可以查询到该次请求记录
-        String requestId = (String) req.getAttribute(SysContants.REQUEST_ID);
+        String requestId = RequestContext.getRequestId();
 
         // 这里可以捕获异常，但无法处理异常，异常还是会抛给 JVM
 

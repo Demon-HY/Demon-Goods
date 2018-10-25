@@ -1,8 +1,8 @@
 package org.demon.module.auth;
 
 import org.demon.sdk.model.entity.User;
-import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.exception.LogicalException;
+import org.demon.starter.utils.RetCodeEnum;
 import org.demon.utils.XCodeUtil;
 import org.demon.utils.crypto.SSHAUtils;
 

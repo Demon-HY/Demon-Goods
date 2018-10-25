@@ -1,7 +1,7 @@
 package org.demon.module.right.exception;
 
-import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.exception.LogicalException;
+import org.demon.starter.utils.RetCodeEnum;
 
 /**
  * 权限验证异常

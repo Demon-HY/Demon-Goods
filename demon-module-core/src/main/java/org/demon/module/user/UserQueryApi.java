@@ -2,10 +2,10 @@ package org.demon.module.user;
 
 import org.demon.sdk.model.entity.User;
 import org.demon.sdk.environment.Env;
-import org.demon.sdk.exception.LogicalException;
-import org.demon.sdk.exception.ParamException;
+import org.demon.starter.exception.LogicalException;
+import org.demon.starter.exception.ParamException;
 import org.demon.sdk.inner.user.IUserQueryApi;
-import org.demon.sdk.utils.RetCodeEnum;
+import org.demon.starter.utils.RetCodeEnum;
 import org.demon.utils.ValidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
