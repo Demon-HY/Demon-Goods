@@ -2,7 +2,6 @@ package org.demon.sdk.environment;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.demon.sdk.model.vo.LoginVo;
 import org.demon.starter.utils.RetCodeEnum;
 
@@ -15,12 +14,11 @@ import java.io.Serializable;
  * <p>
  * Created by heyan on 2017/10/31 0031.
  */
-@ToString
 @Data
 @NoArgsConstructor
 public class Env implements Serializable {
 
-    private static final long serialVersionUID = 8731502802813894971L;
+    private static final long serialVersionUID = -1L;
     /**
      * HTTP 请求所对应的模块名称
      */
